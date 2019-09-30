@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Material DateTimePicker</string>
+    <string name="app_name">Persian DateTimePicker</string>
     <string name="title_activity_main">DateTimePicker Example</string>
     <string name="selected_time">The time you picked will be shown here.</string>
     <string name="selected_date">The date you picked will be shown here.</string>
