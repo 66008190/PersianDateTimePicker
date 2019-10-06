@@ -13,6 +13,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.persian.PersianDatePickerDialog;
+import com.wdullaer.materialdatetimepicker.persian.utils.PersianCalendar;
 
 import java.util.Calendar;
 
@@ -77,19 +79,22 @@ public class DatePickerFragment extends Fragment implements DatePickerDialog.OnD
             The sample app is reusing them because it is useful when looking for regressions
             during testing
              */
+
+            PersianCalendar persianCalendar=new PersianCalendar();
+
             if (dpd == null) {
-                dpd = DatePickerDialog.newInstance(
+                dpd = PersianDatePickerDialog.newInstance(
                         DatePickerFragment.this,
-                        now.get(Calendar.YEAR),
-                        now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH)
-                );
+                        persianCalendar.getPersianYear(),
+                        persianCalendar.getPersianMonth(),
+                        persianCalendar.getPersianDay()
+                        );
             } else {
                 dpd.initialize(
                         DatePickerFragment.this,
-                        now.get(Calendar.YEAR),
-                        now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH)
+                        persianCalendar.getPersianYear(),
+                        persianCalendar.getPersianMonth(),
+                        persianCalendar.getPersianDay()
                 );
             }
             dpd.setThemeDark(modeDarkDate.isChecked());

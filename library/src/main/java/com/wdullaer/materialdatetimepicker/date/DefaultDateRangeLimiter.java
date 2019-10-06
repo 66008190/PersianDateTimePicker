@@ -28,11 +28,11 @@ import java.util.HashSet;
 import java.util.TimeZone;
 import java.util.TreeSet;
 
-class DefaultDateRangeLimiter implements DateRangeLimiter {
+public class DefaultDateRangeLimiter implements DateRangeLimiter {
     private static final int DEFAULT_START_YEAR = 1900;
     private static final int DEFAULT_END_YEAR = 2100;
 
-    private transient DatePickerController mController;
+    public transient DatePickerController mController;
     private int mMinYear = DEFAULT_START_YEAR;
     private int mMaxYear = DEFAULT_END_YEAR;
     private Calendar mMinDate;
@@ -40,7 +40,7 @@ class DefaultDateRangeLimiter implements DateRangeLimiter {
     private TreeSet<Calendar> selectableDays = new TreeSet<>();
     private HashSet<Calendar> disabledDays = new HashSet<>();
 
-    DefaultDateRangeLimiter() {}
+    public DefaultDateRangeLimiter() {}
 
     @SuppressWarnings({"unchecked", "WeakerAccess"})
     public DefaultDateRangeLimiter(Parcel in) {
@@ -79,31 +79,31 @@ class DefaultDateRangeLimiter implements DateRangeLimiter {
         }
     };
 
-    void setSelectableDays(@NonNull Calendar[] days) {
+    public void setSelectableDays(@NonNull Calendar[] days) {
         for (Calendar selectableDay : days) {
             this.selectableDays.add(Utils.trimToMidnight((Calendar) selectableDay.clone()));
         }
     }
 
-    void setDisabledDays(@NonNull Calendar[] days) {
+    public void setDisabledDays(@NonNull Calendar[] days) {
         for (Calendar disabledDay : days) {
             this.disabledDays.add(Utils.trimToMidnight((Calendar) disabledDay.clone()));
         }
     }
 
-    void setMinDate(@NonNull Calendar calendar) {
+    public void setMinDate(@NonNull Calendar calendar) {
         mMinDate = Utils.trimToMidnight((Calendar) calendar.clone());
     }
 
-    void setMaxDate(@NonNull Calendar calendar) {
+    public void setMaxDate(@NonNull Calendar calendar) {
         mMaxDate = Utils.trimToMidnight((Calendar) calendar.clone());
     }
 
-    void setController(@NonNull DatePickerController controller) {
+    public void setController(@NonNull DatePickerController controller) {
         mController = controller;
     }
 
-    void setYearRange(int startYear, int endYear) {
+    public void setYearRange(int startYear, int endYear) {
         if (endYear < startYear) {
             throw new IllegalArgumentException("Year end must be larger than or equal to year start");
         }
@@ -112,19 +112,19 @@ class DefaultDateRangeLimiter implements DateRangeLimiter {
         mMaxYear = endYear;
     }
 
-    @Nullable Calendar getMinDate() {
+    public @Nullable Calendar getMinDate() {
         return mMinDate;
     }
 
-    @Nullable Calendar getMaxDate() {
+    public @Nullable Calendar getMaxDate() {
         return mMaxDate;
     }
 
-    @Nullable Calendar[] getSelectableDays() {
+    public @Nullable Calendar[] getSelectableDays() {
          return selectableDays.isEmpty() ? null : selectableDays.toArray(new Calendar[0]);
     }
 
-    @Nullable Calendar[] getDisabledDays() {
+    public @Nullable Calendar[] getDisabledDays() {
         return disabledDays.isEmpty() ? null : disabledDays.toArray(new Calendar[0]);
     }
 
