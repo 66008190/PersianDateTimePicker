@@ -27,6 +27,11 @@ public class PersianNumberUtils {
 
     }
 
+    public static String toFarsi(Integer number){
+        return toFarsi(String.valueOf(number));
+    }
+
+
     public static String toEnglish(String number) {//1232452
 
         number = number.replaceAll(farsiChars[0], "0");

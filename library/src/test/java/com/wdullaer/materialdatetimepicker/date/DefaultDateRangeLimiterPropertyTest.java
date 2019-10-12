@@ -29,10 +29,10 @@ public class DefaultDateRangeLimiterPropertyTest {
         public void onDayOfMonthSelected(int year, int month, int day) {}
 
         @Override
-        public void registerOnDateChangedListener(DatePickerDialog.OnDateChangedListener listener) {}
+        public void registerOnDateChangedListener(PersianDatePickerDialog.OnDateChangedListener listener) {}
 
         @Override
-        public void unregisterOnDateChangedListener(DatePickerDialog.OnDateChangedListener listener) {}
+        public void unregisterOnDateChangedListener(PersianDatePickerDialog.OnDateChangedListener listener) {}
 
         @Override
         public MonthAdapter.CalendarDay getSelectedDay() {
@@ -98,13 +98,13 @@ public class DefaultDateRangeLimiterPropertyTest {
         }
 
         @Override
-        public DatePickerDialog.Version getVersion() {
-            return DatePickerDialog.Version.VERSION_2;
+        public PersianDatePickerDialog.Version getVersion() {
+            return PersianDatePickerDialog.Version.VERSION_2;
         }
 
         @Override
-        public DatePickerDialog.ScrollOrientation getScrollOrientation() {
-            return DatePickerDialog.ScrollOrientation.HORIZONTAL;
+        public PersianDatePickerDialog.ScrollOrientation getScrollOrientation() {
+            return PersianDatePickerDialog.ScrollOrientation.HORIZONTAL;
         }
     };
 

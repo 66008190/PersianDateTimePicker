@@ -16,6 +16,8 @@
 
 package com.wdullaer.materialdatetimepicker.date;
 
+import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
+
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -29,10 +31,10 @@ public interface DatePickerController {
 
     void onDayOfMonthSelected(int year, int month, int day);
 
-    void registerOnDateChangedListener(DatePickerDialog.OnDateChangedListener listener);
+    void registerOnDateChangedListener(PersianDatePickerDialog.OnDateChangedListener listener);
 
     @SuppressWarnings("unused")
-    void unregisterOnDateChangedListener(DatePickerDialog.OnDateChangedListener listener);
+    void unregisterOnDateChangedListener(PersianDatePickerDialog.OnDateChangedListener listener);
 
     MonthAdapter.CalendarDay getSelectedDay();
 
@@ -48,9 +50,9 @@ public interface DatePickerController {
 
     int getMaxYear();
 
-    Calendar getStartDate();
+    PersianCalendar getStartDate();
 
-    Calendar getEndDate();
+    PersianCalendar getEndDate();
 
     boolean isOutOfRange(int year, int month, int day);
 
@@ -60,7 +62,7 @@ public interface DatePickerController {
 
     Locale getLocale();
 
-    DatePickerDialog.Version getVersion();
+    PersianDatePickerDialog.Version getVersion();
 
-    DatePickerDialog.ScrollOrientation getScrollOrientation();
+    PersianDatePickerDialog.ScrollOrientation getScrollOrientation();
 }

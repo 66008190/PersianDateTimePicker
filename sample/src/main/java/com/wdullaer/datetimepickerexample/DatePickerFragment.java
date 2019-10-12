@@ -12,16 +12,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-import com.wdullaer.materialdatetimepicker.persian.PersianDatePickerDialog;
-import com.wdullaer.materialdatetimepicker.persian.utils.PersianCalendar;
+import com.wdullaer.materialdatetimepicker.date.PersianDatePickerDialog;
+import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
 
 import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DatePickerFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
+public class DatePickerFragment extends Fragment implements PersianDatePickerDialog.OnDateSetListener {
 
     private TextView dateTextView;
     private CheckBox modeDarkDate;
@@ -34,7 +33,7 @@ public class DatePickerFragment extends Fragment implements DatePickerDialog.OnD
     private CheckBox switchOrientation;
     private CheckBox limitSelectableDays;
     private CheckBox highlightDays;
-    private DatePickerDialog dpd;
+    private PersianDatePickerDialog dpd;
 
     public DatePickerFragment() {
         // Required empty public constructor
@@ -101,7 +100,7 @@ public class DatePickerFragment extends Fragment implements DatePickerDialog.OnD
             dpd.vibrate(vibrateDate.isChecked());
             dpd.dismissOnPause(dismissDate.isChecked());
             dpd.showYearPickerFirst(showYearFirst.isChecked());
-            dpd.setVersion(showVersion2.isChecked() ? DatePickerDialog.Version.VERSION_2 : DatePickerDialog.Version.VERSION_1);
+            dpd.setVersion(showVersion2.isChecked() ? PersianDatePickerDialog.Version.VERSION_2 : PersianDatePickerDialog.Version.VERSION_1);
             if (modeCustomAccentDate.isChecked()) {
                 dpd.setAccentColor(Color.parseColor("#9C27B0"));
             }
@@ -109,28 +108,28 @@ public class DatePickerFragment extends Fragment implements DatePickerDialog.OnD
                 dpd.setTitle("DatePicker Title");
             }
             if (highlightDays.isChecked()) {
-                Calendar date1 = Calendar.getInstance();
-                Calendar date2 = Calendar.getInstance();
+                PersianCalendar date1 = PersianCalendar.getInstance();
+                PersianCalendar date2 = PersianCalendar.getInstance();
                 date2.add(Calendar.WEEK_OF_MONTH, -1);
-                Calendar date3 = Calendar.getInstance();
+                PersianCalendar date3 = PersianCalendar.getInstance();
                 date3.add(Calendar.WEEK_OF_MONTH, 1);
-                Calendar[] days = {date1, date2, date3};
+                PersianCalendar[] days = {date1, date2, date3};
                 dpd.setHighlightedDays(days);
             }
             if (limitSelectableDays.isChecked()) {
-                Calendar[] days = new Calendar[13];
+                PersianCalendar[] days = new PersianCalendar[13];
                 for (int i = -6; i < 7; i++) {
-                    Calendar day = Calendar.getInstance();
+                    PersianCalendar day = PersianCalendar.getInstance();
                     day.add(Calendar.DAY_OF_MONTH, i * 2);
                     days[i + 6] = day;
                 }
                 dpd.setSelectableDays(days);
             }
             if (switchOrientation.isChecked()) {
-                if (dpd.getVersion() == DatePickerDialog.Version.VERSION_1) {
-                    dpd.setScrollOrientation(DatePickerDialog.ScrollOrientation.HORIZONTAL);
+                if (dpd.getVersion() == PersianDatePickerDialog.Version.VERSION_1) {
+                    dpd.setScrollOrientation(PersianDatePickerDialog.ScrollOrientation.HORIZONTAL);
                 } else {
-                    dpd.setScrollOrientation(DatePickerDialog.ScrollOrientation.VERTICAL);
+                    dpd.setScrollOrientation(PersianDatePickerDialog.ScrollOrientation.VERTICAL);
                 }
             }
             dpd.setOnCancelListener(dialog -> {
@@ -152,12 +151,12 @@ public class DatePickerFragment extends Fragment implements DatePickerDialog.OnD
     @Override
     public void onResume() {
         super.onResume();
-        DatePickerDialog dpd = (DatePickerDialog) requireFragmentManager().findFragmentByTag("Datepickerdialog");
+        PersianDatePickerDialog dpd = (PersianDatePickerDialog) requireFragmentManager().findFragmentByTag("Datepickerdialog");
         if(dpd != null) dpd.setOnDateSetListener(this);
     }
 
     @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+    public void onDateSet(PersianDatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
         dateTextView.setText(date);
         dpd = null;

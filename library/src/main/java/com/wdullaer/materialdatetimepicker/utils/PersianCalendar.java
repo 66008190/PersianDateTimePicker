@@ -16,7 +16,7 @@
  */
 
 
-package com.wdullaer.materialdatetimepicker.persian.utils;
+package com.wdullaer.materialdatetimepicker.utils;
 
 
 import java.util.GregorianCalendar;
@@ -29,6 +29,8 @@ import java.util.TimeZone;
  */
 
 public class PersianCalendar extends GregorianCalendar {
+
+    private static PersianCalendar persianCalendar;
 
     private int persianYear;
     private int persianMonth;
@@ -57,6 +59,13 @@ public class PersianCalendar extends GregorianCalendar {
      */
     public PersianCalendar() {
         super(TimeZone.getDefault(), Locale.getDefault());
+    }
+
+    public static PersianCalendar getInstance(){
+        if(persianCalendar==null){
+            persianCalendar=new PersianCalendar();
+        }
+        return persianCalendar;
     }
 
     /**

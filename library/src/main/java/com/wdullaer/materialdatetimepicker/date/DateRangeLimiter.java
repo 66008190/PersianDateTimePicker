@@ -19,6 +19,8 @@ package com.wdullaer.materialdatetimepicker.date;
 import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
+import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
+
 import java.util.Calendar;
 
 @SuppressWarnings("WeakerAccess")
@@ -51,7 +53,7 @@ public interface DateRangeLimiter extends Parcelable {
      * It is highly recommended to keep this method as simple as possible
      * @return the minimum selectable date of the picker
      */
-    @NonNull Calendar getStartDate();
+    @NonNull PersianCalendar getStartDate();
 
     /**
      * getEndDate returns the maximum selectable date of the picker
@@ -59,7 +61,7 @@ public interface DateRangeLimiter extends Parcelable {
      * It is highly recommended to keep this method as simple as possible
      * @return the maximum selectable date of the picker
      */
-    @NonNull Calendar getEndDate();
+    @NonNull PersianCalendar getEndDate();
 
     /**
      * isOutOfRange is called for each date when it is about to be rendered
@@ -82,5 +84,6 @@ public interface DateRangeLimiter extends Parcelable {
      * @param day a date with the current user selection
      * @return the date after rounding to a selectable value
      */
-    @NonNull Calendar setToNearestDate(@NonNull Calendar day);
+    @NonNull
+    PersianCalendar setToNearestDate(@NonNull PersianCalendar day);
 }

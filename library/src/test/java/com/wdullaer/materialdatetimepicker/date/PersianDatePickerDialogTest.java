@@ -6,13 +6,13 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class DatePickerDialogTest {
+public class PersianDatePickerDialogTest {
     // isHighlighted
     @Test
     public void isHighlightedShouldReturnFalseIfNoHighlightedDaysAreSet() {
-        DatePickerDialog dpd = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+        PersianDatePickerDialog dpd = PersianDatePickerDialog.newInstance(new PersianDatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+            public void onDateSet(PersianDatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
             }
         });
@@ -21,9 +21,9 @@ public class DatePickerDialogTest {
 
     @Test
     public void isHighlightedShouldReturnFalseIfHighlightedDoesNotContainSelection() {
-        DatePickerDialog dpd = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+        PersianDatePickerDialog dpd = PersianDatePickerDialog.newInstance(new PersianDatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+            public void onDateSet(PersianDatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
             }
         });
@@ -41,9 +41,9 @@ public class DatePickerDialogTest {
 
     @Test
     public void isHighlightedShouldReturnTrueIfHighlightedDoesContainSelection() {
-        DatePickerDialog dpd = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+        PersianDatePickerDialog dpd = PersianDatePickerDialog.newInstance(new PersianDatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+            public void onDateSet(PersianDatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
             }
         });
@@ -67,9 +67,9 @@ public class DatePickerDialogTest {
     public void isHighlightedShouldBehaveCorrectlyInCustomTimezones() {
         String timeZoneString = "Americas/Los_Angeles";
         Calendar initial = Calendar.getInstance(TimeZone.getTimeZone(timeZoneString));
-        DatePickerDialog dpd = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+        PersianDatePickerDialog dpd = PersianDatePickerDialog.newInstance(new PersianDatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+            public void onDateSet(PersianDatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
             }
         }, initial);

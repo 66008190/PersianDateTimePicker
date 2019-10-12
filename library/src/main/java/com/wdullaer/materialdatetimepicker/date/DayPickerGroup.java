@@ -59,7 +59,7 @@ public class DayPickerGroup extends ViewGroup
         prevButton = findViewById(R.id.mdtp_previous_month_arrow);
         nextButton = findViewById(R.id.mdtp_next_month_arrow);
 
-        if (controller.getVersion() == DatePickerDialog.Version.VERSION_1) {
+        if (controller.getVersion() == PersianDatePickerDialog.Version.VERSION_1) {
             int size = Utils.dpToPx(16f, getResources());
             prevButton.setMinimumHeight(size);
             prevButton.setMinimumWidth(size);
@@ -80,7 +80,7 @@ public class DayPickerGroup extends ViewGroup
     }
 
     private void updateButtonVisibility(int position) {
-        final boolean isHorizontal = controller.getScrollOrientation() == DatePickerDialog.ScrollOrientation.HORIZONTAL;
+        final boolean isHorizontal = controller.getScrollOrientation() == PersianDatePickerDialog.ScrollOrientation.HORIZONTAL;
         final boolean hasPrev = position > 0;
         final boolean hasNext = position < (dayPickerView.getCount() - 1);
         prevButton.setVisibility(isHorizontal && hasPrev ? View.VISIBLE : View.INVISIBLE);
@@ -131,7 +131,7 @@ public class DayPickerGroup extends ViewGroup
             rightButton = nextButton;
         }
 
-        final int topMargin = controller.getVersion() == DatePickerDialog.Version.VERSION_1
+        final int topMargin = controller.getVersion() == PersianDatePickerDialog.Version.VERSION_1
                 ? 0
                 : getContext().getResources().getDimensionPixelSize(R.dimen.mdtp_date_picker_view_animator_padding_v2);
         final int width = right - left;

@@ -15,7 +15,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.wdullaer.materialdatetimepicker.persian.utils;
+package com.wdullaer.materialdatetimepicker.utils;
 
 /**
  * algorithms for converting Julian days to the Persian calendar, and vice versa

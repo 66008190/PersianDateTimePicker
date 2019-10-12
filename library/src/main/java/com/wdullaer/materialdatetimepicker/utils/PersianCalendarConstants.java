@@ -17,7 +17,7 @@
  */
 
 
-package com.wdullaer.materialdatetimepicker.persian.utils;
+package com.wdullaer.materialdatetimepicker.utils;
 
 /**
  * Updated By ArashJahani on 2019/09/30
