@@ -33,6 +33,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.customview.widget.ExploreByTouchHelper;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
@@ -40,6 +41,8 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.wdullaer.materialdatetimepicker.R;
 import com.wdullaer.materialdatetimepicker.date.MonthAdapter.CalendarDay;
+import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
+import com.wdullaer.materialdatetimepicker.utils.PersianNumberUtils;
 
 import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
@@ -55,7 +58,7 @@ public abstract class MonthView extends View {
 
     protected static int DEFAULT_HEIGHT = 32;
     protected static final int DEFAULT_SELECTED_DAY = -1;
-    protected static final int DEFAULT_WEEK_START = Calendar.SUNDAY;
+    protected static final int DEFAULT_WEEK_START = Calendar.SATURDAY;
     protected static final int DEFAULT_NUM_DAYS = 7;
     protected static final int DEFAULT_NUM_ROWS = 6;
     protected static final int MAX_NUM_ROWS = 6;
@@ -107,8 +110,8 @@ public abstract class MonthView extends View {
     // The number of days + a spot for week number if it is displayed
     protected int mNumCells = mNumDays;
 
-    private final Calendar mCalendar;
-    protected final Calendar mDayLabelCalendar;
+    private  PersianCalendar mPersianCalendar;
+    protected  PersianCalendar mDayLabelCalendar;
     private final MonthViewTouchHelper mTouchHelper;
 
     protected int mNumRows = DEFAULT_NUM_ROWS;
@@ -138,8 +141,8 @@ public abstract class MonthView extends View {
         mController = controller;
         Resources res = context.getResources();
 
-        mDayLabelCalendar = Calendar.getInstance(mController.getTimeZone(), mController.getLocale());
-        mCalendar = Calendar.getInstance(mController.getTimeZone(), mController.getLocale());
+        mDayLabelCalendar = new PersianCalendar();
+        mPersianCalendar =new  PersianCalendar();
 
         mDayOfWeekTypeface = res.getString(R.string.mdtp_day_of_week_label_typeface);
         mMonthTitleTypeface = res.getString(R.string.mdtp_sans_serif);
@@ -302,22 +305,21 @@ public abstract class MonthView extends View {
         // Figure out what day today is
         //final Time today = new Time(Time.getCurrentTimezone());
         //today.setToNow();
-        final Calendar today = Calendar.getInstance(mController.getTimeZone(), mController.getLocale());
+        final PersianCalendar today = new PersianCalendar();
         mHasToday = false;
         mToday = -1;
 
-        mCalendar.set(Calendar.MONTH, mMonth);
-        mCalendar.set(Calendar.YEAR, mYear);
-        mCalendar.set(Calendar.DAY_OF_MONTH, 1);
-        mDayOfWeekStart = mCalendar.get(Calendar.DAY_OF_WEEK);
+        mPersianCalendar.setPersianDate(mYear,mMonth,1);
+
+        mDayOfWeekStart = mPersianCalendar.getPersianDay();
 
         if (weekStart != -1) {
             mWeekStart = weekStart;
         } else {
-            mWeekStart = mCalendar.getFirstDayOfWeek();
+            mWeekStart = Calendar.SATURDAY;
         }
 
-        mNumCells = mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        mNumCells = mPersianCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         for (int i = 0; i < mNumCells; i++) {
             final int day = i + 1;
             if (sameDay(day, today)) {
@@ -343,10 +345,10 @@ public abstract class MonthView extends View {
         return (dividend + (remainder > 0 ? 1 : 0));
     }
 
-    private boolean sameDay(int day, Calendar today) {
-        return mYear == today.get(Calendar.YEAR) &&
-                mMonth == today.get(Calendar.MONTH) &&
-                day == today.get(Calendar.DAY_OF_MONTH);
+    private boolean sameDay(int day, PersianCalendar today) {
+        return mYear == today.getPersianYear() &&
+                mMonth == today.getPersianMonth() &&
+                day == today.getPersianDay();
     }
 
     @Override
@@ -403,17 +405,9 @@ public abstract class MonthView extends View {
 
     @NonNull
     private String getMonthAndYearString() {
-        Locale locale = mController.getLocale();
-        String pattern = "MMMM yyyy";
-
-        if (Build.VERSION.SDK_INT < 18) pattern = getContext().getResources().getString(R.string.mdtp_date_v1_monthyear);
-        else pattern = DateFormat.getBestDateTimePattern(locale, pattern);
-
-        SimpleDateFormat formatter = new SimpleDateFormat(pattern, locale);
-        formatter.setTimeZone(mController.getTimeZone());
-        formatter.applyLocalizedPattern(pattern);
         mStringBuilder.setLength(0);
-        return formatter.format(mCalendar.getTime());
+        return PersianNumberUtils.toFarsi(
+                mPersianCalendar.getPersianMonthName() + " " + mPersianCalendar.getPersianYear());
     }
 
     protected void drawMonthTitle(Canvas canvas) {
@@ -429,11 +423,14 @@ public abstract class MonthView extends View {
         int dayWidthHalf = (mWidth - mEdgePadding * 2) / (mNumDays * 2);
 
         for (int i = 0; i < mNumDays; i++) {
+
             int x = (2 * i + 1) * dayWidthHalf + mEdgePadding;
 
             int calendarDay = (i + mWeekStart) % mNumDays;
             mDayLabelCalendar.set(Calendar.DAY_OF_WEEK, calendarDay);
-            String weekString = getWeekDayLabel(mDayLabelCalendar);
+            String localWeekDisplayName = mDayLabelCalendar.getPersianWeekDayName();
+            Log.v("DayOfWeek",localWeekDisplayName);
+            String weekString = localWeekDisplayName.substring(0, 1);
             canvas.drawText(weekString, x, y, mMonthDayLabelPaint);
         }
     }

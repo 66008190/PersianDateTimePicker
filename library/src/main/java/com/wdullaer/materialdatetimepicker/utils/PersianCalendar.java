@@ -61,13 +61,6 @@ public class PersianCalendar extends GregorianCalendar {
         super(TimeZone.getDefault(), Locale.getDefault());
     }
 
-    public static PersianCalendar getInstance(){
-        if(persianCalendar==null){
-            persianCalendar=new PersianCalendar();
-        }
-        return persianCalendar;
-    }
-
     /**
      * Calculate persian date from current Date and populates the corresponding
      * fields(persianYear, persianMonth, persianDay)

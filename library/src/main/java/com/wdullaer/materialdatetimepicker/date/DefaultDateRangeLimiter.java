@@ -149,7 +149,7 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
         if (!selectableDays.isEmpty()) return (PersianCalendar) selectableDays.first().clone();
         if (mMinDate != null) return (PersianCalendar) mMinDate.clone();
         TimeZone timeZone = mController == null ? TimeZone.getDefault() : mController.getTimeZone();
-        PersianCalendar output = PersianCalendar.getInstance();
+        PersianCalendar output = new PersianCalendar();
         output.setPersianDate( mMinYear,1,Calendar.JANUARY);
         return output;
     }
@@ -160,7 +160,7 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
         if (!selectableDays.isEmpty()) return (PersianCalendar) selectableDays.last().clone();
         if (mMaxDate != null) return (PersianCalendar) mMaxDate.clone();
         TimeZone timeZone = mController == null ? TimeZone.getDefault() : mController.getTimeZone();
-        PersianCalendar output = PersianCalendar.getInstance();
+        PersianCalendar output = new PersianCalendar();
         output.setPersianDate( mMaxYear,Calendar.DECEMBER,31);
         return output;
     }
@@ -173,7 +173,7 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
     @Override
     public boolean isOutOfRange(int year, int month, int day) {
         TimeZone timezone = mController == null ? TimeZone.getDefault() : mController.getTimeZone();
-        PersianCalendar date = PersianCalendar.getInstance();
+        PersianCalendar date = new PersianCalendar();
         date.setPersianDate( year, month, day);
         return isOutOfRange(date);
     }
@@ -241,14 +241,14 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
         TimeZone timezone = mController == null ? TimeZone.getDefault() : mController.getTimeZone();
         if (isBeforeMin(calendar)) {
             if (mMinDate != null) return (PersianCalendar) mMinDate.clone();
-            PersianCalendar output = PersianCalendar.getInstance();
+            PersianCalendar output = new PersianCalendar();
             output.setPersianDate( mMinYear, Calendar.JANUARY, 1);
             return output; //Utils.trimToMidnight(
         }
 
         if (isAfterMax(calendar)) {
             if (mMaxDate != null) return (PersianCalendar) mMaxDate.clone();
-            PersianCalendar output = PersianCalendar.getInstance();
+            PersianCalendar output = new PersianCalendar();
             output.setPersianDate(mMaxYear, Calendar.DECEMBER, 31);
             return output; //Utils.trimToMidnight(
         }

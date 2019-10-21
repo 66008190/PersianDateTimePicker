@@ -131,7 +131,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     public int mCurrentView = UNINITIALIZED;
 
-    public int mWeekStart = mCalendar.getFirstDayOfWeek();
+    public int mWeekStart = PersianCalendar.SATURDAY;
     public String mTitle;
     public HashSet<Calendar> highlightedDays = new HashSet<>();
     public boolean mThemeDark = false;
@@ -214,7 +214,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      */
     @SuppressWarnings({"unused", "WeakerAccess"})
     public static PersianDatePickerDialog newInstance(OnDateSetListener callback) {
-        PersianCalendar now = PersianCalendar.getInstance();
+        PersianCalendar now = new PersianCalendar();
         return PersianDatePickerDialog.newInstance(callback, now);
     }
 
@@ -245,7 +245,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     }
 
     public void initialize(OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
-        PersianCalendar cal = PersianCalendar.getInstance();
+        PersianCalendar cal = new PersianCalendar();
         cal.setPersianDate(year, monthOfYear, dayOfMonth);
         this.initialize(callBack, cal);
     }
@@ -838,7 +838,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     @Override
     public boolean isHighlighted(int year, int month, int day) {
-        PersianCalendar date = PersianCalendar.getInstance();
+        PersianCalendar date = new PersianCalendar();
         date.set( year, month, day);
         //Utils.trimToMidnight(date);
         return highlightedDays.contains(date);
@@ -1053,10 +1053,10 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     //      e.g. Switching from Mar to Apr when Mar 31 is selected -> Apr 30
     //      e.g. Switching from 2012 to 2013 when Feb 29, 2012 is selected -> Feb 28, 2013
     private PersianCalendar adjustDayInMonthIfNeeded(PersianCalendar calendar) {
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int day = calendar.getPersianDay();
         int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         if (day > daysInMonth) {
-            calendar.set(Calendar.DAY_OF_MONTH, daysInMonth);
+            calendar.setPersianDate(calendar.getPersianYear(),calendar.getPersianMonth(), daysInMonth);
         }
         return mDateRangeLimiter.setToNearestDate(calendar);
     }
@@ -1073,7 +1073,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     @Override
     public void onYearSelected(int year) {
-        mCalendar.set(Calendar.YEAR, year);
+        mCalendar.setPersianDate(year, mCalendar.getPersianMonth(),
+                mCalendar.getPersianDay());
         mCalendar = adjustDayInMonthIfNeeded(mCalendar);
         updatePickers();
         setCurrentView(MONTH_AND_DAY_VIEW);

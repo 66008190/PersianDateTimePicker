@@ -92,7 +92,7 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
 
         private void setTime(long timeInMillis) {
             if (calendar == null) {
-                calendar = PersianCalendar.getInstance();
+                calendar = new PersianCalendar();
             }
             calendar.setTimeInMillis(timeInMillis);
             month = calendar.getPersianMonth();
@@ -201,15 +201,15 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
         }
 
         void bind(int position, DatePickerController mController, CalendarDay selectedCalendarDay) {
-            final int month = (position + mController.getStartDate().get(Calendar.MONTH)) % MONTHS_IN_YEAR;
-            final int year = (position + mController.getStartDate().get(Calendar.MONTH)) / MONTHS_IN_YEAR + mController.getMinYear();
+            final int month = (position + mController.getStartDate().getPersianMonth()) % MONTHS_IN_YEAR;
+            final int year = (position + mController.getStartDate().getPersianMonth()) / MONTHS_IN_YEAR + mController.getMinYear();
 
             int selectedDay = -1;
             if (isSelectedDayInMonth(selectedCalendarDay, year, month)) {
                 selectedDay = selectedCalendarDay.day;
             }
 
-            ((MonthView) itemView).setMonthParams(selectedDay, year, month, mController.getFirstDayOfWeek());
+            ((MonthView) itemView).setMonthParams(selectedDay, selectedCalendarDay.year, selectedCalendarDay.month, mController.getFirstDayOfWeek());
             this.itemView.invalidate();
         }
 

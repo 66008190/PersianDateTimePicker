@@ -60,13 +60,13 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
         highlightDays = view.findViewById(R.id.highlight_dates);
 
         view.findViewById(R.id.original_button).setOnClickListener(v -> {
-            Calendar now = Calendar.getInstance();
+            PersianCalendar now = new PersianCalendar();
             new android.app.DatePickerDialog(
                     requireActivity(),
                     (view1, year, month, dayOfMonth) -> Log.d("Orignal", "Got clicked"),
-                    now.get(Calendar.YEAR),
-                    now.get(Calendar.MONTH),
-                    now.get(Calendar.DAY_OF_MONTH)
+                    now.getPersianYear(),
+                    now.getPersianMonth(),
+                    now.getPersianDay()
             ).show();
         });
 
@@ -108,10 +108,10 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                 dpd.setTitle("DatePicker Title");
             }
             if (highlightDays.isChecked()) {
-                PersianCalendar date1 = PersianCalendar.getInstance();
-                PersianCalendar date2 = PersianCalendar.getInstance();
+                PersianCalendar date1 = new PersianCalendar();
+                PersianCalendar date2 = new PersianCalendar();
                 date2.add(Calendar.WEEK_OF_MONTH, -1);
-                PersianCalendar date3 = PersianCalendar.getInstance();
+                PersianCalendar date3 = new PersianCalendar();
                 date3.add(Calendar.WEEK_OF_MONTH, 1);
                 PersianCalendar[] days = {date1, date2, date3};
                 dpd.setHighlightedDays(days);
@@ -119,7 +119,7 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
             if (limitSelectableDays.isChecked()) {
                 PersianCalendar[] days = new PersianCalendar[13];
                 for (int i = -6; i < 7; i++) {
-                    PersianCalendar day = PersianCalendar.getInstance();
+                    PersianCalendar day = new PersianCalendar();
                     day.add(Calendar.DAY_OF_MONTH, i * 2);
                     days[i + 6] = day;
                 }

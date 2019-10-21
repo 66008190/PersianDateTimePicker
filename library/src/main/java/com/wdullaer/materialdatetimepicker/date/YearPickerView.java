@@ -162,7 +162,7 @@ public class YearPickerView extends ListView implements OnItemClickListener, OnD
     @Override
     public void onDateChanged() {
         mAdapter.notifyDataSetChanged();
-        postSetSelectionCentered(mController.getSelectedDay().year - mController.getMinYear());
+        postSetSelectionCentered(mController.getSelectedDay().year- mController.getMinYear());
     }
 
     @Override
