@@ -356,7 +356,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             We need to update some variables when setting the locale, so use the setter rather
             than a plain assignment
              */
-            setLocale((Locale) savedInstanceState.getSerializable(KEY_LOCALE));
+           // setLocale((Locale) savedInstanceState.getSerializable(KEY_LOCALE));
 
             /*
             If the user supplied a custom limiter, we need to create a new default one to prevent
@@ -999,19 +999,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         DAY_FORMAT.setTimeZone(timeZone);
     }
 
-    /**
-     * Set a custom locale to be used when generating various strings in the picker
-     *
-     * @param locale Locale
-     */
-    @SuppressWarnings("WeakerAccess")
-    public void setLocale(Locale locale) {
-        mLocale = locale;
-        mWeekStart = Calendar.getInstance(mTimezone, mLocale).getFirstDayOfWeek();
-        YEAR_FORMAT = new SimpleDateFormat("yyyy", locale);
-        MONTH_FORMAT = new SimpleDateFormat("MMM", locale);
-        DAY_FORMAT = new SimpleDateFormat("dd", locale);
-    }
 
     /**
      * Return the current locale (default or other)

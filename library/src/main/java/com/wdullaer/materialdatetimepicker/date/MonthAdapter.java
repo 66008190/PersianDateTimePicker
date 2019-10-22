@@ -201,15 +201,15 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
         }
 
         void bind(int position, DatePickerController mController, CalendarDay selectedCalendarDay) {
-            final int month = (position + mController.getStartDate().getPersianMonth()) % MONTHS_IN_YEAR;
-            final int year = (position + mController.getStartDate().getPersianMonth()) / MONTHS_IN_YEAR + mController.getMinYear();
+            final int month = position  % MONTHS_IN_YEAR;
+            final int year = position  / MONTHS_IN_YEAR + mController.getMinYear();
 
             int selectedDay = -1;
             if (isSelectedDayInMonth(selectedCalendarDay, year, month)) {
                 selectedDay = selectedCalendarDay.day;
             }
 
-            ((MonthView) itemView).setMonthParams(selectedDay, selectedCalendarDay.year, selectedCalendarDay.month, mController.getFirstDayOfWeek());
+            ((MonthView) itemView).setMonthParams(selectedDay, year, month, mController.getFirstDayOfWeek());
             this.itemView.invalidate();
         }
 

@@ -110,7 +110,7 @@ public abstract class MonthView extends View {
     // The number of days + a spot for week number if it is displayed
     protected int mNumCells = mNumDays;
 
-    private  PersianCalendar mPersianCalendar;
+    private final  PersianCalendar mPersianCalendar;
     protected  PersianCalendar mDayLabelCalendar;
     private final MonthViewTouchHelper mTouchHelper;
 
@@ -129,6 +129,9 @@ public abstract class MonthView extends View {
     protected int mHighlightedDayTextColor;
     protected int mDisabledDayTextColor;
     protected int mMonthTitleColor;
+
+    private float rightSpace = 30;
+
 
     private SimpleDateFormat weekDayLabelFormatter;
 
@@ -311,7 +314,7 @@ public abstract class MonthView extends View {
 
         mPersianCalendar.setPersianDate(mYear,mMonth,1);
 
-        mDayOfWeekStart = mPersianCalendar.getPersianDay();
+        mDayOfWeekStart = mPersianCalendar.get(Calendar.DAY_OF_WEEK);
 
         if (weekStart != -1) {
             mWeekStart = weekStart;
@@ -421,10 +424,11 @@ public abstract class MonthView extends View {
     protected void drawMonthDayLabels(Canvas canvas) {
         int y = getMonthHeaderSize() - (MONTH_DAY_LABEL_TEXT_SIZE / 2);
         int dayWidthHalf = (mWidth - mEdgePadding * 2) / (mNumDays * 2);
+        float firstX = (2 * (mNumDays - 1) + 1) * dayWidthHalf + rightSpace;
 
         for (int i = 0; i < mNumDays; i++) {
 
-            int x = (2 * i + 1) * dayWidthHalf + mEdgePadding;
+            int x = (int) (firstX - (2 * i + 1) * dayWidthHalf + mEdgePadding);
 
             int calendarDay = (i + mWeekStart) % mNumDays;
             mDayLabelCalendar.set(Calendar.DAY_OF_WEEK, calendarDay);
@@ -447,8 +451,11 @@ public abstract class MonthView extends View {
         // TODO: look at the calculations used by the framework picker to properly align this with the buttons
         final int dayWidthHalf = (mWidth - mEdgePadding * 2) / (mNumDays * 2);
         int j = findDayOffset();
+        float firstX = (2 * (mNumDays - 1) + 1) * dayWidthHalf + rightSpace;
+
         for (int dayNumber = 1; dayNumber <= mNumCells; dayNumber++) {
-            final int x = (2 * j + 1) * dayWidthHalf + mEdgePadding;
+
+            final int x = (int) (firstX - (((2 * j + 1) * dayWidthHalf + mEdgePadding)));
 
             int yRelativeToDay = (mRowHeight + MINI_DAY_NUMBER_TEXT_SIZE) / 2 - DAY_SEPARATOR_WIDTH;
 
@@ -651,7 +658,7 @@ public abstract class MonthView extends View {
         private static final String DATE_FORMAT = "dd MMMM yyyy";
 
         private final Rect mTempRect = new Rect();
-        private final Calendar mTempCalendar = Calendar.getInstance(mController.getTimeZone());
+        private final PersianCalendar mTempCalendar = new PersianCalendar();
 
         MonthViewTouchHelper(View host) {
             super(host);
@@ -751,9 +758,15 @@ public abstract class MonthView extends View {
          * @param day The day to generate a description for
          * @return A description of the time object
          */
-        CharSequence getItemDescription(int day) {
-            mTempCalendar.set(mYear, mMonth, day);
-            return DateFormat.format(DATE_FORMAT, mTempCalendar.getTimeInMillis());
+        protected CharSequence getItemDescription(int day) {
+            mTempCalendar.setPersianDate(mYear, mMonth, day);
+            final String date = PersianNumberUtils.toFarsi(mTempCalendar.getPersianLongDate());
+
+            if (day == mSelectedDay) {
+                return getContext().getString(R.string.mdtp_item_is_selected, date);
+            }
+
+            return date;
         }
     }
 

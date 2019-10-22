@@ -27,6 +27,7 @@ import android.view.accessibility.AccessibilityEvent;
 import com.wdullaer.materialdatetimepicker.GravitySnapHelper;
 import com.wdullaer.materialdatetimepicker.Utils;
 import com.wdullaer.materialdatetimepicker.date.PersianDatePickerDialog.OnDateChangedListener;
+import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -185,9 +186,9 @@ public abstract class DayPickerView extends RecyclerView implements OnDateChange
         }
 
         mTempDay.set(day);
-        int minMonth = mController.getStartDate().get(Calendar.MONTH);
+        //int minMonth = mController.getStartDate().get(Calendar.MONTH);
         final int position = (day.year - mController.getMinYear())
-                * MonthAdapter.MONTHS_IN_YEAR + day.month - minMonth;
+                * MonthAdapter.MONTHS_IN_YEAR + day.month ;
 
         View child;
         int i = 0;
@@ -356,17 +357,24 @@ public abstract class DayPickerView extends RecyclerView implements OnDateChange
     void accessibilityAnnouncePageChanged() {
         MonthView mv = getMostVisibleMonth();
         if (mv != null) {
-            String monthYear = getMonthAndYearString(mv.mMonth, mv.mYear, mController.getLocale());
+            String monthYear = getMonthAndYearString(mv.mMonth, mv.mYear);
             Utils.tryAccessibilityAnnounce(this, monthYear);
         } else {
             Log.w("DayPickerView", "Tried to announce before layout was initialized");
         }
     }
 
-    private static String getMonthAndYearString(int month, int year, Locale locale) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.YEAR, year);
-        return new SimpleDateFormat("MMMM yyyy", locale).format(calendar.getTime());
+    private static String getMonthAndYearString(int month, int year) {
+
+        PersianCalendar mPersianCalendar = new PersianCalendar();
+        mPersianCalendar.setPersianDate(year, month, 1);
+
+        StringBuilder monthAndYear = new StringBuilder();
+        monthAndYear.append(mPersianCalendar.getPersianMonthName());
+        monthAndYear.append(" ");
+        monthAndYear.append(mPersianCalendar.getPersianYear());
+
+        return monthAndYear.toString();
+
     }
 }
