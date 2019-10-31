@@ -1,17 +1,25 @@
-# Material DateTime Picker - Select a time/date in style
-
-[![Join the chat at https://gitter.im/wdullaer/MaterialDateTimePicker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/wdullaer/MaterialDateTimePicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-![Maven Central](https://img.shields.io/maven-central/v/com.wdullaer/materialdatetimepicker.svg)
-![Build Status](https://travis-ci.org/wdullaer/MaterialDateTimePicker.svg?branch=master)
+# Persian Material Date And Time Picker - Select a time/date in style
 
 
-Material DateTime Picker tries to offer you the date and time pickers as shown in [the Material Design spec](http://www.google.com/design/spec/components/pickers.html), with an
-easy themable API.
-The library uses [the code from the Android frameworks](https://android.googlesource.com/platform/frameworks/opt/datetimepicker/) as a base and tweaked it to be as close as possible to Material Design example.
+این کتابخانه ابزاری است برای پیاده سازی هر چه ساده تر تقویم و ساعت شمار فارسی با چند استایل مختلف و کاملا قابل شخصی سازی.
 
-Support for Android 4.1 and up. (Android 4.0 was supported until 3.6.4)
+من تمام تلاشم را میکنم تا در بروزرسانی های مداوم ویژگی های بیشتری اضافه کرده و تعداد باگ ها رو به حداقل برسونم.
 
-Feel free to fork or issue pull requests on github. Issues can be reported on the github issue tracker.
+لطفا با مشارکت و نظراتتون من رو در این امر حمایت کنید.
+
+پشتیبانی از نسخه اندروید ۴.۱(۱۶) و بالاتر - ۹۹.۶ درصد دیوایس های اندرویدی
+
+**Version 4 Layout**
+
+Date Picker | Time Picker
+--- | ---
+![Date Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/date_picker_v2.png) | ![Time Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/time_picker_v2.png)
+
+**Version 3 Layout**
+
+Date Picker | Time Picker
+--- | ---
+![Date Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/date_picker_v2.png) | ![Time Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/time_picker_v2.png)
 
 **Version 2 Layout**
 
