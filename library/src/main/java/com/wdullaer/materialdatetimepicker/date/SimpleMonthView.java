@@ -21,6 +21,8 @@ import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
+import com.wdullaer.materialdatetimepicker.utils.PersianNumberUtils;
+
 public class SimpleMonthView extends MonthView {
 
     public SimpleMonthView(Context context, AttributeSet attr, DatePickerController controller) {
@@ -55,6 +57,6 @@ public class SimpleMonthView extends MonthView {
             mMonthNumPaint.setColor(isHighlighted(year, month, day) ? mHighlightedDayTextColor : mDayTextColor);
         }
 
-        canvas.drawText(String.format(mController.getLocale(), "%d", day), x, y, mMonthNumPaint);
+        canvas.drawText(PersianNumberUtils.toFarsi(day), x, y, mMonthNumPaint); //String.format(mController.getLocale(), "%d", day)
     }
 }

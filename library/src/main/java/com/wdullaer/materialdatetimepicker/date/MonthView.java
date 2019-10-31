@@ -130,7 +130,7 @@ public abstract class MonthView extends View {
     protected int mDisabledDayTextColor;
     protected int mMonthTitleColor;
 
-    private float rightSpace = 30;
+    private float rightSpace = 45;
 
 
     private SimpleDateFormat weekDayLabelFormatter;
@@ -189,9 +189,9 @@ public abstract class MonthView extends View {
                     - getMonthHeaderSize() - MONTH_DAY_LABEL_TEXT_SIZE * 2) / MAX_NUM_ROWS;
         }
 
-        mEdgePadding = mController.getVersion() == PersianDatePickerDialog.Version.VERSION_1
-                ? 0
-                : context.getResources().getDimensionPixelSize(R.dimen.mdtp_date_picker_view_animator_padding_v2);
+//        mEdgePadding = mController.getVersion() == PersianDatePickerDialog.Version.VERSION_1
+//                ? 0
+//                : context.getResources().getDimensionPixelSize(R.dimen.mdtp_date_picker_view_animator_padding_v2);
 
         // Set up accessibility components.
         mTouchHelper = getMonthViewTouchHelper();
@@ -525,8 +525,9 @@ public abstract class MonthView extends View {
             return -1;
         }
         // Selection is (x - start) / (pixels/day) == (x -s) * day / pixels
+        // Selection for RTL is (NumDays-(x - start)) / (pixels/day) == (x -s) * day / pixels
         int row = (int) (y - getMonthHeaderSize()) / mRowHeight;
-        int column = (int) ((x - dayStart) * mNumDays / (mWidth - dayStart - mEdgePadding));
+        int column = (int) (mNumDays - ((x - dayStart) * mNumDays) / (mWidth - dayStart - mEdgePadding));
 
         int day = column - findDayOffset() + 1;
         day += row * mNumDays;

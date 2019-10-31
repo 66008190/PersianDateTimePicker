@@ -172,7 +172,6 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
      */
     @Override
     public boolean isOutOfRange(int year, int month, int day) {
-        TimeZone timezone = mController == null ? TimeZone.getDefault() : mController.getTimeZone();
         PersianCalendar date = new PersianCalendar();
         date.setPersianDate( year, month, day);
         return isOutOfRange(date);
