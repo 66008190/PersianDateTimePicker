@@ -47,7 +47,7 @@ Date Picker | Time Picker
 
 
 ## Setup
- The easiest way to add the Material DateTime Picker library to your project is by adding it as a dependency to your `build.gradle`
+ The easiest way to add the Persian Material DateTime Picker library to your project is by adding it as a dependency to your `build.gradle`
 ```groovy
 dependencies {
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
@@ -76,7 +76,7 @@ The library follows the same API as other pickers in the Android framework.
 For a basic implementation, you'll need to
 
 1. Implement an `OnTimeSetListener`/`OnDateSetListener`
-2. Create a `TimePickerDialog`/`DatePickerDialog` using the supplied factory
+2. Create a `PersianTimePickerDialog`/`PersianDatePickerDialog` using the supplied factory
 3. Theme the pickers
 
 ### Implement an `OnTimeSetListener`/`OnDateSetListener`
@@ -89,27 +89,28 @@ public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int se
   timeTextView.setText(time);
 }
 
-@Override
-public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-  String date = "You picked the following date: "+dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
-  dateTextView.setText(date);
-}
+ @Override
+    public void onDateSet(PersianDatePickerDialog view, PersianCalendar persianCalendar) {
+        String date = "You picked the following date: " +
+                +persianCalendar.getPersianYear()+"/"+persianCalendar.getPersianMonth()+"/"+persianCalendar.getPersianDay();
+        dateTextView.setText(date);
+    }
 ```
 
 ### Create a `TimePickerDialog`/`DatePickerDialog` using the supplied factory
-You will need to create a new instance of `TimePickerDialog` or `DatePickerDialog` using the static `newInstance()` method, supplying proper default values and a callback. Once the dialogs are configured, you can call `show()`.
+You will need to create a new instance of `TimePickerDialog` or `PersianDatePickerDialog` using the static `newInstance()` method, supplying proper default values and a callback. Once the dialogs are configured, you can call `show()`.
 ```java
-Calendar now = Calendar.getInstance();
-DatePickerDialog dpd = DatePickerDialog.newInstance(
-  MainActivity.this,
-  now.get(Calendar.YEAR), // Initial year selection
-  now.get(Calendar.MONTH), // Initial month selection
-  now.get(Calendar.DAY_OF_MONTH) // Inital day selection
-);
+            PersianCalendar now = new PersianCalendar();
+PersianDatePickerDialog pdpd = PersianDatePickerDialog.newInstance(
+                        this, // OnDateSetListener callback
+                        persianCalendar.getPersianYear(), //year
+                        persianCalendar.getPersianMonth(), // month
+                        persianCalendar.getPersianDay() //day
+                        );
 // If you're calling this from a support Fragment
-dpd.show(getFragmentManager(), "Datepickerdialog");
+pdpd.show(getFragmentManager(), "Datepickerdialog");
 // If you're calling this from an AppCompatActivity
-// dpd.show(getSupportFragmentManager(), "Datepickerdialog");
+// pdpd.show(getSupportFragmentManager(), "PersianDatePickerDialog");
 ```
 
 ### Theme the pickers
