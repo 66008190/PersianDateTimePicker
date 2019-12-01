@@ -9,29 +9,13 @@
 
 پشتیبانی از نسخه اندروید ۴.۱(۱۶) و بالاتر - ۹۹.۶ درصد دیوایس های اندرویدی
 
-**Version 4 Layout**
+**Version beta Layout**
 
-Date Picker | Time Picker
---- | ---
-![Date Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/date_picker_v2.png) | ![Time Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/time_picker_v2.png)
-
-**Version 3 Layout**
-
-Date Picker | Time Picker
---- | ---
-![Date Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/date_picker_v2.png) | ![Time Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/time_picker_v2.png)
-
-**Version 2 Layout**
-
-Date Picker | Time Picker
---- | ---
-![Date Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/date_picker_v2.png) | ![Time Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/time_picker_v2.png)
-
-**Version 1 Layout**
-
-Date Picker | Time Picker
----- | ----
-![Date Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/date_picker.png) | ![Time Picker](https://raw.github.com/wdullaer/MaterialDateTimePicker/gh-pages/images/time_picker.png)
+Date Picker | Year Picker | Date Picker
+--- | --- | ---  
+![Date Picker](https://github.com/arash-jahani/ScreenShots/blob/master/datePicker/s1.jpg) | 
+![Date Picker](https://github.com/arash-jahani/ScreenShots/blob/master/datePicker/s2.jpg)| 
+![Date Picker](https://github.com/arash-jahani/ScreenShots/blob/master/datePicker/s3.jpg)
 
 
 ## Table of Contents
