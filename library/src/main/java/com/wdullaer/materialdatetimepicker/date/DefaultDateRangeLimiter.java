@@ -81,23 +81,23 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
         }
     };
 
-    public void setSelectableDays(@NonNull Calendar[] days) {
-        for (Calendar selectableDay : days) {
+    public void setSelectableDays(@NonNull PersianCalendar[] days) {
+        for (PersianCalendar selectableDay : days) {
             this.selectableDays.add((PersianCalendar) selectableDay.clone());
         }
     }
 
-    public void setDisabledDays(@NonNull Calendar[] days) {
-        for (Calendar disabledDay : days) {
+    public void setDisabledDays(@NonNull PersianCalendar[] days) {
+        for (PersianCalendar disabledDay : days) {
             this.disabledDays.add((PersianCalendar) disabledDay.clone());
         }
     }
 
-    public void setMinDate(@NonNull Calendar calendar) {
+    public void setMinDate(@NonNull PersianCalendar calendar) {
         mMinDate = (PersianCalendar) calendar.clone();
     }
 
-    public void setMaxDate(@NonNull Calendar calendar) {
+    public void setMaxDate(@NonNull PersianCalendar calendar) {
         mMaxDate = (PersianCalendar) calendar.clone();
     }
 
@@ -132,16 +132,16 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
 
     @Override
     public int getMinYear() {
-        if (!selectableDays.isEmpty()) return selectableDays.first().get(Calendar.YEAR);
+        if (!selectableDays.isEmpty()) return selectableDays.first().getPersianYear();
         // Ensure no years can be selected outside of the given minimum date
-        return mMinDate != null && mMinDate.get(Calendar.YEAR) > mMinYear ? mMinDate.get(Calendar.YEAR) : mMinYear;
+        return mMinDate != null && mMinDate.getPersianYear() > mMinYear ? mMinDate.getPersianYear() : mMinYear;
     }
 
     @Override
     public int getMaxYear() {
-        if (!selectableDays.isEmpty()) return selectableDays.last().get(Calendar.YEAR);
+        if (!selectableDays.isEmpty()) return selectableDays.last().getPersianYear();
         // Ensure no years can be selected outside of the given maximum date
-        return mMaxDate != null && mMaxDate.get(Calendar.YEAR) < mMaxYear ? mMaxDate.get(Calendar.YEAR) : mMaxYear;
+        return mMaxDate != null && mMaxDate.getPersianYear() < mMaxYear ? mMaxDate.getPersianYear() : mMaxYear;
     }
 
     @Override
@@ -172,7 +172,7 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
      */
     @Override
     public boolean isOutOfRange(int year, int month, int day) {
-        PersianCalendar date = new PersianCalendar();
+        PersianCalendar date = PersianCalendar.getInstance();
         date.setPersianDate( year, month, day);
         return isOutOfRange(date);
     }
@@ -183,11 +183,11 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
     }
 
     private boolean isDisabled(@NonNull PersianCalendar c) {
-        return disabledDays.contains( isBeforeMin(c) || isAfterMax(c));
+        return isBeforeMin(c) || isAfterMax(c);
     }
 
     private boolean isSelectable(@NonNull PersianCalendar c) {
-        return selectableDays.isEmpty() || selectableDays.contains(Utils.trimToMidnight(c));
+        return selectableDays.isEmpty() || selectableDays.contains(c);
     }
 
     private boolean isBeforeMin(@NonNull PersianCalendar calendar) {
@@ -198,12 +198,28 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
         return mMaxDate != null && calendar.after(mMaxDate) || calendar.getPersianYear() > mMaxYear;
     }
 
+//    boolean dateIsSelectable(PersianCalendar c){
+//
+//
+//        while (selectableDays.iterator().hasNext()){
+//
+//            PersianCalendar calendar=selectableDays.iterator().next();
+//            if( calendar.equals(c)==true){
+//                return true;
+//            }
+//
+//        }
+//        return false;
+//    }
+
     @Override
     public @NonNull PersianCalendar setToNearestDate(@NonNull PersianCalendar calendar) {
         if (!selectableDays.isEmpty()) {
             PersianCalendar newCalendar = null;
             PersianCalendar higher = selectableDays.ceiling(calendar);
             PersianCalendar lower = selectableDays.lower(calendar);
+
+
 
             if (higher == null && lower != null) newCalendar = lower;
             else if (lower == null && higher != null) newCalendar = higher;

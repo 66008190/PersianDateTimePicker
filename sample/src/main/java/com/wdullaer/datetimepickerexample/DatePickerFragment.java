@@ -117,11 +117,20 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                 dpd.setHighlightedDays(days);
             }
             if (limitSelectableDays.isChecked()) {
+
+//                PersianCalendar minDate=new PersianCalendar();
+//                minDate.setPersianDate(1398,1,1);
+//                PersianCalendar maxDate=new PersianCalendar();
+//                maxDate.setPersianDate(1398,11,29);
+//
+//                dpd.setMinDate(minDate);
+//                dpd.setMaxDate(maxDate);
+
                 PersianCalendar[] days = new PersianCalendar[13];
-                for (int i = -6; i < 7; i++) {
-                    PersianCalendar day = new PersianCalendar();
-                    day.add(Calendar.DAY_OF_MONTH, i * 2);
-                    days[i + 6] = day;
+                for (int i = -3; i < 10; i++) {
+                    PersianCalendar day = PersianCalendar.getInstance();
+                    day.setPersianDate(day.getPersianYear(),day.getPersianMonth(), i * 2);
+                    days[i + 3] = day;
                 }
                 dpd.setSelectableDays(days);
             }
@@ -156,8 +165,9 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
     }
 
     @Override
-    public void onDateSet(PersianDatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+    public void onDateSet(PersianDatePickerDialog view, PersianCalendar persianCalendar) {
+        String date = "You picked the following date: " +
+                +persianCalendar.getPersianYear()+"/"+persianCalendar.getPersianMonth()+"/"+persianCalendar.getPersianDay();
         dateTextView.setText(date);
         dpd = null;
     }

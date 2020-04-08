@@ -168,8 +168,8 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
     @Override public int getItemCount() {
         PersianCalendar endDate = mController.getEndDate();
         PersianCalendar startDate = mController.getStartDate();
-        int endMonth = endDate.get(Calendar.YEAR) * MONTHS_IN_YEAR + endDate.get(Calendar.MONTH);
-        int startMonth = startDate.get(Calendar.YEAR) * MONTHS_IN_YEAR + startDate.get(Calendar.MONTH);
+        int endMonth = endDate.getPersianYear()* MONTHS_IN_YEAR + endDate.getPersianMonth();
+        int startMonth = startDate.getPersianYear() * MONTHS_IN_YEAR + startDate.getPersianMonth();
         return endMonth - startMonth + 1;
     }
 
@@ -201,8 +201,8 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
         }
 
         void bind(int position, DatePickerController mController, CalendarDay selectedCalendarDay) {
-            final int month = position  % MONTHS_IN_YEAR;
-            final int year = position  / MONTHS_IN_YEAR + mController.getMinYear();
+            final int month = (position + mController.getStartDate().getPersianMonth()) % MONTHS_IN_YEAR;
+            final int year = (position + mController.getStartDate().getPersianMonth()) / MONTHS_IN_YEAR + mController.getMinYear();
 
             int selectedDay = -1;
             if (isSelectedDayInMonth(selectedCalendarDay, year, month)) {

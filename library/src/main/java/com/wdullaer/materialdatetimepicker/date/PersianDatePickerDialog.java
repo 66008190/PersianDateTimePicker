@@ -176,7 +176,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
          *                    with {@link java.util.Calendar}.
          * @param dayOfMonth  The day of the month that was set.
          */
-        void onDateSet(PersianDatePickerDialog view, int year, int monthOfYear, int dayOfMonth);
+        void onDateSet(PersianDatePickerDialog view, PersianCalendar persianCalendar);
     }
 
     /**
@@ -773,7 +773,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      * @param calendar a Calendar object set to the year, month, day desired as the mindate.
      */
     @SuppressWarnings("unused")
-    public void setMinDate(Calendar calendar) {
+    public void setMinDate(PersianCalendar calendar) {
         mDefaultLimiter.setMinDate(calendar);
 
         if (mDayPickerView != null) {
@@ -785,7 +785,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      * @return The minimal date supported by this DatePicker. Null if it has not been set.
      */
     @SuppressWarnings("unused")
-    public Calendar getMinDate() {
+    public PersianCalendar getMinDate() {
         return mDefaultLimiter.getMinDate();
     }
 
@@ -796,7 +796,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      * @param calendar a Calendar object set to the year, month, day desired as the maxdate.
      */
     @SuppressWarnings("unused")
-    public void setMaxDate(Calendar calendar) {
+    public void setMaxDate(PersianCalendar calendar) {
         mDefaultLimiter.setMaxDate(calendar);
 
         if (mDayPickerView != null) {
@@ -808,7 +808,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      * @return The maximal date supported by this DatePicker. Null if it has not been set.
      */
     @SuppressWarnings("unused")
-    public Calendar getMaxDate() {
+    public PersianCalendar getMaxDate() {
         return mDefaultLimiter.getMaxDate();
     }
 
@@ -1070,9 +1070,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     @Override
     public void onDayOfMonthSelected(int year, int month, int day) {
-        mCalendar.set(Calendar.YEAR, year);
-        mCalendar.set(Calendar.MONTH, month);
-        mCalendar.set(Calendar.DAY_OF_MONTH, day);
+        mCalendar.setPersianDate(year,month,day);
         updatePickers();
         updateDisplay(true);
         if (mAutoDismiss) {
@@ -1144,8 +1142,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     public void notifyOnDateListener() {
         if (mCallBack != null) {
-            mCallBack.onDateSet(PersianDatePickerDialog.this, mCalendar.get(Calendar.YEAR),
-                    mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
+            mCallBack.onDateSet(PersianDatePickerDialog.this, mCalendar);
         }
     }
 }
