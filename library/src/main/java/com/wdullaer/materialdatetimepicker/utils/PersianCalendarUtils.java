@@ -31,6 +31,9 @@ package com.wdullaer.materialdatetimepicker.utils;
  */
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Updated By ArashJahani on 2019/09/30
  */
@@ -97,6 +100,28 @@ public class PersianCalendarUtils {
      */
     public static long ceil(double double1, double double2) {
         return (long) (double1 - double2 * Math.floor(double1 / double2));
+    }
+
+    /**
+     * @return PersianCalender Array of Dates
+     */
+
+    public static List<PersianCalendar> getDatesBetween(PersianCalendar startDate, PersianCalendar endDate){
+
+        List<PersianCalendar> array=new ArrayList<>();
+        PersianCalendar temp;
+
+        while (!startDate.after(endDate)) {
+            temp=new PersianCalendar();
+            temp.setPersianDate(startDate.getPersianYear(),startDate.getPersianMonth(),startDate.getPersianDay());
+
+            array.add(temp);
+
+            startDate.setPersianDate(startDate.getPersianYear(),startDate.getPersianMonth(),startDate.getPersianDay()+1);
+
+        }
+
+        return array;
     }
 
 

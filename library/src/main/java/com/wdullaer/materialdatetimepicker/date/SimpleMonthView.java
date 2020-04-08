@@ -18,9 +18,11 @@ package com.wdullaer.materialdatetimepicker.date;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
+import com.wdullaer.materialdatetimepicker.R;
 import com.wdullaer.materialdatetimepicker.utils.PersianNumberUtils;
 
 public class SimpleMonthView extends MonthView {
@@ -38,8 +40,11 @@ public class SimpleMonthView extends MonthView {
         }
 
         if (isHighlighted(year, month, day) && mSelectedDay != day) {
-            canvas.drawCircle(x, y + MINI_DAY_NUMBER_TEXT_SIZE - DAY_HIGHLIGHT_CIRCLE_MARGIN,
-                    DAY_HIGHLIGHT_CIRCLE_SIZE, mSelectedCirclePaint);
+//            canvas.drawCircle(x, y + MINI_DAY_NUMBER_TEXT_SIZE - DAY_HIGHLIGHT_CIRCLE_MARGIN,
+//                    DAY_HIGHLIGHT_CIRCLE_SIZE, mSelectedCirclePaint);
+           // canvas.draw(getResources().getColor(R.color.mdtp_accent_color));
+            //mMonthNumPaint.setStyle(Paint.Style.FILL);
+            canvas.drawRect(startX,startY,stopX,stopY,mSelectedDaysBetweenTwoDates);
             mMonthNumPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         } else {
             mMonthNumPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));

@@ -29,6 +29,8 @@ import androidx.core.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
+
 import java.util.Calendar;
 
 /**
@@ -147,11 +149,13 @@ public class Utils {
      * @param calendar The Calendar object to trim
      * @return The trimmed Calendar object
      */
-    public static Calendar trimToMidnight(Calendar calendar) {
+    public static PersianCalendar trimToMidnight(PersianCalendar calendar) {
+
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
+
         return calendar;
     }
 }

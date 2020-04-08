@@ -19,7 +19,10 @@
 package com.wdullaer.materialdatetimepicker.utils;
 
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -61,9 +64,9 @@ public class PersianCalendar extends GregorianCalendar {
         super(TimeZone.getDefault(), Locale.getDefault());
     }
 
-    public static PersianCalendar getInstance(){
-        if(persianCalendar==null){
-            persianCalendar=new PersianCalendar();
+    public static PersianCalendar getInstance() {
+        if (persianCalendar == null) {
+            persianCalendar = new PersianCalendar();
         }
         return persianCalendar;
     }
@@ -189,12 +192,12 @@ public class PersianCalendar extends GregorianCalendar {
      *
      * @param field
      * @param amount <pre>
-     *                                                                                                                  Usage:
-     *                                                                                                                  {@code
-     *                                                                                                                  addPersianDate(Calendar.YEAR, 2);
-     *                                                                                                                  addPersianDate(Calendar.MONTH, 3);
-     *                                                                                                                  }
-     *                                                                                                                 </pre>
+     *                                                                                                                                Usage:
+     *                                                                                                                                {@code
+     *                                                                                                                                addPersianDate(Calendar.YEAR, 2);
+     *                                                                                                                                addPersianDate(Calendar.MONTH, 3);
+     *                                                                                                                                }
+     *                                                                                                                               </pre>
      *               <p>
      *               u can also use Calendar.HOUR_OF_DAY,Calendar.MINUTE,
      *               Calendar.SECOND, Calendar.MILLISECOND etc
@@ -217,6 +220,10 @@ public class PersianCalendar extends GregorianCalendar {
             setPersianDate(this.persianYear
                             + ((getPersianMonth() + amount) / 12),
                     (getPersianMonth() + amount) % 12, this.persianDay);
+            return;
+        } else if (field == DAY_OF_MONTH) {
+            setPersianDate(getPersianYear(), getPersianMonth(),
+                    this.persianDay + amount);
             return;
         }
         add(field, amount);
@@ -261,13 +268,20 @@ public class PersianCalendar extends GregorianCalendar {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (!(obj instanceof PersianCalendar))
+            return false;
+        if (((PersianCalendar) obj).persianYear == this.getPersianYear() &&
+                ((PersianCalendar) obj).persianMonth == this.persianMonth &&
+                ((PersianCalendar) obj).persianDay == this.persianDay)
+            return true;
+
+        return false;
 
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return this.persianYear*this.persianMonth*this.persianDay;
     }
 
     @Override

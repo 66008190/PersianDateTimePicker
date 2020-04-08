@@ -64,6 +64,7 @@ public abstract class MonthView extends View {
     protected static final int MAX_NUM_ROWS = 6;
 
     private static final int SELECTED_CIRCLE_ALPHA = 255;
+    private static final int SELECTED_DAYS_ALPHA = 150;
 
     protected static int DAY_SEPARATOR_WIDTH = 1;
     protected static int MINI_DAY_NUMBER_TEXT_SIZE;
@@ -87,8 +88,10 @@ public abstract class MonthView extends View {
     protected Paint mMonthTitlePaint;
     protected Paint mSelectedCirclePaint;
     protected Paint mMonthDayLabelPaint;
+    protected Paint mSelectedDaysBetweenTwoDates;
 
     private final StringBuilder mStringBuilder;
+
 
     protected int mMonth;
 
@@ -261,6 +264,13 @@ public abstract class MonthView extends View {
         mSelectedCirclePaint.setTextAlign(Align.CENTER);
         mSelectedCirclePaint.setStyle(Style.FILL);
         mSelectedCirclePaint.setAlpha(SELECTED_CIRCLE_ALPHA);
+
+        mSelectedDaysBetweenTwoDates=new Paint();
+        mSelectedDaysBetweenTwoDates.setAntiAlias(true);
+        mSelectedDaysBetweenTwoDates.setColor(mTodayNumberColor);
+        mSelectedDaysBetweenTwoDates.setTextAlign(Align.CENTER);
+        mSelectedDaysBetweenTwoDates.setStyle(Style.FILL);
+        mSelectedDaysBetweenTwoDates.setAlpha(SELECTED_DAYS_ALPHA);
 
         mMonthDayLabelPaint = new Paint();
         mMonthDayLabelPaint.setAntiAlias(true);

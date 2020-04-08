@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.wdullaer.materialdatetimepicker.date.PersianDatePickerDialog;
 import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
+import com.wdullaer.materialdatetimepicker.utils.PersianCalendarUtils;
 
 import java.util.Calendar;
 
@@ -32,6 +33,7 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
     private CheckBox showVersion2;
     private CheckBox switchOrientation;
     private CheckBox limitSelectableDays;
+    private CheckBox highlightDates;
     private CheckBox highlightDays;
     private PersianDatePickerDialog dpd;
 
@@ -57,7 +59,8 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
         showVersion2 = view.findViewById(R.id.show_version_2);
         switchOrientation = view.findViewById(R.id.switch_orientation);
         limitSelectableDays = view.findViewById(R.id.limit_dates);
-        highlightDays = view.findViewById(R.id.highlight_dates);
+        highlightDates = view.findViewById(R.id.highlight_dates);
+        highlightDays = view.findViewById(R.id.highlight_days);
 
         view.findViewById(R.id.original_button).setOnClickListener(v -> {
             PersianCalendar now = new PersianCalendar();
@@ -107,7 +110,7 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
             if (titleDate.isChecked()) {
                 dpd.setTitle("DatePicker Title");
             }
-            if (highlightDays.isChecked()) {
+            if (highlightDates.isChecked()) {
                 PersianCalendar date1 = new PersianCalendar();
                 PersianCalendar date2 = new PersianCalendar();
                 date2.add(Calendar.WEEK_OF_MONTH, -1);
@@ -115,6 +118,15 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                 date3.add(Calendar.WEEK_OF_MONTH, 1);
                 PersianCalendar[] days = {date1, date2, date3};
                 dpd.setHighlightedDays(days);
+            }
+            if (highlightDays.isChecked()) {
+                PersianCalendar date1 = new PersianCalendar();
+                date1.setPersianDate(1399,0, 1);
+
+                PersianCalendar date2 = new PersianCalendar();
+                date2.setPersianDate(1399,0, 20);
+
+                dpd.setHighlightedDays(PersianCalendarUtils.getDatesBetween(date1,date2));
             }
             if (limitSelectableDays.isChecked()) {
 

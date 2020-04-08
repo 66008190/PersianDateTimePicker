@@ -54,6 +54,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -133,7 +134,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     public int mWeekStart = PersianCalendar.SATURDAY;
     public String mTitle;
-    public HashSet<Calendar> highlightedDays = new HashSet<>();
+    public HashSet<PersianCalendar> highlightedDays = new HashSet<>();
     public boolean mThemeDark = false;
     public boolean mThemeDarkChanged = false;
     public Integer mAccentColor = null;
@@ -330,7 +331,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             listPosition = savedInstanceState.getInt(KEY_LIST_POSITION);
             listPositionOffset = savedInstanceState.getInt(KEY_LIST_POSITION_OFFSET);
             //noinspection unchecked
-            highlightedDays = (HashSet<Calendar>) savedInstanceState.getSerializable(KEY_HIGHLIGHTED_DAYS);
+            highlightedDays = (HashSet<PersianCalendar>) savedInstanceState.getSerializable(KEY_HIGHLIGHTED_DAYS);
             mThemeDark = savedInstanceState.getBoolean(KEY_THEME_DARK);
             mThemeDarkChanged = savedInstanceState.getBoolean(KEY_THEME_DARK_CHANGED);
             if (savedInstanceState.containsKey(KEY_ACCENT))
@@ -825,6 +826,12 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         if (mDayPickerView != null) mDayPickerView.onChange();
     }
 
+    public void setHighlightedDays(List<PersianCalendar> highlightedDays) {
+        for (PersianCalendar highlightedDay : highlightedDays) {
+            this.highlightedDays.add(highlightedDay);
+        }
+        if (mDayPickerView != null) mDayPickerView.onChange();
+    }
     /**
      * @return The list of dates, as Calendar Objects, which should be highlighted. null is no dates should be highlighted
      */
@@ -839,7 +846,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     @Override
     public boolean isHighlighted(int year, int month, int day) {
         PersianCalendar date = new PersianCalendar();
-        date.set( year, month, day);
+        date.setPersianDate( year, month, day);
         //Utils.trimToMidnight(date);
         return highlightedDays.contains(date);
     }
