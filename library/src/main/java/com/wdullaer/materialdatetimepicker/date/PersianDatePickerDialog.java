@@ -97,9 +97,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public static final String KEY_OK_STRING = "ok_string";
     public static final String KEY_TITLE_STRING = "title_string";
     public static final String KEY_OK_COLOR = "ok_color";
-    public static final String KEY_CANCEL_RESID = "cancel_resid";
-    public static final String KEY_CANCEL_STRING = "cancel_string";
-    public static final String KEY_CANCEL_COLOR = "cancel_color";
     public static final String KEY_VERSION = "version";
     public static final String KEY_TIMEZONE = "timezone";
     public static final String KEY_DATERANGELIMITER = "daterangelimiter";
@@ -154,9 +151,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public Integer mFinishColor = null;
     public Integer mHighlightColor = null;
 
-    public int mCancelResid = R.string.mdtp_cancel;
-    public String mCancelString;
-    public Integer mCancelColor = null;
     public Version mVersion;
     public ScrollOrientation mScrollOrientation;
     public TimeZone mTimezone;
@@ -315,9 +309,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         if (mStartColor != null) outState.putInt(KEY_START_COLOR, mStartColor);
         if (mFinishColor != null) outState.putInt(KEY_FINISH_COLOR, mFinishColor);
         if (mHighlightColor != null) outState.putInt(KEY_HIGHLIGHT_COLOR, mHighlightColor);
-        outState.putInt(KEY_CANCEL_RESID, mCancelResid);
-        outState.putString(KEY_CANCEL_STRING, mCancelString);
-        if (mCancelColor != null) outState.putInt(KEY_CANCEL_COLOR, mCancelColor);
+
         outState.putSerializable(KEY_VERSION, mVersion);
         outState.putSerializable(KEY_SCROLL_ORIENTATION, mScrollOrientation);
         outState.putSerializable(KEY_TIMEZONE, mTimezone);
@@ -366,10 +358,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             if (savedInstanceState.containsKey(KEY_HIGHLIGHT_COLOR))
                 mHighlightColor = savedInstanceState.getInt(KEY_HIGHLIGHT_COLOR);
 
-            mCancelResid = savedInstanceState.getInt(KEY_CANCEL_RESID);
-            mCancelString = savedInstanceState.getString(KEY_CANCEL_STRING);
-            if (savedInstanceState.containsKey(KEY_CANCEL_COLOR))
-                mCancelColor = savedInstanceState.getInt(KEY_CANCEL_COLOR);
             mVersion = (Version) savedInstanceState.getSerializable(KEY_VERSION);
             mScrollOrientation = (ScrollOrientation) savedInstanceState.getSerializable(KEY_SCROLL_ORIENTATION);
             mTimezone = (TimeZone) savedInstanceState.getSerializable(KEY_TIMEZONE);
@@ -452,15 +440,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         if (mOkString != null) okButton.setText(mOkString);
         else okButton.setText(mOkResid);
 
-        Button cancelButton = view.findViewById(R.id.mdtp_cancel);
-        cancelButton.setOnClickListener(v -> {
-            tryVibrate();
-            if (getDialog() != null) getDialog().cancel();
-        });
-        cancelButton.setTypeface(ResourcesCompat.getFont(activity, R.font.robotomedium));
-        if (mCancelString != null) cancelButton.setText(mCancelString);
-        else cancelButton.setText(mCancelResid);
-        cancelButton.setVisibility(isCancelable() ? View.VISIBLE : View.GONE);
 
         // If an accent color has not been set manually, get it from the context
         if (mAccentColor == null) {
@@ -474,11 +453,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             mOkColor = mAccentColor;
         }
         okButton.setTextColor(mOkColor);
-
-        if (mCancelColor == null) {
-            mCancelColor = mAccentColor;
-        }
-        cancelButton.setTextColor(mCancelColor);
 
         if (getDialog() == null) {
             view.findViewById(R.id.mdtp_done_background).setVisibility(View.GONE);
@@ -701,25 +675,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         mOkColor = Color.argb(255, Color.red(color), Color.green(color), Color.blue(color));
     }
 
-    /**
-     * Set the text color of the Cancel button
-     *
-     * @param color the color you want
-     */
-    @SuppressWarnings("unused")
-    public void setCancelColor(String color) {
-        mCancelColor = Color.parseColor(color);
-    }
-
-    /**
-     * Set the text color of the Cancel button
-     *
-     * @param color the color you want
-     */
-    @SuppressWarnings("unused")
-    public void setCancelColor(@ColorInt int color) {
-        mCancelColor = Color.argb(255, Color.red(color), Color.green(color), Color.blue(color));
-    }
 
     /**
      * Get the accent color of this dialog
@@ -968,26 +923,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         mTitleResid = titleResid;
     }
 
-    /**
-     * Set the label for the Cancel button (max 12 characters)
-     *
-     * @param cancelString A literal String to be used as the Cancel button label
-     */
-    @SuppressWarnings("unused")
-    public void setCancelText(String cancelString) {
-        mCancelString = cancelString;
-    }
-
-    /**
-     * Set the label for the Cancel button (max 12 characters)
-     *
-     * @param cancelResid A resource ID to be used as the Cancel button label
-     */
-    @SuppressWarnings("unused")
-    public void setCancelText(@StringRes int cancelResid) {
-        mCancelString = null;
-        mCancelResid = cancelResid;
-    }
 
     /**
      * Set which layout version the picker should use
@@ -1059,10 +994,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         mCallBack = listener;
     }
 
-    @SuppressWarnings("unused")
-    public void setOnCancelListener(DialogInterface.OnCancelListener onCancelListener) {
-        mOnCancelListener = onCancelListener;
-    }
 
     @SuppressWarnings("unused")
     public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {

@@ -143,10 +143,6 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                     dpd.setScrollOrientation(PersianDatePickerDialog.ScrollOrientation.VERTICAL);
                 }
             }
-            dpd.setOnCancelListener(dialog -> {
-                Log.d("DatePickerDialog", "Dialog was cancelled");
-                dpd = null;
-            });
             dpd.show(requireFragmentManager(), "Datepickerdialog");
         });
 

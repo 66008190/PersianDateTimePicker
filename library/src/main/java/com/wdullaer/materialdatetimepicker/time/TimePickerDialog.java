@@ -106,7 +106,6 @@ public class TimePickerDialog extends AppCompatDialogFragment implements
 
     private HapticFeedbackController mHapticFeedbackController;
 
-    private Button mCancelButton;
     private Button mOkButton;
     private TextView mHourView;
     private TextView mHourSpaceView;
@@ -766,16 +765,6 @@ public class TimePickerDialog extends AppCompatDialogFragment implements
         if(mOkString != null) mOkButton.setText(mOkString);
         else mOkButton.setText(mOkResid);
 
-        mCancelButton = view.findViewById(R.id.mdtp_cancel);
-        mCancelButton.setOnClickListener(v -> {
-            tryVibrate();
-            if (getDialog() != null) getDialog().cancel();
-        });
-        mCancelButton.setTypeface(ResourcesCompat.getFont(context, R.font.robotomedium));
-        if(mCancelString != null) mCancelButton.setText(mCancelString);
-        else mCancelButton.setText(mCancelResid);
-        mCancelButton.setVisibility(isCancelable() ? View.VISIBLE : View.GONE);
-
         // Enable or disable the AM/PM view.
         if (mIs24HourMode) {
             mAmPmLayout.setVisibility(View.GONE);
@@ -992,8 +981,6 @@ public class TimePickerDialog extends AppCompatDialogFragment implements
         // Button text can have a different color
         if (mOkColor == null) mOkColor = mAccentColor;
         mOkButton.setTextColor(mOkColor);
-        if (mCancelColor == null) mCancelColor = mAccentColor;
-        mCancelButton.setTextColor(mCancelColor);
 
         if(getDialog() == null) {
             view.findViewById(R.id.mdtp_done_background).setVisibility(View.GONE);
