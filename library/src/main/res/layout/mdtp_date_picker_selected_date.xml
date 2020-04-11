@@ -18,8 +18,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mdtp_day_picker_selected_date_layout"
-    android:layout_width="@dimen/mdtp_date_picker_component_width"
-    android:layout_height="@dimen/mdtp_selected_date_height"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_weight="1"
     android:background="@color/mdtp_accent_color"
     android:gravity="center"
@@ -35,8 +35,38 @@
         android:background="@android:color/transparent"
         android:textColor="@color/mdtp_date_picker_selector" >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/mdtp_date_picker_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                            android:includeFontPadding="false"
+                android:background="@android:color/transparent"
+                android:textColor="@color/mdtp_date_picker_selector"
+                android:textSize="@dimen/mdtp_selected_date_title_size"
+                tools:text="Select Date"
+                android:clickable="false"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"/>
+
+            <ImageView
+                android:id="@+id/mdtp_date_picker_close"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_action_close"
+                android:clickable="true"
+                android:padding="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="8dp"/>
+
+        </RelativeLayout>
         <TextView
-            android:id="@+id/mdtp_date_picker_month"
+            android:id="@+id/mdtp_date_picker_selected_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
@@ -44,36 +74,11 @@
             android:includeFontPadding="false"
             android:background="@android:color/transparent"
             android:textColor="@color/mdtp_date_picker_selector"
-            android:textSize="@dimen/mdtp_selected_date_month_size"
+            android:textSize="@dimen/mdtp_date_picker_selected_date"
             android:textAllCaps="true"
-            tools:text="May"/>
+            tools:text="May"
+            android:layout_marginBottom="16dp"/>
 
-        <TextView
-            android:id="@+id/mdtp_date_picker_day"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="-10dip"
-            android:layout_marginTop="-10dip"
-            android:duplicateParentState="true"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:background="@android:color/transparent"
-            android:textColor="@color/mdtp_date_picker_selector"
-            android:textSize="@dimen/mdtp_selected_date_day_size"
-            tools:text="15"/>
     </com.wdullaer.materialdatetimepicker.AccessibleLinearLayout>
-
-    <com.wdullaer.materialdatetimepicker.AccessibleTextView
-        android:id="@+id/mdtp_date_picker_year"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal|top"
-        android:includeFontPadding="false"
-        android:background="@android:color/transparent"
-        android:textColor="@color/mdtp_date_picker_selector"
-        android:textSize="@dimen/mdtp_selected_date_year_size"
-        tools:text="2015" />
 
 </LinearLayout>

@@ -129,6 +129,10 @@ public abstract class MonthView extends View {
     protected int mSelectedDayTextColor;
     protected int mMonthDayTextColor;
     protected int mTodayNumberColor;
+    protected int mStartDayColor;
+    protected int mFinishDayColor;
+    protected int mHighlightedDayColor;
+
     protected int mHighlightedDayTextColor;
     protected int mDisabledDayTextColor;
     protected int mMonthTitleColor;
@@ -167,6 +171,10 @@ public abstract class MonthView extends View {
         }
         mSelectedDayTextColor = ContextCompat.getColor(context, R.color.mdtp_white);
         mTodayNumberColor = mController.getAccentColor();
+        mStartDayColor = mController.getStartColor();
+        mFinishDayColor = mController.getFinishColor();
+        mHighlightedDayColor = mController.getHighlightColor();
+
         mMonthTitleColor = ContextCompat.getColor(context, R.color.mdtp_white);
 
         mStringBuilder = new StringBuilder(50);
@@ -260,14 +268,14 @@ public abstract class MonthView extends View {
         mSelectedCirclePaint = new Paint();
         mSelectedCirclePaint.setFakeBoldText(true);
         mSelectedCirclePaint.setAntiAlias(true);
-        mSelectedCirclePaint.setColor(mTodayNumberColor);
+        mSelectedCirclePaint.setColor(mStartDayColor);
         mSelectedCirclePaint.setTextAlign(Align.CENTER);
         mSelectedCirclePaint.setStyle(Style.FILL);
         mSelectedCirclePaint.setAlpha(SELECTED_CIRCLE_ALPHA);
 
         mSelectedDaysBetweenTwoDates=new Paint();
         mSelectedDaysBetweenTwoDates.setAntiAlias(true);
-        mSelectedDaysBetweenTwoDates.setColor(mTodayNumberColor);
+        mSelectedDaysBetweenTwoDates.setColor(mHighlightedDayColor);
         mSelectedDaysBetweenTwoDates.setTextAlign(Align.CENTER);
         mSelectedDaysBetweenTwoDates.setStyle(Style.FILL);
         mSelectedDaysBetweenTwoDates.setAlpha(SELECTED_DAYS_ALPHA);

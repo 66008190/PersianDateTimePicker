@@ -30,7 +30,6 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
     private CheckBox dismissDate;
     private CheckBox titleDate;
     private CheckBox showYearFirst;
-    private CheckBox showVersion2;
     private CheckBox switchOrientation;
     private CheckBox limitSelectableDays;
     private CheckBox highlightDates;
@@ -56,22 +55,10 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
         dismissDate = view.findViewById(R.id.dismiss_date);
         titleDate = view.findViewById(R.id.title_date);
         showYearFirst = view.findViewById(R.id.show_year_first);
-        showVersion2 = view.findViewById(R.id.show_version_2);
         switchOrientation = view.findViewById(R.id.switch_orientation);
         limitSelectableDays = view.findViewById(R.id.limit_dates);
         highlightDates = view.findViewById(R.id.highlight_dates);
         highlightDays = view.findViewById(R.id.highlight_days);
-
-        view.findViewById(R.id.original_button).setOnClickListener(v -> {
-            PersianCalendar now = new PersianCalendar();
-            new android.app.DatePickerDialog(
-                    requireActivity(),
-                    (view1, year, month, dayOfMonth) -> Log.d("Orignal", "Got clicked"),
-                    now.getPersianYear(),
-                    now.getPersianMonth(),
-                    now.getPersianDay()
-            ).show();
-        });
 
         // Show a datepicker when the dateButton is clicked
         dateButton.setOnClickListener(v -> {
@@ -103,12 +90,12 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
             dpd.vibrate(vibrateDate.isChecked());
             dpd.dismissOnPause(dismissDate.isChecked());
             dpd.showYearPickerFirst(showYearFirst.isChecked());
-            dpd.setVersion(showVersion2.isChecked() ? PersianDatePickerDialog.Version.VERSION_2 : PersianDatePickerDialog.Version.VERSION_1);
+            dpd.setVersion(PersianDatePickerDialog.Version.VERSION_1);
             if (modeCustomAccentDate.isChecked()) {
                 dpd.setAccentColor(Color.parseColor("#9C27B0"));
             }
             if (titleDate.isChecked()) {
-                dpd.setTitle("DatePicker Title");
+                dpd.setTitleText("DatePicker Title");
             }
             if (highlightDates.isChecked()) {
                 PersianCalendar date1 = new PersianCalendar();
@@ -126,6 +113,9 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                 PersianCalendar date2 = new PersianCalendar();
                 date2.setPersianDate(1399,0, 20);
 
+                dpd.setStartColor("#459EFA");
+                dpd.setFinishColor("#4341FA");
+                dpd.setHighlightColor("#DAECFE");
                 dpd.setHighlightedDays(PersianCalendarUtils.getDatesBetween(date1,date2));
             }
             if (limitSelectableDays.isChecked()) {

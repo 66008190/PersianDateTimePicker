@@ -479,6 +479,21 @@ public class DefaultDateRangeLimiterTest {
             }
 
             @Override
+            public int getStartColor() {
+                return 0;
+            }
+
+            @Override
+            public int getFinishColor() {
+                return 0;
+            }
+
+            @Override
+            public int getHighlightColor() {
+                return 0;
+            }
+
+            @Override
             public boolean isHighlighted(int year, int month, int day) {
                 return false;
             }

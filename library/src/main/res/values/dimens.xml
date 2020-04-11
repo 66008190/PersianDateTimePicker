@@ -51,7 +51,7 @@
     <dimen name="mdtp_date_picker_title_height">30dp</dimen>
     <dimen name="mdtp_date_picker_title_padding">9dp</dimen>
     <dimen name="mdtp_selected_calendar_layout_height">155dp</dimen>
-    <dimen name="mdtp_selected_date_height">140dp</dimen>
+    <dimen name="mdtp_selected_date_height">70dp</dimen>
     <dimen name="mdtp_date_picker_view_animator_height">252dp</dimen>
     <dimen name="mdtp_date_picker_view_animator_height_v2">320dp</dimen>
     <dimen name="mdtp_date_picker_view_animator_padding">8dp</dimen>
@@ -70,6 +70,8 @@
     <dimen name="mdtp_month_select_circle_radius">45dp</dimen>
     <dimen name="mdtp_selected_date_year_size">25dp</dimen>
     <dimen name="mdtp_selected_date_day_size">70dp</dimen>
+    <dimen name="mdtp_selected_date_title_size">15sp</dimen>
+    <dimen name="mdtp_date_picker_selected_date">18sp</dimen>
     <dimen name="mdtp_selected_date_month_size">25dp</dimen>
     <dimen name="mdtp_date_picker_header_text_size">13dp</dimen>
     <dimen name="mdtp_time_picker_header_text_size">13dp</dimen>

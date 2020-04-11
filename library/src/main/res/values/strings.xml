@@ -23,6 +23,7 @@
     <!-- Label for date or time [CHAR LIMIT=30] -->
     <string name="mdtp_done_label">ثبت</string>
     <string name="mdtp_ok">تائید</string>
+    <string name="mdtp_title">انتخاب تاریخ</string>
     <string name="mdtp_cancel">انصراف</string>
     <!--
          Content description for the hour selector in the time picker, which displays

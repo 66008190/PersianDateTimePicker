@@ -19,7 +19,7 @@
     <com.wdullaer.materialdatetimepicker.date.AccessibleDateAnimator
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mdtp_animator"
-        android:layout_width="@dimen/mdtp_date_picker_component_width"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/mdtp_date_picker_view_animator_height"
         android:background="@android:color/transparent"
         android:gravity="center"
