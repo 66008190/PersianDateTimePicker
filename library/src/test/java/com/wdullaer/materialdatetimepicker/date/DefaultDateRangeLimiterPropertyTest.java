@@ -50,12 +50,12 @@ public class DefaultDateRangeLimiterPropertyTest {
         }
 
         @Override
-        public int getStartColor() {
+        public int getStartDateColor() {
             return 0;
         }
 
         @Override
-        public int getFinishColor() {
+        public int getFinishDateColor() {
             return 0;
         }
 

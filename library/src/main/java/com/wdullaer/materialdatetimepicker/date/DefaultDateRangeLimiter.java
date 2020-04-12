@@ -27,6 +27,7 @@ import com.wdullaer.materialdatetimepicker.utils.PersianNumberUtils;
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.TreeSet;
 
@@ -87,9 +88,9 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
         }
     }
 
-    public void setDisabledDays(@NonNull PersianCalendar[] days) {
-        for (PersianCalendar disabledDay : days) {
-            this.disabledDays.add((PersianCalendar) disabledDay.clone());
+    public void setSelectableDays(@NonNull List<PersianCalendar> days) {
+        for (PersianCalendar selectableDay : days) {
+            this.selectableDays.add((PersianCalendar) selectableDay.clone());
         }
     }
 
@@ -150,7 +151,7 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
         if (mMinDate != null) return (PersianCalendar) mMinDate.clone();
         TimeZone timeZone = mController == null ? TimeZone.getDefault() : mController.getTimeZone();
         PersianCalendar output = new PersianCalendar();
-        output.setPersianDate( mMinYear,1,Calendar.JANUARY);
+        output.setPersianDate( mMinYear,0,1);
         return output;
     }
 
@@ -161,7 +162,7 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
         if (mMaxDate != null) return (PersianCalendar) mMaxDate.clone();
         TimeZone timeZone = mController == null ? TimeZone.getDefault() : mController.getTimeZone();
         PersianCalendar output = new PersianCalendar();
-        output.setPersianDate( mMaxYear,Calendar.DECEMBER,31);
+        output.setPersianDate( mMaxYear,11,29);
         return output;
     }
 
@@ -218,8 +219,6 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
             PersianCalendar newCalendar = null;
             PersianCalendar higher = selectableDays.ceiling(calendar);
             PersianCalendar lower = selectableDays.lower(calendar);
-
-
 
             if (higher == null && lower != null) newCalendar = lower;
             else if (lower == null && higher != null) newCalendar = higher;

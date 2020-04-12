@@ -31,7 +31,10 @@ package com.wdullaer.materialdatetimepicker.utils;
  */
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -111,13 +114,16 @@ public class PersianCalendarUtils {
         List<PersianCalendar> array=new ArrayList<>();
         PersianCalendar temp;
 
-        while (!startDate.after(endDate)) {
+        Date end=endDate.getDateWithZeroTime();
+
+        while (startDate.getDateWithZeroTime().after(end)) {
             temp=new PersianCalendar();
             temp.setPersianDate(startDate.getPersianYear(),startDate.getPersianMonth(),startDate.getPersianDay());
 
+            Log.v("sellectedDate",temp.getPersianLongDate());
             array.add(temp);
 
-            startDate.setPersianDate(startDate.getPersianYear(),startDate.getPersianMonth(),startDate.getPersianDay()+1);
+            startDate.setPersianDate(startDate.getPersianYear(),startDate.getPersianMonth(),startDate.getPersianDay()-1);
 
         }
 

@@ -42,9 +42,9 @@ public interface DatePickerController {
 
     int getAccentColor();
 
-    int getStartColor();
+    int getStartDateColor();
 
-    int getFinishColor();
+    int getFinishDateColor();
 
     int getHighlightColor();
 
@@ -67,6 +67,8 @@ public interface DatePickerController {
     TimeZone getTimeZone();
 
     Locale getLocale();
+
+    boolean isDisabled(int year, int month, int day);
 
     PersianDatePickerDialog.Version getVersion();
 

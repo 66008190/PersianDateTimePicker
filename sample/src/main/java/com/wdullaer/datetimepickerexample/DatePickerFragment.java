@@ -1,10 +1,9 @@
 package com.wdullaer.datetimepickerexample;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,13 +85,14 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                         persianCalendar.getPersianDay()
                 );
             }
+            dpd.setYearRange(persianCalendar.getPersianYear(),persianCalendar.getPersianYear()+1);
             dpd.setThemeDark(modeDarkDate.isChecked());
             dpd.vibrate(vibrateDate.isChecked());
             dpd.dismissOnPause(dismissDate.isChecked());
             dpd.showYearPickerFirst(showYearFirst.isChecked());
             dpd.setVersion(PersianDatePickerDialog.Version.VERSION_1);
             if (modeCustomAccentDate.isChecked()) {
-                dpd.setAccentColor(Color.parseColor("#9C27B0"));
+                dpd.setAccentColor("#9C27B0");
             }
             if (titleDate.isChecked()) {
                 dpd.setTitleText("DatePicker Title");
@@ -113,12 +113,14 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                 PersianCalendar date2 = new PersianCalendar();
                 date2.setPersianDate(1399,0, 20);
 
-                dpd.setStartColor("#459EFA");
-                dpd.setFinishColor("#4341FA");
+                dpd.setStartDateColor("#459EFA");
+                dpd.setFinishDateColor("#4341FA");
                 dpd.setHighlightColor("#DAECFE");
                 dpd.setHighlightedDays(PersianCalendarUtils.getDatesBetween(date1,date2));
             }
             if (limitSelectableDays.isChecked()) {
+
+                dpd.setDisabledDaysBeforeToday();
 
 //                PersianCalendar minDate=new PersianCalendar();
 //                minDate.setPersianDate(1398,1,1);
@@ -127,14 +129,8 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
 //
 //                dpd.setMinDate(minDate);
 //                dpd.setMaxDate(maxDate);
-
-                PersianCalendar[] days = new PersianCalendar[13];
-                for (int i = -3; i < 10; i++) {
-                    PersianCalendar day = PersianCalendar.getInstance();
-                    day.setPersianDate(day.getPersianYear(),day.getPersianMonth(), i * 2);
-                    days[i + 3] = day;
-                }
-                dpd.setSelectableDays(days);
+//
+//                dpd.setSelectableDays(days);
             }
             if (switchOrientation.isChecked()) {
                 if (dpd.getVersion() == PersianDatePickerDialog.Version.VERSION_1) {

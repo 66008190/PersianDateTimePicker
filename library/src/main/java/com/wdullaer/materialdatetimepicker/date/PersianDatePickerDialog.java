@@ -36,7 +36,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -47,6 +46,7 @@ import com.wdullaer.materialdatetimepicker.HapticFeedbackController;
 import com.wdullaer.materialdatetimepicker.R;
 import com.wdullaer.materialdatetimepicker.Utils;
 import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
+import com.wdullaer.materialdatetimepicker.utils.PersianCalendarUtils;
 import com.wdullaer.materialdatetimepicker.utils.PersianNumberUtils;
 
 import java.text.SimpleDateFormat;
@@ -85,6 +85,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public static final String KEY_CURRENT_VIEW = "current_view";
     public static final String KEY_LIST_POSITION_OFFSET = "list_position_offset";
     public static final String KEY_HIGHLIGHTED_DAYS = "highlighted_days";
+    public static final String KEY_DISABLED_DAYS = "disabled_days";
     public static final String KEY_THEME_DARK = "theme_dark";
     public static final String KEY_THEME_DARK_CHANGED = "theme_dark_changed";
     public static final String KEY_ACCENT = "accent";
@@ -97,6 +98,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public static final String KEY_OK_STRING = "ok_string";
     public static final String KEY_TITLE_STRING = "title_string";
     public static final String KEY_OK_COLOR = "ok_color";
+    public static final String KEY_OK_BACKGROUND_COLOR = "ok_background_color";
     public static final String KEY_VERSION = "version";
     public static final String KEY_TIMEZONE = "timezone";
     public static final String KEY_DATERANGELIMITER = "daterangelimiter";
@@ -134,6 +136,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public int mWeekStart = PersianCalendar.SATURDAY;
     public String mTitle;
     public HashSet<PersianCalendar> highlightedDays = new HashSet<>();
+    public HashSet<PersianCalendar> disabledDays = new HashSet<>();
+
     public boolean mThemeDark = false;
     public boolean mThemeDarkChanged = false;
     public Integer mAccentColor = null;
@@ -147,8 +151,9 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public String mOkString;
     public String mTitleString;
     public Integer mOkColor = null;
-    public Integer mStartColor = null;
-    public Integer mFinishColor = null;
+    public Integer mOkBackgroundColor = null;
+    public Integer mStartDateColor = null;
+    public Integer mFinishDateColor = null;
     public Integer mHighlightColor = null;
 
     public Version mVersion;
@@ -294,6 +299,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
         outState.putInt(KEY_LIST_POSITION, listPosition);
         outState.putSerializable(KEY_HIGHLIGHTED_DAYS, highlightedDays);
+        outState.putSerializable(KEY_DISABLED_DAYS, disabledDays);
         outState.putBoolean(KEY_THEME_DARK, mThemeDark);
         outState.putBoolean(KEY_THEME_DARK_CHANGED, mThemeDarkChanged);
         if (mAccentColor != null) outState.putInt(KEY_ACCENT, mAccentColor);
@@ -306,8 +312,10 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         outState.putString(KEY_OK_STRING, mOkString);
         outState.putString(KEY_TITLE_STRING, mTitleString);
         if (mOkColor != null) outState.putInt(KEY_OK_COLOR, mOkColor);
-        if (mStartColor != null) outState.putInt(KEY_START_COLOR, mStartColor);
-        if (mFinishColor != null) outState.putInt(KEY_FINISH_COLOR, mFinishColor);
+        if (mOkBackgroundColor != null) outState.putInt(KEY_OK_BACKGROUND_COLOR, mOkBackgroundColor);
+
+        if (mStartDateColor != null) outState.putInt(KEY_START_COLOR, mStartDateColor);
+        if (mFinishDateColor != null) outState.putInt(KEY_FINISH_COLOR, mFinishDateColor);
         if (mHighlightColor != null) outState.putInt(KEY_HIGHLIGHT_COLOR, mHighlightColor);
 
         outState.putSerializable(KEY_VERSION, mVersion);
@@ -335,6 +343,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             listPositionOffset = savedInstanceState.getInt(KEY_LIST_POSITION_OFFSET);
             //noinspection unchecked
             highlightedDays = (HashSet<PersianCalendar>) savedInstanceState.getSerializable(KEY_HIGHLIGHTED_DAYS);
+            disabledDays = (HashSet<PersianCalendar>) savedInstanceState.getSerializable(KEY_DISABLED_DAYS);
+
             mThemeDark = savedInstanceState.getBoolean(KEY_THEME_DARK);
             mThemeDarkChanged = savedInstanceState.getBoolean(KEY_THEME_DARK_CHANGED);
             if (savedInstanceState.containsKey(KEY_ACCENT))
@@ -349,11 +359,14 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             if (savedInstanceState.containsKey(KEY_OK_COLOR))
                 mOkColor = savedInstanceState.getInt(KEY_OK_COLOR);
 
+            if (savedInstanceState.containsKey(KEY_OK_BACKGROUND_COLOR))
+                mOkBackgroundColor = savedInstanceState.getInt(KEY_OK_BACKGROUND_COLOR);
+
             if (savedInstanceState.containsKey(KEY_START_COLOR))
-                mStartColor = savedInstanceState.getInt(KEY_START_COLOR);
+                mStartDateColor = savedInstanceState.getInt(KEY_START_COLOR);
 
             if (savedInstanceState.containsKey(KEY_FINISH_COLOR))
-                mFinishColor = savedInstanceState.getInt(KEY_FINISH_COLOR);
+                mFinishDateColor = savedInstanceState.getInt(KEY_FINISH_COLOR);
 
             if (savedInstanceState.containsKey(KEY_HIGHLIGHT_COLOR))
                 mHighlightColor = savedInstanceState.getInt(KEY_HIGHLIGHT_COLOR);
@@ -450,9 +463,13 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
         // Buttons can have a different color
         if (mOkColor == null) {
-            mOkColor = mAccentColor;
+            mOkColor = R.color.mdtp_white;
+        }
+        if(mOkBackgroundColor==null){
+            mOkBackgroundColor=mAccentColor;
         }
         okButton.setTextColor(mOkColor);
+        //okButton.setBackgroundColor(mOkBackgroundColor);
 
         if (getDialog() == null) {
             view.findViewById(R.id.mdtp_done_background).setVisibility(View.GONE);
@@ -539,9 +556,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     private void updateDisplay(boolean announce) {
 
-
-        mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mCalendar.getPersianMonthName()) + " " + PersianNumberUtils.toFarsi(mCalendar.getPersianDay()));
-
+        //mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mCalendar.getPersianMonthName()) + " " + PersianNumberUtils.toFarsi(mCalendar.getPersianDay()));
+        mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mCalendar.getPersianShortDatePersianFormat()) +" - "+PersianNumberUtils.toFarsi(mCalendar.getPersianShortDatePersianFormat()));
 
         // Accessibility.
         long millis = mCalendar.getTimeInMillis();
@@ -611,8 +627,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      * @param color the Start color you want
      */
     @SuppressWarnings("unused")
-    public void setStartColor(String color) {
-        mStartColor = Color.parseColor(color);
+    public void setStartDateColor(String color) {
+        mStartDateColor = Color.parseColor(color);
     }
 
     /**
@@ -621,8 +637,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      * @param color the Finish color you want
      */
     @SuppressWarnings("unused")
-    public void setFinishColor(String color) {
-        mFinishColor = Color.parseColor(color);
+    public void setFinishDateColor(String color) {
+        mFinishDateColor = Color.parseColor(color);
     }
 
     /**
@@ -647,15 +663,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     }
 
     /**
-     * Set the accent color of this dialog
-     *
-     * @param color the accent color you want
-     */
-    public void setAccentColor(@ColorInt int color) {
-        mAccentColor = Color.argb(255, Color.red(color), Color.green(color), Color.blue(color));
-    }
-
-    /**
      * Set the text color of the OK button
      *
      * @param color the color you want
@@ -665,14 +672,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         mOkColor = Color.parseColor(color);
     }
 
-    /**
-     * Set the text color of the OK button
-     *
-     * @param color the color you want
-     */
-    @SuppressWarnings("unused")
-    public void setOkColor(@ColorInt int color) {
-        mOkColor = Color.argb(255, Color.red(color), Color.green(color), Color.blue(color));
+    public void setOkBackgroundColor(String color) {
+        mOkBackgroundColor = Color.parseColor(color);
     }
 
 
@@ -692,8 +693,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      * @return start color
      */
     @Override
-    public int getStartColor() {
-        return mStartColor == null ? mAccentColor : mStartColor;
+    public int getStartDateColor() {
+        return mStartDateColor == null ? mAccentColor : mStartDateColor;
     }
 
     /**
@@ -702,8 +703,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      * @return start color
      */
     @Override
-    public int getFinishColor() {
-        return mFinishColor == null ? mAccentColor : mFinishColor;
+    public int getFinishDateColor() {
+        return mFinishDateColor == null ? mAccentColor : mFinishDateColor;
     }
 
     /**
@@ -832,6 +833,61 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     }
 
     /**
+     * Sets an array of dates which should be disabled when the picker is drawn
+     *
+     * @param disabledDays an Array of Calendar objects containing the dates to be highlighted
+     */
+    @SuppressWarnings("unused")
+    public void setDisabledDays(PersianCalendar[] disabledDays) {
+        for (PersianCalendar day : disabledDays) {
+            this.disabledDays.add(Utils.trimToMidnight((PersianCalendar) day.clone()));
+        }
+        if (mDayPickerView != null) mDayPickerView.onChange();
+    }
+
+    public void setDisabledDays(List<PersianCalendar> disabledDays) {
+        this.disabledDays.addAll(disabledDays);
+
+        if (mDayPickerView != null) mDayPickerView.onChange();
+    }
+
+    /**
+     * @return The list of dates, as Calendar Objects, which should be disabled. null is no dates should be highlighted
+     */
+    @SuppressWarnings("unused")
+    public PersianCalendar[] getDisabledDays() {
+        if (disabledDays.isEmpty()) return null;
+        PersianCalendar[] output = disabledDays.toArray(new PersianCalendar[0]);
+        Arrays.sort(output);
+        return output;
+    }
+
+    @Override
+    public boolean isDisabled(int year, int month, int day) {
+        PersianCalendar date = new PersianCalendar();
+        date.setPersianDate(year, month, day);
+        //Utils.trimToMidnight(date);
+        return disabledDays.contains(date);
+    }
+
+    /**
+     * Sets a list of days that are not selectable in the picker
+     * Setting this value will take precedence over using setMinDate() and setMaxDate(), but stacks with setSelectableDays()
+     *
+     * @param disabledDays an Array of Calendar Objects containing the disabled dates
+     */
+    @SuppressWarnings("unused")
+
+    public void setDisabledDaysBeforeToday() {
+
+        PersianCalendar today=new PersianCalendar();
+        PersianCalendar startDay=new PersianCalendar();
+        startDay.setPersianDate(getMinYear(),0,0);
+
+        this.setDisabledDays(PersianCalendarUtils.getDatesBetween(today,startDay));
+    }
+
+    /**
      * Sets a list of days which are the only valid selections.
      * Setting this value will take precedence over using setMinDate() and setMaxDate()
      *
@@ -851,25 +907,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         return mDefaultLimiter.getSelectableDays();
     }
 
-    /**
-     * Sets a list of days that are not selectable in the picker
-     * Setting this value will take precedence over using setMinDate() and setMaxDate(), but stacks with setSelectableDays()
-     *
-     * @param disabledDays an Array of Calendar Objects containing the disabled dates
-     */
-    @SuppressWarnings("unused")
-    public void setDisabledDays(PersianCalendar[] disabledDays) {
-        mDefaultLimiter.setDisabledDays(disabledDays);
-        if (mDayPickerView != null) mDayPickerView.onChange();
-    }
 
-    /**
-     * @return an Array of Calendar objects containing the list of days that are not selectable. null if no restriction is set
-     */
-    @SuppressWarnings("unused")
-    public PersianCalendar[] getDisabledDays() {
-        return mDefaultLimiter.getDisabledDays();
-    }
 
     /**
      * Provide a DateRangeLimiter for full control over which dates are enabled and disabled in the picker

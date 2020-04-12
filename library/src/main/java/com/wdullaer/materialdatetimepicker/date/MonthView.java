@@ -31,7 +31,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.customview.widget.ExploreByTouchHelper;
-import android.text.format.DateFormat;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -171,8 +171,8 @@ public abstract class MonthView extends View {
         }
         mSelectedDayTextColor = ContextCompat.getColor(context, R.color.mdtp_white);
         mTodayNumberColor = mController.getAccentColor();
-        mStartDayColor = mController.getStartColor();
-        mFinishDayColor = mController.getFinishColor();
+        mStartDayColor = mController.getStartDateColor();
+        mFinishDayColor = mController.getFinishDateColor();
         mHighlightedDayColor = mController.getHighlightColor();
 
         mMonthTitleColor = ContextCompat.getColor(context, R.color.mdtp_white);
@@ -566,6 +566,10 @@ public abstract class MonthView extends View {
             return;
         }
 
+        if (mController.isDisabled(mYear, mMonth, day) && mToday!=day) {
+            return;
+        }
+
 
         if (mOnDayClickListener != null) {
             mOnDayClickListener.onDayClick(this, new CalendarDay(mYear, mMonth, day, mController.getTimeZone()));
@@ -583,6 +587,16 @@ public abstract class MonthView extends View {
      */
     protected boolean isHighlighted(int year, int month, int day) {
         return mController.isHighlighted(year, month, day);
+    }
+
+    /**
+     * @param year as an int
+     * @param month as an int
+     * @param day as an int
+     * @return true if the given date should be highlighted
+     */
+    protected boolean isDisabledDay(int year, int month, int day) {
+        return mController.isDisabled(year, month, day);
     }
 
     /**
@@ -779,7 +793,7 @@ public abstract class MonthView extends View {
          */
         protected CharSequence getItemDescription(int day) {
             mTempCalendar.setPersianDate(mYear, mMonth, day);
-            final String date = PersianNumberUtils.toFarsi(mTempCalendar.getPersianLongDate());
+            final String date = PersianNumberUtils.toFarsi(mTempCalendar.getPersianShortDatePersianFormat());
 
             if (day == mSelectedDay) {
                 return getContext().getString(R.string.mdtp_item_is_selected, date);

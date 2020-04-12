@@ -19,7 +19,11 @@
 package com.wdullaer.materialdatetimepicker.utils;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -166,9 +170,19 @@ public class PersianCalendar extends GregorianCalendar {
      * @return String of Persian Date ex: شنبه 01 خرداد 1361
      */
     public String getPersianLongDate() {
-        return getPersianWeekDayName() + "  "
-                + formatToMilitary(this.persianDay) + "  "
-                + getPersianMonthName() + "  " + this.persianYear;
+        return getPersianWeekDayName() + " "
+                + this.persianDay + " "
+                + getPersianMonthName()+ " "+this.persianYear;
+
+    }
+
+    /**
+     * @return String of Persian Date ex: شنبه 01 خرداد 1361
+     */
+    public String getPersianShortDatePersianFormat() {
+        return getPersianWeekDayName() + " "
+                + this.persianDay + " "
+                + getPersianMonthName();
 
     }
 
@@ -276,6 +290,20 @@ public class PersianCalendar extends GregorianCalendar {
             return true;
 
         return false;
+
+    }
+
+    public Date getDateWithZeroTime(){
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime( this.getTime() );
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
 
     }
 

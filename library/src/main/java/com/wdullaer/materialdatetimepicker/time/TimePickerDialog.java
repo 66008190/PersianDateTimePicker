@@ -274,13 +274,6 @@ public class TimePickerDialog extends AppCompatDialogFragment implements
         mAccentColor = Color.parseColor(color);
     }
 
-    /**
-     * Set the accent color of this dialog
-     * @param color the accent color you want
-     */
-    public void setAccentColor(@ColorInt int color) {
-        mAccentColor = Color.argb(255, Color.red(color), Color.green(color), Color.blue(color));
-    }
 
     /**
      * Set the text color of the OK button
