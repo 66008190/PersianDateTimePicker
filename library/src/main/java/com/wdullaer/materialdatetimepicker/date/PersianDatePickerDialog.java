@@ -173,6 +173,12 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public String mYearPickerDescription;
     public String mSelectYear;
 
+    private boolean isRangeDatePicker = false;
+    PersianCalendar mRangeDateStart = null;
+    PersianCalendar mRangeDateFinish = null;
+
+    boolean isUeserTapped=false;
+
     /**
      * The callback used to indicate the user is done filling in the date.
      */
@@ -312,7 +318,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         outState.putString(KEY_OK_STRING, mOkString);
         outState.putString(KEY_TITLE_STRING, mTitleString);
         if (mOkColor != null) outState.putInt(KEY_OK_COLOR, mOkColor);
-        if (mOkBackgroundColor != null) outState.putInt(KEY_OK_BACKGROUND_COLOR, mOkBackgroundColor);
+        if (mOkBackgroundColor != null)
+            outState.putInt(KEY_OK_BACKGROUND_COLOR, mOkBackgroundColor);
 
         if (mStartDateColor != null) outState.putInt(KEY_START_COLOR, mStartDateColor);
         if (mFinishDateColor != null) outState.putInt(KEY_FINISH_COLOR, mFinishDateColor);
@@ -465,8 +472,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         if (mOkColor == null) {
             mOkColor = R.color.mdtp_white;
         }
-        if(mOkBackgroundColor==null){
-            mOkBackgroundColor=mAccentColor;
+        if (mOkBackgroundColor == null) {
+            mOkBackgroundColor = mAccentColor;
         }
         okButton.setTextColor(mOkColor);
         //okButton.setBackgroundColor(mOkBackgroundColor);
@@ -557,7 +564,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     private void updateDisplay(boolean announce) {
 
         //mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mCalendar.getPersianMonthName()) + " " + PersianNumberUtils.toFarsi(mCalendar.getPersianDay()));
-        mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mCalendar.getPersianShortDatePersianFormat()) +" - "+PersianNumberUtils.toFarsi(mCalendar.getPersianShortDatePersianFormat()));
+        mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mCalendar.getPersianShortDatePersianFormat()) + " - " + PersianNumberUtils.toFarsi(mCalendar.getPersianShortDatePersianFormat()));
 
         // Accessibility.
         long millis = mCalendar.getTimeInMillis();
@@ -571,6 +578,84 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             String fullDateText = DateUtils.formatDateTime(getActivity(), millis, flags);
             Utils.tryAccessibilityAnnounce(mAnimator, fullDateText);
         }
+    }
+
+
+    public void setEnableRangePicker() {
+
+        isRangeDatePicker = true;
+        mRangeDateStart = null;
+        mRangeDateFinish = null;
+
+    }
+
+    /**
+     * @return   true if Enable DateRangePicker
+     */
+    @Override
+    public boolean isRangDatePickerEnable() {
+        return isRangeDatePicker;
+    }
+
+    @Override
+    public PersianCalendar getRangeDatePickerStartDate() {
+        return mRangeDateStart;
+    }
+
+    @Override
+    public void setRangeDatePickerStartDate(int year, int month, int mSelectedDay) {
+        PersianCalendar p = new PersianCalendar();
+        p.setPersianDate(year, month, mSelectedDay);
+        mRangeDateStart = p;
+    }
+
+    @Override
+    public PersianCalendar getRangeDatePickerFinishDate() {
+        return mRangeDateFinish;
+    }
+
+    @Override
+    public void setRangeDatePickerFinishDate(int year, int month, int mSelectedDay) {
+        PersianCalendar p = new PersianCalendar();
+        p.setPersianDate(year, month, mSelectedDay);
+        mRangeDateFinish = p;
+    }
+
+    @Override
+    public boolean getRangeDatePickerFinishIsEqualWith(int year, int month, int mSelectedDay) {
+
+        PersianCalendar temp = new PersianCalendar();
+        temp.setPersianDate(year, month, mSelectedDay);
+
+        return mRangeDateFinish.equals(temp);
+    }
+
+    @Override
+    public boolean getRangeDatePickerStartIsEqualWith(int year, int month, int mSelectedDay) {
+        PersianCalendar temp = new PersianCalendar();
+        temp.setPersianDate(year, month, mSelectedDay);
+
+        return mRangeDateStart.equals(temp);
+    }
+
+    @Override
+    public void clearRangeDatePickerFinishDate() {
+        mRangeDateFinish=null;
+    }
+
+    @Override
+    public void clearRangeDatePickerStartDate() {
+        mRangeDateStart=null;
+    }
+
+    @Override
+    public boolean isUserTapedOnDay() {
+        return isUeserTapped;
+    }
+
+    @Override
+    public void setUserTapedOnDay(boolean state) {
+         isUeserTapped=state;
     }
 
     /**
@@ -880,11 +965,11 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     public void setDisabledDaysBeforeToday() {
 
-        PersianCalendar today=new PersianCalendar();
-        PersianCalendar startDay=new PersianCalendar();
-        startDay.setPersianDate(getMinYear(),0,0);
+        PersianCalendar today = new PersianCalendar();
+        PersianCalendar startDay = new PersianCalendar();
+        startDay.setPersianDate(getMinYear(), 0, 0);
 
-        this.setDisabledDays(PersianCalendarUtils.getDatesBetween(today,startDay));
+        this.setDisabledDays(PersianCalendarUtils.getDatesBetween(today, startDay));
     }
 
     /**
@@ -906,7 +991,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public PersianCalendar[] getSelectableDays() {
         return mDefaultLimiter.getSelectableDays();
     }
-
 
 
     /**
@@ -998,6 +1082,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         return mScrollOrientation;
     }
 
+
     /**
      * Set which timezone the picker should use
      * <p>
@@ -1066,7 +1151,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         tryVibrate();
         if (v.getId() == R.id.mdtp_date_picker_month_and_day) {
             setCurrentView(MONTH_AND_DAY_VIEW);
-        }else if(v.getId() == R.id.mdtp_date_picker_close){
+        } else if (v.getId() == R.id.mdtp_date_picker_close) {
             dismiss();
         }
     }

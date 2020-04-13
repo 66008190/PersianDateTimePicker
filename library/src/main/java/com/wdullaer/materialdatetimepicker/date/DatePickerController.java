@@ -73,4 +73,26 @@ public interface DatePickerController {
     PersianDatePickerDialog.Version getVersion();
 
     PersianDatePickerDialog.ScrollOrientation getScrollOrientation();
+
+    boolean isRangDatePickerEnable();
+
+    PersianCalendar getRangeDatePickerStartDate();
+
+    void setRangeDatePickerStartDate(int year, int month, int mSelectedDay);
+
+    PersianCalendar getRangeDatePickerFinishDate();
+
+    void setRangeDatePickerFinishDate(int year, int month, int mSelectedDay);
+
+    boolean getRangeDatePickerStartIsEqualWith(int year, int month, int mSelectedDay);
+
+    boolean getRangeDatePickerFinishIsEqualWith(int year, int month, int mSelectedDay);
+
+    void clearRangeDatePickerFinishDate();
+
+    void clearRangeDatePickerStartDate();
+
+    boolean isUserTapedOnDay();
+
+    void setUserTapedOnDay(boolean b);
 }

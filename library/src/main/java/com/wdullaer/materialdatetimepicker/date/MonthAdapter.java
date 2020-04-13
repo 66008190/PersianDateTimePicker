@@ -17,8 +17,10 @@
 package com.wdullaer.materialdatetimepicker.date;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.ViewGroup;
 import android.widget.AbsListView.LayoutParams;
 
@@ -116,7 +118,7 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
     public MonthAdapter(DatePickerController controller) {
         mController = controller;
         init();
-        setSelectedDay(mController.getSelectedDay());
+            setSelectedDay(mController.getSelectedDay());
         setHasStableIds(true);
     }
 
@@ -156,7 +158,8 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
         return new MonthViewHolder(v);
     }
 
-    @Override public void onBindViewHolder(@NonNull MonthViewHolder holder, int position) {
+    @Override
+    public void onBindViewHolder(@NonNull MonthViewHolder holder, int position) {
         holder.bind(position, mController, mSelectedDay);
     }
 
@@ -165,10 +168,11 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
         return position;
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
         PersianCalendar endDate = mController.getEndDate();
         PersianCalendar startDate = mController.getStartDate();
-        int endMonth = endDate.getPersianYear()* MONTHS_IN_YEAR + endDate.getPersianMonth();
+        int endMonth = endDate.getPersianYear() * MONTHS_IN_YEAR + endDate.getPersianMonth();
         int startMonth = startDate.getPersianYear() * MONTHS_IN_YEAR + startDate.getPersianMonth();
         return endMonth - startMonth + 1;
     }
@@ -188,6 +192,14 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
      * @param day The day that was tapped
      */
     protected void onDayTapped(CalendarDay day) {
+
+        if (mController.getRangeDatePickerFinishDate() != null && mController.getRangeDatePickerStartDate() != null) {
+            mController.clearRangeDatePickerFinishDate();
+            mController.clearRangeDatePickerStartDate();
+        }
+
+        mController.setUserTapedOnDay(true);
+
         mController.tryVibrate();
         mController.onDayOfMonthSelected(day.year, day.month, day.day);
         setSelectedDay(day);

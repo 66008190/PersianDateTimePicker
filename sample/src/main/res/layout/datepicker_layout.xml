@@ -21,6 +21,12 @@
             android:text="@string/pick_date"/>
 
         <CheckBox
+            android:id="@+id/date_range_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_range_picker" />
+
+        <CheckBox
             android:id="@+id/mode_dark_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,13 +73,6 @@
             android:checked="false"/>
 
         <CheckBox
-            android:id="@+id/limit_dates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/limit_dates"
-            android:checked="false"/>
-
-        <CheckBox
             android:id="@+id/highlight_dates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,6 +84,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/highlight_days_between_two_date"
+            android:checked="false"/>
+
+        <CheckBox
+            android:id="@+id/limit_dates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/limit_dates"
             android:checked="false"/>
 
     </LinearLayout>

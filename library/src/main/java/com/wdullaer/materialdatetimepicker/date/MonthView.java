@@ -87,6 +87,7 @@ public abstract class MonthView extends View {
     protected Paint mMonthNumPaint;
     protected Paint mMonthTitlePaint;
     protected Paint mSelectedCirclePaint;
+    protected Paint mSelectedBorderCirclePaint;
     protected Paint mMonthDayLabelPaint;
     protected Paint mSelectedDaysBetweenTwoDates;
 
@@ -272,6 +273,14 @@ public abstract class MonthView extends View {
         mSelectedCirclePaint.setTextAlign(Align.CENTER);
         mSelectedCirclePaint.setStyle(Style.FILL);
         mSelectedCirclePaint.setAlpha(SELECTED_CIRCLE_ALPHA);
+
+        mSelectedBorderCirclePaint = new Paint();
+        mSelectedBorderCirclePaint.setFakeBoldText(true);
+        mSelectedBorderCirclePaint.setAntiAlias(true);
+        mSelectedBorderCirclePaint.setColor(mStartDayColor);
+        mSelectedBorderCirclePaint.setTextAlign(Align.CENTER);
+        mSelectedBorderCirclePaint.setStyle(Style.STROKE);
+        mSelectedBorderCirclePaint.setAlpha(SELECTED_CIRCLE_ALPHA);
 
         mSelectedDaysBetweenTwoDates=new Paint();
         mSelectedDaysBetweenTwoDates.setAntiAlias(true);

@@ -35,5 +35,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="highlight_days_between_two_date">highlight days between two date</string>
+    <string name="date_range_picker">Date Range Picker</string>
+
 
 </resources>
