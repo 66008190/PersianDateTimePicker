@@ -109,6 +109,11 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public static final String KEY_START_COLOR = "start_color";
     public static final String KEY_FINISH_COLOR = "finish_color";
 
+    public static final String KEY_RANGE_DATE_PICKER = "range_date_picker";
+    public static final String KEY_RANGE_DATE_PICKER_START = "range_date_picker_start";
+    public static final String KEY_RANGE_DATE_PICKER_FINITSH = "range_date_picker_finish";
+    public static final String KEY_USER_TAPPED = "user_tapped";
+
 
     public static final int ANIMATION_DURATION = 300;
     public static final int ANIMATION_DELAY = 500;
@@ -147,7 +152,11 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public int mDefaultView = MONTH_AND_DAY_VIEW;
     public int mOkResid = R.string.mdtp_ok;
     public int mTitleResid = R.string.mdtp_title;
+    public int mDateRangePickerStartHintResId = R.string.mdtp_start_datel;
+    public int mDateRangePickerFinishHintResId = R.string.mdtp_finish_date;
 
+    public String mDateRangePickerStartHintString;
+    public String mDateRangePickerFinishHintString;
     public String mOkString;
     public String mTitleString;
     public Integer mOkColor = null;
@@ -177,7 +186,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     PersianCalendar mRangeDateStart = null;
     PersianCalendar mRangeDateFinish = null;
 
-    boolean isUeserTapped=false;
+    boolean isUeserTapped = false;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -330,6 +339,13 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         outState.putSerializable(KEY_TIMEZONE, mTimezone);
         outState.putParcelable(KEY_DATERANGELIMITER, mDateRangeLimiter);
         outState.putSerializable(KEY_LOCALE, mLocale);
+
+        outState.putBoolean(KEY_RANGE_DATE_PICKER, isRangeDatePicker);
+        if (mRangeDateStart != null)
+            outState.putSerializable(KEY_RANGE_DATE_PICKER_START, mRangeDateStart);
+        if (mRangeDateFinish != null)
+            outState.putSerializable(KEY_RANGE_DATE_PICKER_FINITSH, mRangeDateFinish);
+        outState.putBoolean(KEY_USER_TAPPED, isUeserTapped);
     }
 
     @Override
@@ -382,6 +398,12 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             mScrollOrientation = (ScrollOrientation) savedInstanceState.getSerializable(KEY_SCROLL_ORIENTATION);
             mTimezone = (TimeZone) savedInstanceState.getSerializable(KEY_TIMEZONE);
             mDateRangeLimiter = savedInstanceState.getParcelable(KEY_DATERANGELIMITER);
+
+            isRangeDatePicker = savedInstanceState.getBoolean(KEY_RANGE_DATE_PICKER);
+            mRangeDateStart = (PersianCalendar) savedInstanceState.getSerializable(KEY_RANGE_DATE_PICKER_START);
+            mRangeDateFinish = (PersianCalendar) savedInstanceState.getSerializable(KEY_RANGE_DATE_PICKER_FINITSH);
+
+            isUeserTapped = savedInstanceState.getBoolean(KEY_USER_TAPPED);
 
             /*
             We need to update some variables when setting the locale, so use the setter rather
@@ -563,8 +585,28 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     private void updateDisplay(boolean announce) {
 
-        //mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mCalendar.getPersianMonthName()) + " " + PersianNumberUtils.toFarsi(mCalendar.getPersianDay()));
-        mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mCalendar.getPersianShortDatePersianFormat()) + " - " + PersianNumberUtils.toFarsi(mCalendar.getPersianShortDatePersianFormat()));
+        if (isRangeDatePicker) {
+            if (mRangeDateStart == null && mRangeDateFinish == null) {
+
+                mSelectedDateTextView.setText(getDateRangePickerStartHintString());
+            } else if (mRangeDateFinish == null) {
+                mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mRangeDateStart.getPersianShortDatePersianFormat()
+                        + " - " +
+                        getDateRangePickerFinishHintString()
+                ));
+            } else {
+                mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mRangeDateStart.getPersianShortDatePersianFormat()
+                        + " - " +
+                        mRangeDateFinish.getPersianShortDatePersianFormat()
+                ));
+
+//                this.highlightedDays.clear();
+//                setHighlightedDays(PersianCalendarUtils.getDatesBetween(mRangeDateFinish,mRangeDateStart));
+            }
+        } else {
+            mSelectedDateTextView.setText(PersianNumberUtils.toFarsi(mCalendar.getPersianShortDatePersianFormat()));
+
+        }
 
         // Accessibility.
         long millis = mCalendar.getTimeInMillis();
@@ -590,7 +632,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     }
 
     /**
-     * @return   true if Enable DateRangePicker
+     * @return true if Enable DateRangePicker
      */
     @Override
     public boolean isRangDatePickerEnable() {
@@ -640,12 +682,12 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     @Override
     public void clearRangeDatePickerFinishDate() {
-        mRangeDateFinish=null;
+        mRangeDateFinish = null;
     }
 
     @Override
     public void clearRangeDatePickerStartDate() {
-        mRangeDateStart=null;
+        mRangeDateStart = null;
     }
 
     @Override
@@ -655,7 +697,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     @Override
     public void setUserTapedOnDay(boolean state) {
-         isUeserTapped=state;
+        isUeserTapped = state;
     }
 
     /**
@@ -885,6 +927,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      */
     @SuppressWarnings("unused")
     public void setHighlightedDays(PersianCalendar[] highlightedDays) {
+        this.highlightedDays.clear();
         for (PersianCalendar highlightedDay : highlightedDays) {
             this.highlightedDays.add(Utils.trimToMidnight((PersianCalendar) highlightedDay.clone()));
         }
@@ -892,6 +935,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     }
 
     public void setHighlightedDays(List<PersianCalendar> highlightedDays) {
+        this.highlightedDays.clear();
         for (PersianCalendar highlightedDay : highlightedDays) {
             this.highlightedDays.add(highlightedDay);
         }
@@ -1022,6 +1066,30 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public void setOkText(@StringRes int okResid) {
         mOkString = null;
         mOkResid = okResid;
+    }
+
+    public void setDateRangePickerStartHintString(String mDateRangePickerStartHintString) {
+        this.mDateRangePickerStartHintString = mDateRangePickerStartHintString;
+    }
+
+    public void setDateRangePickerFinishHintString(String mDateRangePickerFinishHintString) {
+        this.mDateRangePickerFinishHintString = mDateRangePickerFinishHintString;
+    }
+
+    public void setDateRangePickerStartHintString(@StringRes int resid) {
+        this.mDateRangePickerStartHintResId =resid;
+    }
+
+    public void setDateRangePickerFinishHintString(@StringRes int resid) {
+        this.mDateRangePickerFinishHintResId =  resid;
+    }
+
+    public String getDateRangePickerStartHintString() {
+        return (mDateRangePickerStartHintString==null)? getString(mDateRangePickerStartHintResId):mDateRangePickerStartHintString;
+    }
+
+    public String getDateRangePickerFinishHintString() {
+        return (mDateRangePickerFinishHintString==null)? getString(mDateRangePickerFinishHintResId):mDateRangePickerFinishHintString;
     }
 
     /**
@@ -1169,6 +1237,10 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     @Override
     public void onDayOfMonthSelected(int year, int month, int day) {
         mCalendar.setPersianDate(year, month, day);
+
+        if(mRangeDateStart!=null && mRangeDateFinish!=null)
+        setHighlightedDays(PersianCalendarUtils.getDatesBetween(mRangeDateFinish,mRangeDateStart));
+
         updatePickers();
         updateDisplay(true);
         if (mAutoDismiss) {

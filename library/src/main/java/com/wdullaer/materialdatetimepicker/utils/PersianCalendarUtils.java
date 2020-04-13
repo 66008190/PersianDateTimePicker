@@ -109,21 +109,21 @@ public class PersianCalendarUtils {
      * @return PersianCalender Array of Dates
      */
 
-    public static List<PersianCalendar> getDatesBetween(PersianCalendar startDate, PersianCalendar endDate){
+    public static List<PersianCalendar> getDatesBetween(PersianCalendar finishDate, PersianCalendar startDate){
 
         List<PersianCalendar> array=new ArrayList<>();
         PersianCalendar temp;
 
-        Date end=endDate.getDateWithZeroTime();
+        //Date end=finishDate.getDateWithZeroTime();
 
-        while (startDate.getDateWithZeroTime().after(end)) {
+        while (finishDate.after(startDate)) {
             temp=new PersianCalendar();
             temp.setPersianDate(startDate.getPersianYear(),startDate.getPersianMonth(),startDate.getPersianDay());
 
             Log.v("sellectedDate",temp.getPersianLongDate());
             array.add(temp);
 
-            startDate.setPersianDate(startDate.getPersianYear(),startDate.getPersianMonth(),startDate.getPersianDay()-1);
+            startDate.setPersianDate(startDate.getPersianYear(),startDate.getPersianMonth(),startDate.getPersianDay()+1);
 
         }
 

@@ -37,16 +37,6 @@ public class SimpleMonthView extends MonthView {
 
                 canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3), DAY_SELECTED_CIRCLE_SIZE,
                         mSelectedCirclePaint);
-            } else {
-                if (mController.isUserTapedOnDay())
-                    if (mController.getRangeDatePickerStartDate() == null) {
-                        mController.setRangeDatePickerStartDate(year, month, mSelectedDay);
-
-                    } else if (mController.getRangeDatePickerFinishDate() == null && !mController.getRangeDatePickerStartIsEqualWith(year, month, mSelectedDay)) {
-
-                        mController.setRangeDatePickerFinishDate(year, month, mSelectedDay);
-
-                    }
             }
         }
 

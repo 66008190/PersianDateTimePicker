@@ -123,7 +123,7 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                 dpd.setStartDateColor("#459EFA");
                 dpd.setFinishDateColor("#4341FA");
                 dpd.setHighlightColor("#DAECFE");
-                dpd.setHighlightedDays(PersianCalendarUtils.getDatesBetween(date1, date2));
+                dpd.setHighlightedDays(PersianCalendarUtils.getDatesBetween(date2, date1));
             }
             if (limitSelectableDays.isChecked()) {
 

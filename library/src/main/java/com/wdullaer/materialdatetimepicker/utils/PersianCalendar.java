@@ -172,7 +172,7 @@ public class PersianCalendar extends GregorianCalendar {
     public String getPersianLongDate() {
         return getPersianWeekDayName() + " "
                 + this.persianDay + " "
-                + getPersianMonthName()+ " "+this.persianYear;
+                + getPersianMonthName() + " " + this.persianYear;
 
     }
 
@@ -206,12 +206,12 @@ public class PersianCalendar extends GregorianCalendar {
      *
      * @param field
      * @param amount <pre>
-     *                                                                                                                                Usage:
-     *                                                                                                                                {@code
-     *                                                                                                                                addPersianDate(Calendar.YEAR, 2);
-     *                                                                                                                                addPersianDate(Calendar.MONTH, 3);
-     *                                                                                                                                }
-     *                                                                                                                               </pre>
+     *                                                                                                                                                                          Usage:
+     *                                                                                                                                                                          {@code
+     *                                                                                                                                                                          addPersianDate(Calendar.YEAR, 2);
+     *                                                                                                                                                                          addPersianDate(Calendar.MONTH, 3);
+     *                                                                                                                                                                          }
+     *                                                                                                                                                                         </pre>
      *               <p>
      *               u can also use Calendar.HOUR_OF_DAY,Calendar.MINUTE,
      *               Calendar.SECOND, Calendar.MILLISECOND etc
@@ -293,11 +293,12 @@ public class PersianCalendar extends GregorianCalendar {
 
     }
 
-    public Date getDateWithZeroTime(){
+
+    public Date getDateWithZeroTime() {
 
         Calendar calendar = Calendar.getInstance();
 
-        calendar.setTime( this.getTime() );
+        calendar.setTime(this.getTime());
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -309,7 +310,7 @@ public class PersianCalendar extends GregorianCalendar {
 
     @Override
     public int hashCode() {
-        return this.persianYear*this.persianMonth*this.persianDay;
+        return this.persianYear * this.persianMonth * this.persianDay;
     }
 
     @Override

@@ -118,7 +118,7 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
     public MonthAdapter(DatePickerController controller) {
         mController = controller;
         init();
-            setSelectedDay(mController.getSelectedDay());
+        setSelectedDay(mController.getSelectedDay());
         setHasStableIds(true);
     }
 
@@ -196,6 +196,15 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
         if (mController.getRangeDatePickerFinishDate() != null && mController.getRangeDatePickerStartDate() != null) {
             mController.clearRangeDatePickerFinishDate();
             mController.clearRangeDatePickerStartDate();
+        } else {
+
+            if (mController.getRangeDatePickerStartDate() == null) {
+                mController.setRangeDatePickerStartDate(day.year, day.month, day.day);
+
+            } else if (mController.getRangeDatePickerFinishDate() == null && !mController.getRangeDatePickerStartIsEqualWith(day.year, day.month, day.day)) {
+
+                mController.setRangeDatePickerFinishDate(day.year, day.month, day.day);
+            }
         }
 
         mController.setUserTapedOnDay(true);

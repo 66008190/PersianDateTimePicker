@@ -92,4 +92,6 @@
 
     <string name="mdtp_am">am</string>
     <string name="mdtp_pm">pm</string>
+    <string name="mdtp_start_datel">تاریخ ورود را انتخاب کنید</string>
+    <string name="mdtp_finish_date">تاریخ خروج را انتخاب کنید</string>
 </resources>
