@@ -2,6 +2,8 @@ package com.wdullaer.datetimepickerexample;
 
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
+import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -17,6 +19,15 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        PersianCalendar a=new PersianCalendar();
+//        PersianCalendar b=new PersianCalendar();
+//
+//        a.setPersianDate(1399,0,12);
+//        b.setPersianDate(1399,0,13);
+//        b.setPersianDate(1399,0,14);
+//                a.setPersianDate(1399,0,15);
+//        a.setPersianDate(1399,0,16);
 
         adapter = new PickerAdapter(getSupportFragmentManager());
         viewPager = findViewById(R.id.pager);

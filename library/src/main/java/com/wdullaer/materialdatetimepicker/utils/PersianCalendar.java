@@ -19,6 +19,8 @@
 package com.wdullaer.materialdatetimepicker.utils;
 
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,6 +48,12 @@ public class PersianCalendar extends GregorianCalendar {
     // on this delimiter
     private String delimiter = "/";
 
+    // Helper Functions
+    private static int gregorianDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31,
+            31, 30, 31, 30, 31};
+    private static int persianDaysInMonth[] = {31, 31, 31, 31, 31, 31, 30, 30,
+            30, 30, 30, 29};
+
     private long convertToMilis(long julianDate) {
         return PersianCalendarConstants.MILLIS_JULIAN_EPOCH
                 + julianDate
@@ -66,6 +74,11 @@ public class PersianCalendar extends GregorianCalendar {
      */
     public PersianCalendar() {
         super(TimeZone.getDefault(), Locale.getDefault());
+
+//        if(this.isPersianLeapYear()){
+//             gregorianDaysInMonth[1] = 29;
+//             persianDaysInMonth[11]=30;
+//        }
     }
 
     public static PersianCalendar getInstance() {
@@ -80,7 +93,13 @@ public class PersianCalendar extends GregorianCalendar {
      * fields(persianYear, persianMonth, persianDay)
      */
     protected void calculatePersianDate() {
-        YearMonthDay persianYearMonthDay = PersianCalendar.gregorianToJalali(new YearMonthDay(this.get(PersianCalendar.YEAR), this.get(PersianCalendar.MONTH), this.get(PersianCalendar.DAY_OF_MONTH)));
+        Log.v("selected month1:",String.valueOf(this.get(PersianCalendar.MONTH)));
+
+        YearMonthDay persianYearMonthDay = PersianCalendar.gregorianToJalali(
+                new YearMonthDay(this.get(PersianCalendar.YEAR), this.get(PersianCalendar.MONTH), this.get(PersianCalendar.DAY_OF_MONTH))
+        );
+        Log.v("selected date:",this.get(PersianCalendar.YEAR)+"/"+this.get(PersianCalendar.MONTH)+"/"+this.get(PersianCalendar.DAY_OF_MONTH));
+
         this.persianYear = persianYearMonthDay.year;
         this.persianMonth = persianYearMonthDay.month;
         this.persianDay = persianYearMonthDay.day;
@@ -105,13 +124,25 @@ public class PersianCalendar extends GregorianCalendar {
      * @param persianDay
      */
     public void setPersianDate(int persianYear, int persianMonth, int persianDay) {
+
         persianMonth += 1; // TODO
         this.persianYear = persianYear;
         this.persianMonth = persianMonth;
         this.persianDay = persianDay;
-        YearMonthDay gregorianYearMonthDay = persianToGregorian(new YearMonthDay(persianYear, this.persianMonth - 1, persianDay));
+
+        Log.v("selectedDate F-1:",this.persianYear+"/"+this.persianMonth+"/"+this.persianDay);
+
+        YearMonthDay gregorianYearMonthDay = persianToGregorian(new YearMonthDay(persianYear, this.persianMonth-1, persianDay));
+        Log.v("selectedDate M-2:",String.valueOf(gregorianYearMonthDay.getYear()+"/"+gregorianYearMonthDay.getMonth()+"/"+gregorianYearMonthDay.getDay()));
         this.set(gregorianYearMonthDay.year, gregorianYearMonthDay.month, gregorianYearMonthDay.day);
+        Log.v("selectedDate F2-3:",this.persianYear+"/"+this.persianMonth+"/"+this.persianDay);
+        Log.v("selectedDate:","--------------------");
+        calculatePersianDate();
     }
+
+//    public void setPersianDay(int day){
+//        this.persianDay=day;
+//    }
 
     public int getPersianYear() {
         // calculatePersianDate();
@@ -315,8 +346,9 @@ public class PersianCalendar extends GregorianCalendar {
 
     @Override
     public void set(int field, int value) {
+        Log.v("selected:",field+"  -  "+value);
         super.set(field, value);
-        calculatePersianDate();
+      //  calculatePersianDate();
     }
 
     @Override
@@ -330,12 +362,6 @@ public class PersianCalendar extends GregorianCalendar {
         super.setTimeZone(zone);
         calculatePersianDate();
     }
-
-    // Helper Functions
-    private static int gregorianDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31,
-            31, 30, 31, 30, 31};
-    private static int persianDaysInMonth[] = {31, 31, 31, 31, 31, 31, 30, 30,
-            30, 30, 30, 29};
 
     private static YearMonthDay gregorianToJalali(YearMonthDay gregorian) {
 
@@ -391,6 +417,7 @@ public class PersianCalendar extends GregorianCalendar {
 
 
     private static YearMonthDay persianToGregorian(YearMonthDay persian) {
+
         if (persian.getMonth() > 11 || persian.getMonth() < -11) {
             throw new IllegalArgumentException();
         }

@@ -609,17 +609,17 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         }
 
         // Accessibility.
-        long millis = mCalendar.getTimeInMillis();
-        mAnimator.setDateMillis(millis);
-        int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_YEAR;
-        String monthAndDayText = DateUtils.formatDateTime(getActivity(), millis, flags);
-        mMonthAndDayView.setContentDescription(monthAndDayText);
+//        long millis = mCalendar.getTimeInMillis();
+//        mAnimator.setDateMillis(millis);
+//        int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_YEAR;
+//        String monthAndDayText = DateUtils.formatDateTime(getActivity(), millis, flags);
+//        mMonthAndDayView.setContentDescription(monthAndDayText);
 
-        if (announce) {
-            flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR;
-            String fullDateText = DateUtils.formatDateTime(getActivity(), millis, flags);
-            Utils.tryAccessibilityAnnounce(mAnimator, fullDateText);
-        }
+//        if (announce) {
+//            flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR;
+//            String fullDateText = DateUtils.formatDateTime(getActivity(), millis, flags);
+//            Utils.tryAccessibilityAnnounce(mAnimator, fullDateText);
+//        }
     }
 
 
@@ -934,11 +934,14 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         if (mDayPickerView != null) mDayPickerView.onChange();
     }
 
-    public void setHighlightedDays(List<PersianCalendar> highlightedDays) {
+    public void setHighlightedDays(HashSet<PersianCalendar> days) {
         this.highlightedDays.clear();
-        for (PersianCalendar highlightedDay : highlightedDays) {
-            this.highlightedDays.add(highlightedDay);
-        }
+
+        this.highlightedDays=days;
+
+//        for (PersianCalendar highlightedDay : highlightedDays) {
+//            this.highlightedDays.add(highlightedDay);
+//        }
         if (mDayPickerView != null) mDayPickerView.onChange();
     }
 
@@ -974,8 +977,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         if (mDayPickerView != null) mDayPickerView.onChange();
     }
 
-    public void setDisabledDays(List<PersianCalendar> disabledDays) {
-        this.disabledDays.addAll(disabledDays);
+    public void setDisabledDays(HashSet<PersianCalendar> disabledDays) {
+        this.disabledDays=disabledDays;
 
         if (mDayPickerView != null) mDayPickerView.onChange();
     }

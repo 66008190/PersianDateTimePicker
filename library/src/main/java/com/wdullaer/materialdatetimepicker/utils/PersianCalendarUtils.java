@@ -35,6 +35,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -109,21 +110,20 @@ public class PersianCalendarUtils {
      * @return PersianCalender Array of Dates
      */
 
-    public static List<PersianCalendar> getDatesBetween(PersianCalendar finishDate, PersianCalendar startDate){
+    public static HashSet<PersianCalendar> getDatesBetween(PersianCalendar finishDate, PersianCalendar startDate){
 
-        List<PersianCalendar> array=new ArrayList<>();
-        PersianCalendar temp;
+        HashSet<PersianCalendar> array=new HashSet<>();
+        PersianCalendar start=startDate;
+        PersianCalendar temp=new PersianCalendar();
 
         //Date end=finishDate.getDateWithZeroTime();
 
-        while (finishDate.after(startDate)) {
-            temp=new PersianCalendar();
-            temp.setPersianDate(startDate.getPersianYear(),startDate.getPersianMonth(),startDate.getPersianDay());
+        while (finishDate.after(start)) {
 
-            Log.v("sellectedDate",temp.getPersianLongDate());
-            array.add(temp);
-
-            startDate.setPersianDate(startDate.getPersianYear(),startDate.getPersianMonth(),startDate.getPersianDay()+1);
+            array.add(start);
+            temp=start;
+            start=new PersianCalendar();
+            start.setPersianDate(temp.getPersianYear(),temp.getPersianMonth(),temp.getPersianDay()+1);
 
         }
 

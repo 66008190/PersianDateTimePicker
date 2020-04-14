@@ -40,6 +40,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.wdullaer.materialdatetimepicker.R;
+import com.wdullaer.materialdatetimepicker.Utils;
 import com.wdullaer.materialdatetimepicker.date.MonthAdapter.CalendarDay;
 import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
 import com.wdullaer.materialdatetimepicker.utils.PersianNumberUtils;
@@ -349,7 +350,7 @@ public abstract class MonthView extends View {
             mWeekStart = Calendar.SATURDAY;
         }
 
-        mNumCells = mPersianCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        mNumCells = Utils.getDaysInMonth(mMonth,mYear);// mPersianCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         for (int i = 0; i < mNumCells; i++) {
             final int day = i + 1;
             if (sameDay(day, today)) {

@@ -41,21 +41,6 @@ public class SimpleMonthView extends MonthView {
         }
 
 
-        if (mController.isRangDatePickerEnable()) {
-
-            if (mController.getRangeDatePickerStartDate() != null && mController.getRangeDatePickerStartIsEqualWith(year, month, day)) {
-
-                canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3), DAY_SELECTED_CIRCLE_SIZE,
-                        mSelectedCirclePaint);
-            }
-            if (mController.getRangeDatePickerFinishDate() != null && mController.getRangeDatePickerFinishIsEqualWith(year, month, day)) {
-
-                canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3), DAY_SELECTED_CIRCLE_SIZE,
-                        mSelectedBorderCirclePaint);
-            }
-
-        }
-
         if (isHighlighted(year, month, day) && mSelectedDay != day) {
 //            canvas.drawCircle(x, y + MINI_DAY_NUMBER_TEXT_SIZE - DAY_HIGHLIGHT_CIRCLE_MARGIN,
 //                    DAY_HIGHLIGHT_CIRCLE_SIZE, mSelectedCirclePaint);
@@ -83,6 +68,21 @@ public class SimpleMonthView extends MonthView {
             mMonthNumPaint.setColor(mDisabledDayTextColor);
         } else {
             mMonthNumPaint.setColor(isHighlighted(year, month, day) ? mHighlightedDayTextColor : mDayTextColor);
+        }
+
+        if (mController.isRangDatePickerEnable()) {
+
+            if (mController.getRangeDatePickerStartDate() != null && mController.getRangeDatePickerStartIsEqualWith(year, month, day)) {
+
+                canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3), DAY_SELECTED_CIRCLE_SIZE,
+                        mSelectedCirclePaint);
+            }
+            if (mController.getRangeDatePickerFinishDate() != null && mController.getRangeDatePickerFinishIsEqualWith(year, month, day)) {
+
+                canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3), DAY_SELECTED_CIRCLE_SIZE,
+                        mSelectedBorderCirclePaint);
+            }
+
         }
 
         canvas.drawText(PersianNumberUtils.toFarsi(day), x, y, mMonthNumPaint); //String.format(mController.getLocale(), "%d", day)

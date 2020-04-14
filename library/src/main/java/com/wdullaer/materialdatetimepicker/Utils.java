@@ -30,6 +30,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
+import com.wdullaer.materialdatetimepicker.utils.PersianCalendarUtils;
 
 import java.util.Calendar;
 
@@ -114,6 +115,17 @@ public class Utils {
         }
         // Return the value in mdtp_accent_color
         return ContextCompat.getColor(context, R.color.mdtp_accent_color);
+    }
+
+    public static int getDaysInMonth(int month, int year) {
+        if (month < 6) {
+            return 31;
+        } else if (month < 11) {
+            return 30;
+        } else {
+            if (PersianCalendarUtils.isPersianLeapYear(year)) return 30;
+            else return 29;
+        }
     }
 
     /**
