@@ -34,7 +34,7 @@
     <color name="mdtp_date_picker_text_normal">#ff212121</color>
     <color name="mdtp_date_picker_text_highlighted">@color/mdtp_date_picker_text_normal</color>
     <color name="mdtp_date_picker_text_disabled">#ccc</color>
-    <color name="mdtp_date_picker_month_day">#767676</color>
+    <color name="mdtp_date_picker_month_day">#646464</color>
 
     <!-- DatePicker Dark Theme -->
     <color name="mdtp_date_picker_view_animator_dark_theme">@color/mdtp_light_gray</color>
@@ -62,4 +62,7 @@
     <color name="mdtp_done_text_color_dark_normal">#ffffff</color>
     <color name="mdtp_done_text_color_dark_disabled">#888888</color>
     <color name="mdtp_done_disabled_dark">#bfbfbf</color>
+
+    <color name="color_f5">#f5f5f5</color>
+    <color name="color_3c">#3c3c3c</color>
 </resources>

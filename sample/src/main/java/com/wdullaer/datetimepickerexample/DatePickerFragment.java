@@ -35,6 +35,7 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
     private CheckBox limitSelectableDays;
     private CheckBox highlightDates;
     private CheckBox highlightDays;
+
     private PersianDatePickerDialog dpd;
 
     public DatePickerFragment() {
@@ -62,15 +63,15 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
         highlightDates = view.findViewById(R.id.highlight_dates);
         highlightDays = view.findViewById(R.id.highlight_days);
 
+
         // Show a datepicker when the dateButton is clicked
         dateButton.setOnClickListener(v -> {
-            Calendar now = Calendar.getInstance();
+
             /*
             It is recommended to always create a new instance whenever you need to show a Dialog.
             The sample app is reusing them because it is useful when looking for regressions
             during testing
              */
-
             PersianCalendar persianCalendar = new PersianCalendar();
 
             if (dpd == null) {
@@ -80,14 +81,11 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                         persianCalendar.getPersianMonth(),
                         persianCalendar.getPersianDay()
                 );
-            } else {
-                dpd.initialize(
-                        DatePickerFragment.this,
-                        persianCalendar.getPersianYear(),
-                        persianCalendar.getPersianMonth(),
-                        persianCalendar.getPersianDay()
-                );
             }
+            dpd.setStartDateColor("#459efa");
+            dpd.setFinishDateColor("#f5f5f5");
+            dpd.setHighlightColor("#459efa");
+
             dpd.setYearRange(persianCalendar.getPersianYear(), persianCalendar.getPersianYear() + 1);
             dpd.setThemeDark(modeDarkDate.isChecked());
             dpd.vibrate(vibrateDate.isChecked());
@@ -95,12 +93,12 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
             dpd.showYearPickerFirst(showYearFirst.isChecked());
             dpd.setVersion(PersianDatePickerDialog.Version.VERSION_1);
 
-            if (dateRangePicker.isChecked()){
-                dpd.setEnableRangePicker();
+
+            dpd.setEnableRangePicker(dateRangePicker.isChecked());
+
+            if (modeCustomAccentDate.isChecked()) {
+                dpd.setAccentColor("#9C27B0");
             }
-                if (modeCustomAccentDate.isChecked()) {
-                    dpd.setAccentColor("#9C27B0");
-                }
             if (titleDate.isChecked()) {
                 dpd.setTitleText("DatePicker Title");
             }

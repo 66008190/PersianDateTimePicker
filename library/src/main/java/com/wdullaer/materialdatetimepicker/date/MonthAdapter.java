@@ -193,19 +193,21 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
      */
     protected void onDayTapped(CalendarDay day) {
 
-        if (mController.getRangeDatePickerFinishDate() != null && mController.getRangeDatePickerStartDate() != null) {
-            mController.clearRangeDatePickerFinishDate();
-            mController.clearRangeDatePickerStartDate();
-        } else {
+        if (mController.isRangDatePickerEnable())
+            if (mController.getRangeDatePickerFinishDate() != null && mController.getRangeDatePickerStartDate() != null) {
+                mController.clearRangeDatePickerFinishDate();
+                mController.clearRangeDatePickerStartDate();
 
-            if (mController.getRangeDatePickerStartDate() == null) {
-                mController.setRangeDatePickerStartDate(day.year, day.month, day.day);
+            } else {
 
-            } else if (mController.getRangeDatePickerFinishDate() == null && !mController.getRangeDatePickerStartIsEqualWith(day.year, day.month, day.day)) {
+                if (mController.getRangeDatePickerStartDate() == null) {
+                    mController.setRangeDatePickerStartDate(day.year, day.month, day.day);
 
-                mController.setRangeDatePickerFinishDate(day.year, day.month, day.day);
+                } else if (mController.getRangeDatePickerFinishDate() == null && !mController.getRangeDatePickerStartIsEqualWith(day.year, day.month, day.day)) {
+
+                    mController.setRangeDatePickerFinishDate(day.year, day.month, day.day);
+                }
             }
-        }
 
         mController.setUserTapedOnDay(true);
 

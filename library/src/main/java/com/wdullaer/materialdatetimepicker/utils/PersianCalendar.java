@@ -198,6 +198,29 @@ public class PersianCalendar extends GregorianCalendar {
     }
 
     /**
+     * @return String Name of the day in week
+     */
+    public String getPersianWeekDayNameShortType() {
+        switch (get(DAY_OF_WEEK)) {
+            case SATURDAY:
+                return PersianCalendarConstants.persianWeekDaysShortType[0];
+            case SUNDAY:
+                return PersianCalendarConstants.persianWeekDaysShortType[1];
+            case MONDAY:
+                return PersianCalendarConstants.persianWeekDaysShortType[2];
+            case TUESDAY:
+                return PersianCalendarConstants.persianWeekDaysShortType[3];
+            case WEDNESDAY:
+                return PersianCalendarConstants.persianWeekDaysShortType[4];
+            case THURSDAY:
+                return PersianCalendarConstants.persianWeekDaysShortType[5];
+            default:
+                return PersianCalendarConstants.persianWeekDaysShortType[6];
+        }
+
+    }
+
+    /**
      * @return String of Persian Date ex: شنبه 01 خرداد 1361
      */
     public String getPersianLongDate() {

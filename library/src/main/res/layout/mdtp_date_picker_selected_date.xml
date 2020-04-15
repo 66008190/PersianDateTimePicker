@@ -47,7 +47,7 @@
                 android:layout_centerInParent="true"
                             android:includeFontPadding="false"
                 android:background="@android:color/transparent"
-                android:textColor="@color/mdtp_date_picker_selector"
+                android:textColor="@color/color_3c"
                 android:textSize="@dimen/mdtp_selected_date_title_size"
                 tools:text="Select Date"
                 android:clickable="false"
@@ -62,7 +62,8 @@
                 android:clickable="true"
                 android:padding="5dp"
                 android:layout_alignParentRight="true"
-                android:layout_margin="8dp"/>
+                android:layout_margin="8dp"
+                android:tint="@color/color_3c"/>
 
         </RelativeLayout>
         <TextView

@@ -57,7 +57,7 @@ import java.util.Locale;
  */
 public abstract class MonthView extends View {
 
-    protected static int DEFAULT_HEIGHT = 32;
+    protected static int DEFAULT_HEIGHT = 42;
     protected static final int DEFAULT_SELECTED_DAY = -1;
     protected static final int DEFAULT_WEEK_START = Calendar.SATURDAY;
     protected static final int DEFAULT_NUM_DAYS = 7;
@@ -65,7 +65,7 @@ public abstract class MonthView extends View {
     protected static final int MAX_NUM_ROWS = 6;
 
     private static final int SELECTED_CIRCLE_ALPHA = 255;
-    private static final int SELECTED_DAYS_ALPHA = 150;
+    private static final int SELECTED_DAYS_ALPHA = 50;
 
     protected static int DAY_SEPARATOR_WIDTH = 1;
     protected static int MINI_DAY_NUMBER_TEXT_SIZE;
@@ -170,6 +170,7 @@ public abstract class MonthView extends View {
             mMonthDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_month_day);
             mDisabledDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_disabled);
             mHighlightedDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_highlighted);
+
         }
         mSelectedDayTextColor = ContextCompat.getColor(context, R.color.mdtp_white);
         mTodayNumberColor = mController.getAccentColor();
@@ -194,13 +195,13 @@ public abstract class MonthView extends View {
         DAY_HIGHLIGHT_CIRCLE_MARGIN = res
                 .getDimensionPixelSize(R.dimen.mdtp_day_highlight_circle_margin);
 
-        if (mController.getVersion() == PersianDatePickerDialog.Version.VERSION_1) {
+        //if (mController.getVersion() == PersianDatePickerDialog.Version.VERSION_1) {
             mRowHeight = (res.getDimensionPixelOffset(R.dimen.mdtp_date_picker_view_animator_height)
                     - getMonthHeaderSize()) / MAX_NUM_ROWS;
-        } else {
-            mRowHeight = (res.getDimensionPixelOffset(R.dimen.mdtp_date_picker_view_animator_height_v2)
-                    - getMonthHeaderSize() - MONTH_DAY_LABEL_TEXT_SIZE * 2) / MAX_NUM_ROWS;
-        }
+//        } else {
+//            mRowHeight = (res.getDimensionPixelOffset(R.dimen.mdtp_date_picker_view_animator_height_v2)
+//                    - getMonthHeaderSize() - MONTH_DAY_LABEL_TEXT_SIZE * 2) / MAX_NUM_ROWS;
+//        }
 
 //        mEdgePadding = mController.getVersion() == PersianDatePickerDialog.Version.VERSION_1
 //                ? 0
@@ -259,10 +260,10 @@ public abstract class MonthView extends View {
     protected void initView() {
         mMonthTitlePaint = new Paint();
         if (mController.getVersion() == PersianDatePickerDialog.Version.VERSION_1)
-            mMonthTitlePaint.setFakeBoldText(true);
+            mMonthTitlePaint.setFakeBoldText(false);
         mMonthTitlePaint.setAntiAlias(true);
         mMonthTitlePaint.setTextSize(MONTH_LABEL_TEXT_SIZE);
-        mMonthTitlePaint.setTypeface(Typeface.create(mMonthTitleTypeface, Typeface.BOLD));
+        mMonthTitlePaint.setTypeface(Typeface.create(mMonthTitleTypeface, Typeface.NORMAL));
         mMonthTitlePaint.setColor(mDayTextColor);
         mMonthTitlePaint.setTextAlign(Align.CENTER);
         mMonthTitlePaint.setStyle(Style.FILL);
@@ -278,9 +279,9 @@ public abstract class MonthView extends View {
         mSelectedBorderCirclePaint = new Paint();
         mSelectedBorderCirclePaint.setFakeBoldText(true);
         mSelectedBorderCirclePaint.setAntiAlias(true);
-        mSelectedBorderCirclePaint.setColor(mStartDayColor);
+        mSelectedBorderCirclePaint.setColor(mFinishDayColor);
         mSelectedBorderCirclePaint.setTextAlign(Align.CENTER);
-        mSelectedBorderCirclePaint.setStyle(Style.STROKE);
+        mSelectedBorderCirclePaint.setStyle(Style.FILL);
         mSelectedBorderCirclePaint.setAlpha(SELECTED_CIRCLE_ALPHA);
 
         mSelectedDaysBetweenTwoDates=new Paint();
@@ -294,7 +295,7 @@ public abstract class MonthView extends View {
         mMonthDayLabelPaint.setAntiAlias(true);
         mMonthDayLabelPaint.setTextSize(MONTH_DAY_LABEL_TEXT_SIZE);
         mMonthDayLabelPaint.setColor(mMonthDayTextColor);
-        mMonthTitlePaint.setTypeface(Typeface.create(mDayOfWeekTypeface, Typeface.BOLD));
+        mMonthTitlePaint.setTypeface(Typeface.create(mDayOfWeekTypeface, Typeface.NORMAL));
         mMonthDayLabelPaint.setStyle(Style.FILL);
         mMonthDayLabelPaint.setTextAlign(Align.CENTER);
         mMonthDayLabelPaint.setFakeBoldText(true);
@@ -443,9 +444,8 @@ public abstract class MonthView extends View {
 
     protected void drawMonthTitle(Canvas canvas) {
         int x = mWidth / 2;
-        int y = mController.getVersion() == PersianDatePickerDialog.Version.VERSION_1
-                ? (getMonthHeaderSize() - MONTH_DAY_LABEL_TEXT_SIZE) / 2
-                : getMonthHeaderSize() / 2 - MONTH_DAY_LABEL_TEXT_SIZE;
+        int y = ((getMonthHeaderSize() - MONTH_DAY_LABEL_TEXT_SIZE) / 2);
+
         canvas.drawText(getMonthAndYearString(), x, y, mMonthTitlePaint);
     }
 
@@ -460,9 +460,9 @@ public abstract class MonthView extends View {
 
             int calendarDay = (i + mWeekStart) % mNumDays;
             mDayLabelCalendar.set(Calendar.DAY_OF_WEEK, calendarDay);
-            String localWeekDisplayName = mDayLabelCalendar.getPersianWeekDayName();
+            String localWeekDisplayName = mDayLabelCalendar.getPersianWeekDayNameShortType();
             Log.v("DayOfWeek",localWeekDisplayName);
-            String weekString = localWeekDisplayName.substring(0, 1);
+            String weekString = localWeekDisplayName;//.substring(0, 1);
             canvas.drawText(weekString, x, y, mMonthDayLabelPaint);
         }
     }

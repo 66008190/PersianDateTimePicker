@@ -59,5 +59,14 @@ public class PersianCalendarConstants {
             "\u062c\u0645\u0639\u0647" // jome
     };
 
+    public static final String[] persianWeekDaysShortType = { "شنبه", // Shanbeh
+            "۱شنبه", // Yekshanbeh
+            "۲شنبه", // Doshanbeh
+            "۳شنبه", // Sehshanbeh
+            "۴شنبه", // Chaharshanbeh
+            "۵شنبه", // Panjshanbeh
+            "جمعه" // jome
+    };
+
 
 }

@@ -127,6 +127,8 @@ public class PersianCalendarUtils {
 
         }
 
+        array.add(finishDate);
+
         return array;
     }
 

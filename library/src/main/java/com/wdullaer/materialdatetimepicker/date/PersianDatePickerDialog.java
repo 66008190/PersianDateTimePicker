@@ -488,7 +488,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             mAccentColor = Utils.getAccentColorFromThemeIfAvailable(getActivity());
         }
 
-        view.findViewById(R.id.mdtp_day_picker_selected_date_layout).setBackgroundColor(mAccentColor);
+        view.findViewById(R.id.mdtp_day_picker_selected_date_layout).setBackgroundColor(getResources().getColor(R.color.color_f5));
 
         // Buttons can have a different color
         if (mOkColor == null) {
@@ -499,6 +499,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         }
         okButton.setTextColor(mOkColor);
         //okButton.setBackgroundColor(mOkBackgroundColor);
+
+        mSelectedDateTextView.setTextColor(getStartDateColor());
 
         if (getDialog() == null) {
             view.findViewById(R.id.mdtp_done_background).setVisibility(View.GONE);
@@ -623,11 +625,12 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     }
 
 
-    public void setEnableRangePicker() {
+    public void setEnableRangePicker(Boolean state) {
 
-        isRangeDatePicker = true;
+        isRangeDatePicker = state;
         mRangeDateStart = null;
         mRangeDateFinish = null;
+        highlightedDays.clear();
 
     }
 
@@ -819,6 +822,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      *
      * @return start color
      */
+
     @Override
     public int getStartDateColor() {
         return mStartDateColor == null ? mAccentColor : mStartDateColor;
@@ -937,7 +941,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public void setHighlightedDays(HashSet<PersianCalendar> days) {
         this.highlightedDays.clear();
 
-        this.highlightedDays=days;
+        this.highlightedDays = days;
 
 //        for (PersianCalendar highlightedDay : highlightedDays) {
 //            this.highlightedDays.add(highlightedDay);
@@ -978,7 +982,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     }
 
     public void setDisabledDays(HashSet<PersianCalendar> disabledDays) {
-        this.disabledDays=disabledDays;
+        this.disabledDays = disabledDays;
 
         if (mDayPickerView != null) mDayPickerView.onChange();
     }
@@ -1080,19 +1084,19 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     }
 
     public void setDateRangePickerStartHintString(@StringRes int resid) {
-        this.mDateRangePickerStartHintResId =resid;
+        this.mDateRangePickerStartHintResId = resid;
     }
 
     public void setDateRangePickerFinishHintString(@StringRes int resid) {
-        this.mDateRangePickerFinishHintResId =  resid;
+        this.mDateRangePickerFinishHintResId = resid;
     }
 
     public String getDateRangePickerStartHintString() {
-        return (mDateRangePickerStartHintString==null)? getString(mDateRangePickerStartHintResId):mDateRangePickerStartHintString;
+        return (mDateRangePickerStartHintString == null) ? getString(mDateRangePickerStartHintResId) : mDateRangePickerStartHintString;
     }
 
     public String getDateRangePickerFinishHintString() {
-        return (mDateRangePickerFinishHintString==null)? getString(mDateRangePickerFinishHintResId):mDateRangePickerFinishHintString;
+        return (mDateRangePickerFinishHintString == null) ? getString(mDateRangePickerFinishHintResId) : mDateRangePickerFinishHintString;
     }
 
     /**
@@ -1241,8 +1245,10 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public void onDayOfMonthSelected(int year, int month, int day) {
         mCalendar.setPersianDate(year, month, day);
 
-        if(mRangeDateStart!=null && mRangeDateFinish!=null)
-        setHighlightedDays(PersianCalendarUtils.getDatesBetween(mRangeDateFinish,mRangeDateStart));
+        if (mRangeDateStart != null && mRangeDateFinish != null)
+            setHighlightedDays(PersianCalendarUtils.getDatesBetween(mRangeDateFinish, mRangeDateStart));
+        else
+            highlightedDays.clear();
 
         updatePickers();
         updateDisplay(true);

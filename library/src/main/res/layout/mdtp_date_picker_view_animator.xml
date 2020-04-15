@@ -24,5 +24,7 @@
         android:background="@android:color/transparent"
         android:gravity="center"
         android:paddingLeft="@dimen/mdtp_date_picker_view_animator_padding"
-        android:paddingRight="@dimen/mdtp_date_picker_view_animator_padding" />
+        android:paddingRight="@dimen/mdtp_date_picker_view_animator_padding"
+        android:layout_marginTop="8dp"
+        />
 </FrameLayout>

@@ -35,18 +35,28 @@ public class SimpleMonthView extends MonthView {
         if (mSelectedDay == day) {
             if (!mController.isRangDatePickerEnable()) {
 
-                canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3), DAY_SELECTED_CIRCLE_SIZE,
+                canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3) - 3, DAY_SELECTED_CIRCLE_SIZE,
                         mSelectedCirclePaint);
             }
         }
 
 
-        if (isHighlighted(year, month, day) && mSelectedDay != day) {
-//            canvas.drawCircle(x, y + MINI_DAY_NUMBER_TEXT_SIZE - DAY_HIGHLIGHT_CIRCLE_MARGIN,
-//                    DAY_HIGHLIGHT_CIRCLE_SIZE, mSelectedCirclePaint);
-            // canvas.draw(getResources().getColor(R.color.mdtp_accent_color));
-            //mMonthNumPaint.setStyle(Paint.Style.FILL);
-            canvas.drawRect(startX, startY, stopX, stopY, mSelectedDaysBetweenTwoDates);
+        if (isHighlighted(year, month, day)) {
+
+            if (mController.isRangDatePickerEnable()) {
+
+                if (mController.getRangeDatePickerStartDate() != null && mController.getRangeDatePickerStartIsEqualWith(year, month, day)) {
+
+                    canvas.drawRect(startX, startY + 8, stopX - 40, stopY - 7, mSelectedDaysBetweenTwoDates);
+                } else if (mController.getRangeDatePickerFinishDate() != null && mController.getRangeDatePickerFinishIsEqualWith(year, month, day)) {
+
+                    canvas.drawRect(startX + 40, startY + 8, stopX, stopY - 7, mSelectedDaysBetweenTwoDates);
+                }else{
+                    canvas.drawRect(startX, startY + 8, stopX, stopY - 7, mSelectedDaysBetweenTwoDates);
+                }
+            } else {
+                canvas.drawRect(startX, startY + 8, stopX, stopY - 7, mSelectedDaysBetweenTwoDates);
+            }
             mMonthNumPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         } else {
             mMonthNumPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
@@ -55,16 +65,18 @@ public class SimpleMonthView extends MonthView {
         // gray out the day number if it's outside the range.
         if (mController.isOutOfRange(year, month, day)) {
             mMonthNumPaint.setColor(mDisabledDayTextColor);
-        } else if (mController.getRangeDatePickerStartDate() != null && mController.getRangeDatePickerStartIsEqualWith(year, month, day)) {
+        } else if (mController.isRangDatePickerEnable() && mController.getRangeDatePickerStartDate() != null && mController.getRangeDatePickerStartIsEqualWith(year, month, day)) {
             mMonthNumPaint.setColor(mSelectedDayTextColor);
-        } else if (mController.getRangeDatePickerFinishDate() != null && mController.getRangeDatePickerFinishIsEqualWith(year, month, day)) {
+        } else if (mController.isRangDatePickerEnable() && mController.getRangeDatePickerFinishDate() != null && mController.getRangeDatePickerFinishIsEqualWith(year, month, day)) {
             mMonthNumPaint.setColor(mDayTextColor);
         } else if (mSelectedDay == day && !mController.isRangDatePickerEnable()) {
             mMonthNumPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
             mMonthNumPaint.setColor(mSelectedDayTextColor);
         } else if (mHasToday && mToday == day) {
             mMonthNumPaint.setColor(mTodayNumberColor);
-        } else if (isDisabledDay(year, month, day) && mSelectedDay != day) {
+        } else if (
+
+                isDisabledDay(year, month, day) && mSelectedDay != day) {
             mMonthNumPaint.setColor(mDisabledDayTextColor);
         } else {
             mMonthNumPaint.setColor(isHighlighted(year, month, day) ? mHighlightedDayTextColor : mDayTextColor);
@@ -74,12 +86,12 @@ public class SimpleMonthView extends MonthView {
 
             if (mController.getRangeDatePickerStartDate() != null && mController.getRangeDatePickerStartIsEqualWith(year, month, day)) {
 
-                canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3), DAY_SELECTED_CIRCLE_SIZE,
+                canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3) - 3, DAY_SELECTED_CIRCLE_SIZE,
                         mSelectedCirclePaint);
             }
             if (mController.getRangeDatePickerFinishDate() != null && mController.getRangeDatePickerFinishIsEqualWith(year, month, day)) {
 
-                canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3), DAY_SELECTED_CIRCLE_SIZE,
+                canvas.drawCircle(x, y - (MINI_DAY_NUMBER_TEXT_SIZE / 3) - 3, DAY_SELECTED_CIRCLE_SIZE,
                         mSelectedBorderCirclePaint);
             }
 
