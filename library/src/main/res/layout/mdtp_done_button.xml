@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2013 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,19 +13,22 @@
      limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mdtp_done_background"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="wrap_content"
     android:background="@android:color/transparent"
-    android:gravity="center_horizontal"
-    >
+    android:gravity="center_horizontal">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/mdtp_ok"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:text="@string/mdtp_ok"
-        style="@style/mdtp_ActionButton.Text"
+        android:layout_margin="16dp"
+        android:textSize="14sp"
+        android:textColor="@color/mdtp_white"
         />
 </RelativeLayout>
 

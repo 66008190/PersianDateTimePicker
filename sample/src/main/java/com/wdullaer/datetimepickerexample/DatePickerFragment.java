@@ -82,6 +82,9 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                         persianCalendar.getPersianDay()
                 );
             }
+            dpd.setOkBackgroundColor(R.color.button_color);
+            dpd.setOkColor(R.color.white);
+            //dpd.setOkDaysNumberHintText(R.string.day);
             dpd.setStartDateColor("#459efa");
             dpd.setFinishDateColor("#f5f5f5");
             dpd.setHighlightColor("#459efa");
@@ -167,6 +170,17 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
     public void onDateSet(PersianDatePickerDialog view, PersianCalendar persianCalendar) {
         String date = "You picked the following date: " +
                 +persianCalendar.getPersianYear() + "/" + persianCalendar.getPersianMonth() + "/" + persianCalendar.getPersianDay();
+        dateTextView.setText(date);
+        dpd = null;
+    }
+
+    @Override
+    public void onRangeDateSet(PersianDatePickerDialog view, PersianCalendar startPersianCalendar, PersianCalendar finishPersianCalendar) {
+        String date = "You picked the following range date: " +
+                +startPersianCalendar.getPersianYear() + "/" + startPersianCalendar.getPersianMonth() + "/" + startPersianCalendar.getPersianDay()
+                + "--" +
+                +finishPersianCalendar.getPersianYear() + "/" + finishPersianCalendar.getPersianMonth() + "/" + finishPersianCalendar.getPersianDay();
+
         dateTextView.setText(date);
         dpd = null;
     }

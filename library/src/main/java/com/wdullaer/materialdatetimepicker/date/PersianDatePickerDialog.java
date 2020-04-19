@@ -22,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -53,7 +55,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -95,6 +96,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public final String KEY_DEFAULT_VIEW = "default_view";
     public static final String KEY_TITLE = "title";
     public static final String KEY_OK_RESID = "ok_resid";
+    public static final String KEY_RANGE_PICKER_RESULT_HINT="range_picker_result_hint";
     public static final String KEY_OK_STRING = "ok_string";
     public static final String KEY_TITLE_STRING = "title_string";
     public static final String KEY_OK_COLOR = "ok_color";
@@ -151,16 +153,16 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public boolean mAutoDismiss = false;
     public int mDefaultView = MONTH_AND_DAY_VIEW;
     public int mOkResid = R.string.mdtp_ok;
+    public int mOkDaysNumberHintResid =R.string.night;
     public int mTitleResid = R.string.mdtp_title;
     public int mDateRangePickerStartHintResId = R.string.mdtp_start_datel;
     public int mDateRangePickerFinishHintResId = R.string.mdtp_finish_date;
 
     public String mDateRangePickerStartHintString;
     public String mDateRangePickerFinishHintString;
-    public String mOkString;
     public String mTitleString;
     public Integer mOkColor = null;
-    public Integer mOkBackgroundColor = null;
+    public Integer mOkBackgroundColorResId = null;
     public Integer mStartDateColor = null;
     public Integer mFinishDateColor = null;
     public Integer mHighlightColor = null;
@@ -182,11 +184,13 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public String mYearPickerDescription;
     public String mSelectYear;
 
-    private boolean isRangeDatePicker = false;
+    private boolean isRangeDatePickerEnable = false;
     PersianCalendar mRangeDateStart = null;
     PersianCalendar mRangeDateFinish = null;
 
     boolean isUeserTapped = false;
+
+    Button okButton;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -201,6 +205,9 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
          * @param dayOfMonth  The day of the month that was set.
          */
         void onDateSet(PersianDatePickerDialog view, PersianCalendar persianCalendar);
+
+        void onRangeDateSet(PersianDatePickerDialog view, PersianCalendar startPersianCalendar, PersianCalendar finishPersianCalendar);
+
     }
 
     /**
@@ -324,11 +331,11 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         outState.putInt(KEY_DEFAULT_VIEW, mDefaultView);
         outState.putString(KEY_TITLE, mTitle);
         outState.putInt(KEY_OK_RESID, mOkResid);
-        outState.putString(KEY_OK_STRING, mOkString);
+        outState.putInt(KEY_RANGE_PICKER_RESULT_HINT, mOkDaysNumberHintResid);
         outState.putString(KEY_TITLE_STRING, mTitleString);
         if (mOkColor != null) outState.putInt(KEY_OK_COLOR, mOkColor);
-        if (mOkBackgroundColor != null)
-            outState.putInt(KEY_OK_BACKGROUND_COLOR, mOkBackgroundColor);
+        if (mOkBackgroundColorResId != null)
+            outState.putInt(KEY_OK_BACKGROUND_COLOR, mOkBackgroundColorResId);
 
         if (mStartDateColor != null) outState.putInt(KEY_START_COLOR, mStartDateColor);
         if (mFinishDateColor != null) outState.putInt(KEY_FINISH_COLOR, mFinishDateColor);
@@ -340,7 +347,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         outState.putParcelable(KEY_DATERANGELIMITER, mDateRangeLimiter);
         outState.putSerializable(KEY_LOCALE, mLocale);
 
-        outState.putBoolean(KEY_RANGE_DATE_PICKER, isRangeDatePicker);
+        outState.putBoolean(KEY_RANGE_DATE_PICKER, isRangeDatePickerEnable);
         if (mRangeDateStart != null)
             outState.putSerializable(KEY_RANGE_DATE_PICKER_START, mRangeDateStart);
         if (mRangeDateFinish != null)
@@ -377,13 +384,13 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             mAutoDismiss = savedInstanceState.getBoolean(KEY_AUTO_DISMISS);
             mTitle = savedInstanceState.getString(KEY_TITLE);
             mOkResid = savedInstanceState.getInt(KEY_OK_RESID);
-            mOkString = savedInstanceState.getString(KEY_OK_STRING);
+            mOkDaysNumberHintResid=savedInstanceState.getInt(KEY_RANGE_PICKER_RESULT_HINT);
             mTitleString = savedInstanceState.getString(KEY_TITLE_STRING);
             if (savedInstanceState.containsKey(KEY_OK_COLOR))
                 mOkColor = savedInstanceState.getInt(KEY_OK_COLOR);
 
             if (savedInstanceState.containsKey(KEY_OK_BACKGROUND_COLOR))
-                mOkBackgroundColor = savedInstanceState.getInt(KEY_OK_BACKGROUND_COLOR);
+                mOkBackgroundColorResId = savedInstanceState.getInt(KEY_OK_BACKGROUND_COLOR);
 
             if (savedInstanceState.containsKey(KEY_START_COLOR))
                 mStartDateColor = savedInstanceState.getInt(KEY_START_COLOR);
@@ -399,7 +406,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             mTimezone = (TimeZone) savedInstanceState.getSerializable(KEY_TIMEZONE);
             mDateRangeLimiter = savedInstanceState.getParcelable(KEY_DATERANGELIMITER);
 
-            isRangeDatePicker = savedInstanceState.getBoolean(KEY_RANGE_DATE_PICKER);
+            isRangeDatePickerEnable = savedInstanceState.getBoolean(KEY_RANGE_DATE_PICKER);
             mRangeDateStart = (PersianCalendar) savedInstanceState.getSerializable(KEY_RANGE_DATE_PICKER_START);
             mRangeDateFinish = (PersianCalendar) savedInstanceState.getSerializable(KEY_RANGE_DATE_PICKER_FINITSH);
 
@@ -472,15 +479,15 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         animation2.setDuration(ANIMATION_DURATION);
         mAnimator.setOutAnimation(animation2);
 
-        Button okButton = view.findViewById(R.id.mdtp_ok);
+        okButton = view.findViewById(R.id.mdtp_ok);
         okButton.setOnClickListener(v -> {
             tryVibrate();
             notifyOnDateListener();
             dismiss();
         });
         okButton.setTypeface(ResourcesCompat.getFont(activity, R.font.robotomedium));
-        if (mOkString != null) okButton.setText(mOkString);
-        else okButton.setText(mOkResid);
+
+         okButton.setText(mOkResid);
 
 
         // If an accent color has not been set manually, get it from the context
@@ -494,11 +501,14 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         if (mOkColor == null) {
             mOkColor = R.color.mdtp_white;
         }
-        if (mOkBackgroundColor == null) {
-            mOkBackgroundColor = mAccentColor;
+        if (mOkBackgroundColorResId == null) {
+            mOkBackgroundColorResId = R.color.mdtp_accent_color;
         }
-        okButton.setTextColor(mOkColor);
-        //okButton.setBackgroundColor(mOkBackgroundColor);
+        okButton.setTextColor(getResources().getColor(mOkColor));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            okButton.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), mOkBackgroundColorResId));
+        }
 
         mSelectedDateTextView.setTextColor(getStartDateColor());
 
@@ -587,7 +597,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     private void updateDisplay(boolean announce) {
 
-        if (isRangeDatePicker) {
+        if (isRangeDatePickerEnable) {
             if (mRangeDateStart == null && mRangeDateFinish == null) {
 
                 mSelectedDateTextView.setText(getDateRangePickerStartHintString());
@@ -627,7 +637,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     public void setEnableRangePicker(Boolean state) {
 
-        isRangeDatePicker = state;
+        isRangeDatePickerEnable = state;
         mRangeDateStart = null;
         mRangeDateFinish = null;
         highlightedDays.clear();
@@ -639,7 +649,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      */
     @Override
     public boolean isRangDatePickerEnable() {
-        return isRangeDatePicker;
+        return isRangeDatePickerEnable;
     }
 
     @Override
@@ -802,8 +812,12 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         mOkColor = Color.parseColor(color);
     }
 
-    public void setOkBackgroundColor(String color) {
-        mOkBackgroundColor = Color.parseColor(color);
+    public void setOkColor(@ColorRes Integer color) {
+        mOkColor = color;
+    }
+
+    public void setOkBackgroundColor(@ColorRes Integer color) {
+        mOkBackgroundColorResId = color;
     }
 
 
@@ -1057,23 +1071,17 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     /**
      * Set the label for the Ok button (max 12 characters)
      *
-     * @param okString A literal String to be used as the Ok button label
-     */
-    @SuppressWarnings("unused")
-    public void setOkText(String okString) {
-        mOkString = okString;
-    }
-
-    /**
-     * Set the label for the Ok button (max 12 characters)
-     *
      * @param okResid A resource ID to be used as the Ok button label
      */
     @SuppressWarnings("unused")
     public void setOkText(@StringRes int okResid) {
-        mOkString = null;
         mOkResid = okResid;
     }
+
+    public void setOkDaysNumberHintText(@StringRes int okResid) {
+        mOkDaysNumberHintResid = okResid;
+    }
+
 
     public void setDateRangePickerStartHintString(String mDateRangePickerStartHintString) {
         this.mDateRangePickerStartHintString = mDateRangePickerStartHintString;
@@ -1245,10 +1253,14 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public void onDayOfMonthSelected(int year, int month, int day) {
         mCalendar.setPersianDate(year, month, day);
 
-        if (mRangeDateStart != null && mRangeDateFinish != null)
+        if (mRangeDateStart != null && mRangeDateFinish != null) {
             setHighlightedDays(PersianCalendarUtils.getDatesBetween(mRangeDateFinish, mRangeDateStart));
-        else
+
+                okButton.setText(String.format("%s (%s %s)",getString(mOkResid),PersianNumberUtils.toFarsi(highlightedDays.size()-1),getString(mOkDaysNumberHintResid)));
+
+        } else {
             highlightedDays.clear();
+        }
 
         updatePickers();
         updateDisplay(true);
@@ -1321,7 +1333,10 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
     public void notifyOnDateListener() {
         if (mCallBack != null) {
-            mCallBack.onDateSet(PersianDatePickerDialog.this, mCalendar);
+            if (isRangeDatePickerEnable)
+                mCallBack.onRangeDateSet(PersianDatePickerDialog.this, mRangeDateStart, mRangeDateFinish);
+            else
+                mCallBack.onDateSet(PersianDatePickerDialog.this, mCalendar);
         }
     }
 }

@@ -130,13 +130,13 @@ public class PersianCalendar extends GregorianCalendar {
         this.persianMonth = persianMonth;
         this.persianDay = persianDay;
 
-        Log.v("selectedDate F-1:",this.persianYear+"/"+this.persianMonth+"/"+this.persianDay);
+        //Log.v("selectedDate F-1:",this.persianYear+"/"+this.persianMonth+"/"+this.persianDay);
 
         YearMonthDay gregorianYearMonthDay = persianToGregorian(new YearMonthDay(persianYear, this.persianMonth-1, persianDay));
-        Log.v("selectedDate M-2:",String.valueOf(gregorianYearMonthDay.getYear()+"/"+gregorianYearMonthDay.getMonth()+"/"+gregorianYearMonthDay.getDay()));
+        //Log.v("selectedDate M-2:",String.valueOf(gregorianYearMonthDay.getYear()+"/"+gregorianYearMonthDay.getMonth()+"/"+gregorianYearMonthDay.getDay()));
         this.set(gregorianYearMonthDay.year, gregorianYearMonthDay.month, gregorianYearMonthDay.day);
-        Log.v("selectedDate F2-3:",this.persianYear+"/"+this.persianMonth+"/"+this.persianDay);
-        Log.v("selectedDate:","--------------------");
+        //Log.v("selectedDate F2-3:",this.persianYear+"/"+this.persianMonth+"/"+this.persianDay);
+        //Log.v("selectedDate:","--------------------");
         calculatePersianDate();
     }
 
