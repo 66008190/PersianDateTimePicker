@@ -25,16 +25,15 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
 
     private TextView dateTextView;
     private CheckBox dateRangePicker;
-    private CheckBox modeDarkDate;
-    private CheckBox modeCustomAccentDate;
     private CheckBox vibrateDate;
     private CheckBox dismissDate;
-    private CheckBox titleDate;
-    private CheckBox showYearFirst;
     private CheckBox switchOrientation;
-    private CheckBox limitSelectableDays;
-    private CheckBox highlightDates;
-    private CheckBox highlightDays;
+
+    private CheckBox highlightCertainDates;
+    private CheckBox highlightBetweenTwoDates;
+
+    private CheckBox chbDisableDates;
+    private CheckBox disableDatesBeforeToday;
 
     private PersianDatePickerDialog dpd;
 
@@ -52,16 +51,16 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
         dateTextView = view.findViewById(R.id.date_textview);
         Button dateButton = view.findViewById(R.id.date_button);
         dateRangePicker = view.findViewById(R.id.date_range_picker);
-        modeDarkDate = view.findViewById(R.id.mode_dark_date);
-        modeCustomAccentDate = view.findViewById(R.id.mode_custom_accent_date);
         vibrateDate = view.findViewById(R.id.vibrate_date);
         dismissDate = view.findViewById(R.id.dismiss_date);
-        titleDate = view.findViewById(R.id.title_date);
-        showYearFirst = view.findViewById(R.id.show_year_first);
         switchOrientation = view.findViewById(R.id.switch_orientation);
-        limitSelectableDays = view.findViewById(R.id.limit_dates);
-        highlightDates = view.findViewById(R.id.highlight_dates);
-        highlightDays = view.findViewById(R.id.highlight_days);
+
+
+        highlightCertainDates = view.findViewById(R.id.highlight_certain_dates);
+        highlightBetweenTwoDates = view.findViewById(R.id.highlight_between_two_dates);
+
+        chbDisableDates = view.findViewById(R.id.chb_disable_dates);
+        disableDatesBeforeToday = view.findViewById(R.id.disable_dates_before_today);
 
 
         // Show a datepicker when the dateButton is clicked
@@ -90,55 +89,50 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
             dpd.setHighlightColor("#459efa");
 
             dpd.setYearRange(persianCalendar.getPersianYear(), persianCalendar.getPersianYear() + 1);
-            dpd.setThemeDark(modeDarkDate.isChecked());
             dpd.vibrate(vibrateDate.isChecked());
             dpd.dismissOnPause(dismissDate.isChecked());
-            dpd.showYearPickerFirst(showYearFirst.isChecked());
             dpd.setVersion(PersianDatePickerDialog.Version.VERSION_1);
-
 
             dpd.setEnableRangePicker(dateRangePicker.isChecked());
 
-            if (modeCustomAccentDate.isChecked()) {
-                dpd.setAccentColor("#9C27B0");
-            }
-            if (titleDate.isChecked()) {
-                dpd.setTitleText("DatePicker Title");
-            }
-            if (highlightDates.isChecked()) {
-                PersianCalendar date1 = new PersianCalendar();
-                PersianCalendar date2 = new PersianCalendar();
-                date2.add(Calendar.WEEK_OF_MONTH, -1);
-                PersianCalendar date3 = new PersianCalendar();
-                date3.add(Calendar.WEEK_OF_MONTH, 1);
-                PersianCalendar[] days = {date1, date2, date3};
+            if (highlightCertainDates.isChecked()) {
+
+                PersianCalendar day1=new PersianCalendar();
+                day1.setPersianDate(day1.getPersianYear(),day1.getPersianMonth(),day1.getPersianDay()+2);
+                PersianCalendar day2=new PersianCalendar();
+                day2.setPersianDate(day2.getPersianYear(),day2.getPersianMonth(),day2.getPersianDay()+7);
+
+                PersianCalendar day3=new PersianCalendar();
+                day3.setPersianDate(day3.getPersianYear(),day3.getPersianMonth(),day3.getPersianDay()-4);
+
+                PersianCalendar[] days = {day1, day2,day3};
+
                 dpd.setHighlightedDays(days);
             }
-            if (highlightDays.isChecked()) {
-                PersianCalendar date1 = new PersianCalendar();
-                date1.setPersianDate(1399, 0, 1);
+            if (highlightBetweenTwoDates.isChecked()) {
+                PersianCalendar date1=new PersianCalendar();
+                date1.setPersianDate(date1.getPersianYear(),date1.getPersianMonth(),date1.getPersianDay()-2);
+                PersianCalendar date2=new PersianCalendar();
+                date2.setPersianDate(date2.getPersianYear(),date2.getPersianMonth(),date2.getPersianDay()+7);
 
-                PersianCalendar date2 = new PersianCalendar();
-                date2.setPersianDate(1399, 0, 20);
-
-                dpd.setStartDateColor("#459EFA");
-                dpd.setFinishDateColor("#4341FA");
-                dpd.setHighlightColor("#DAECFE");
                 dpd.setHighlightedDays(PersianCalendarUtils.getDatesBetween(date2, date1));
             }
-            if (limitSelectableDays.isChecked()) {
+            if (chbDisableDates.isChecked()) {
 
+                PersianCalendar day1=new PersianCalendar();
+                day1.setPersianDate(day1.getPersianYear(),day1.getPersianMonth(),day1.getPersianDay()+2);
+                PersianCalendar day2=new PersianCalendar();
+                day2.setPersianDate(day2.getPersianYear(),day2.getPersianMonth(),day2.getPersianDay()+7);
+
+                PersianCalendar day3=new PersianCalendar();
+                day3.setPersianDate(day3.getPersianYear(),day3.getPersianMonth(),day3.getPersianDay()-4);
+
+                PersianCalendar[] days = {day1, day2,day3};
+
+                dpd.setDisabledDays(days);
+            }
+            if (disableDatesBeforeToday.isChecked()) {
                 dpd.setDisabledDaysBeforeToday();
-
-//                PersianCalendar minDate=new PersianCalendar();
-//                minDate.setPersianDate(1398,1,1);
-//                PersianCalendar maxDate=new PersianCalendar();
-//                maxDate.setPersianDate(1398,11,29);
-//
-//                dpd.setMinDate(minDate);
-//                dpd.setMaxDate(maxDate);
-//
-//                dpd.setSelectableDays(days);
             }
             if (switchOrientation.isChecked()) {
                 if (dpd.getVersion() == PersianDatePickerDialog.Version.VERSION_1) {

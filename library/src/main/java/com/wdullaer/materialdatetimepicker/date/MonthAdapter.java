@@ -205,6 +205,13 @@ public abstract class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder>
 
                 } else if (mController.getRangeDatePickerFinishDate() == null && !mController.getRangeDatePickerStartIsEqualWith(day.year, day.month, day.day)) {
 
+                    PersianCalendar finishDate=new PersianCalendar();
+                    finishDate.setPersianDate(day.year, day.month, day.day);
+
+                    if(mController.getRangeDatePickerStartDate().after(finishDate) || mController.getRangeDatePickerStartDate().equals(finishDate)){
+                        return;
+                    }
+
                     mController.setRangeDatePickerFinishDate(day.year, day.month, day.day);
                 }
             }

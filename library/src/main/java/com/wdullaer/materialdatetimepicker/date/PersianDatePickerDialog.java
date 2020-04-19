@@ -87,8 +87,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public static final String KEY_LIST_POSITION_OFFSET = "list_position_offset";
     public static final String KEY_HIGHLIGHTED_DAYS = "highlighted_days";
     public static final String KEY_DISABLED_DAYS = "disabled_days";
-    public static final String KEY_THEME_DARK = "theme_dark";
-    public static final String KEY_THEME_DARK_CHANGED = "theme_dark_changed";
     public static final String KEY_ACCENT = "accent";
     public static final String KEY_VIBRATE = "vibrate";
     public static final String KEY_DISMISS = "dismiss";
@@ -145,8 +143,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     public HashSet<PersianCalendar> highlightedDays = new HashSet<>();
     public HashSet<PersianCalendar> disabledDays = new HashSet<>();
 
-    public boolean mThemeDark = false;
-    public boolean mThemeDarkChanged = false;
     public Integer mAccentColor = null;
     public boolean mVibrate = true;
     public boolean mDismissOnPause = false;
@@ -322,8 +318,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         outState.putInt(KEY_LIST_POSITION, listPosition);
         outState.putSerializable(KEY_HIGHLIGHTED_DAYS, highlightedDays);
         outState.putSerializable(KEY_DISABLED_DAYS, disabledDays);
-        outState.putBoolean(KEY_THEME_DARK, mThemeDark);
-        outState.putBoolean(KEY_THEME_DARK_CHANGED, mThemeDarkChanged);
         if (mAccentColor != null) outState.putInt(KEY_ACCENT, mAccentColor);
         outState.putBoolean(KEY_VIBRATE, mVibrate);
         outState.putBoolean(KEY_DISMISS, mDismissOnPause);
@@ -375,8 +369,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             highlightedDays = (HashSet<PersianCalendar>) savedInstanceState.getSerializable(KEY_HIGHLIGHTED_DAYS);
             disabledDays = (HashSet<PersianCalendar>) savedInstanceState.getSerializable(KEY_DISABLED_DAYS);
 
-            mThemeDark = savedInstanceState.getBoolean(KEY_THEME_DARK);
-            mThemeDarkChanged = savedInstanceState.getBoolean(KEY_THEME_DARK_CHANGED);
             if (savedInstanceState.containsKey(KEY_ACCENT))
                 mAccentColor = savedInstanceState.getInt(KEY_ACCENT);
             mVibrate = savedInstanceState.getBoolean(KEY_VIBRATE);
@@ -452,10 +444,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         if (mTitleString != null) mDatePickerTitle.setText(mTitleString);
         else mDatePickerTitle.setText(mTitleResid);
 
-        // if theme mode has not been set by java code, check if it is specified in Style.xml
-        if (!mThemeDarkChanged) {
-            mThemeDark = Utils.isDarkTheme(activity, mThemeDark);
-        }
 
         Resources res = getResources();
         mDayPickerDescription = res.getString(R.string.mdtp_day_picker_description);
@@ -463,7 +451,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         mYearPickerDescription = res.getString(R.string.mdtp_year_picker_description);
         mSelectYear = res.getString(R.string.mdtp_select_year);
 
-        int bgColorResource = mThemeDark ? R.color.mdtp_date_picker_view_animator_dark_theme : R.color.mdtp_date_picker_view_animator;
+        int bgColorResource =  R.color.mdtp_date_picker_view_animator;
         int bgColor = ContextCompat.getColor(activity, bgColorResource);
         view.setBackgroundColor(bgColor);
 
@@ -508,6 +496,9 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             okButton.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), mOkBackgroundColorResId));
+        }
+        if(isRangeDatePickerEnable){
+            okButton.setEnabled(false);
         }
 
         mSelectedDateTextView.setTextColor(getStartDateColor());
@@ -739,26 +730,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     @SuppressWarnings("unused")
     public void autoDismiss(boolean autoDismiss) {
         mAutoDismiss = autoDismiss;
-    }
-
-    /**
-     * Set whether the dark theme should be used
-     *
-     * @param themeDark true if the dark theme should be used, false if the default theme should be used
-     */
-    public void setThemeDark(boolean themeDark) {
-        mThemeDark = themeDark;
-        mThemeDarkChanged = true;
-    }
-
-    /**
-     * Returns true when the dark theme should be used
-     *
-     * @return true if the dark theme should be used, false if the default theme should be used
-     */
-    @Override
-    public boolean isThemeDark() {
-        return mThemeDark;
     }
 
     /**
@@ -1257,7 +1228,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
             setHighlightedDays(PersianCalendarUtils.getDatesBetween(mRangeDateFinish, mRangeDateStart));
 
                 okButton.setText(String.format("%s (%s %s)",getString(mOkResid),PersianNumberUtils.toFarsi(highlightedDays.size()-1),getString(mOkDaysNumberHintResid)));
-
+            okButton.setEnabled(true);
         } else {
             highlightedDays.clear();
         }

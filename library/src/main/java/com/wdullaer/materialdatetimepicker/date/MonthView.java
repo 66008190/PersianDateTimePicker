@@ -26,6 +26,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
@@ -115,8 +116,8 @@ public abstract class MonthView extends View {
     // The number of days + a spot for week number if it is displayed
     protected int mNumCells = mNumDays;
 
-    private final  PersianCalendar mPersianCalendar;
-    protected  PersianCalendar mDayLabelCalendar;
+    private final PersianCalendar mPersianCalendar;
+    protected PersianCalendar mDayLabelCalendar;
     private final MonthViewTouchHelper mTouchHelper;
 
     protected int mNumRows = DEFAULT_NUM_ROWS;
@@ -154,24 +155,18 @@ public abstract class MonthView extends View {
         Resources res = context.getResources();
 
         mDayLabelCalendar = new PersianCalendar();
-        mPersianCalendar =new  PersianCalendar();
+        mPersianCalendar = new PersianCalendar();
 
         mDayOfWeekTypeface = res.getString(R.string.mdtp_day_of_week_label_typeface);
         mMonthTitleTypeface = res.getString(R.string.mdtp_sans_serif);
 
-        boolean darkTheme = mController != null && mController.isThemeDark();
-        if (darkTheme) {
-            mDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_normal_dark_theme);
-            mMonthDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_month_day_dark_theme);
-            mDisabledDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_disabled_dark_theme);
-            mHighlightedDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_highlighted_dark_theme);
-        } else {
-            mDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_normal);
-            mMonthDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_month_day);
-            mDisabledDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_disabled);
-            mHighlightedDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_highlighted);
 
-        }
+        mDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_normal);
+        mMonthDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_month_day);
+        mDisabledDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_disabled);
+        mHighlightedDayTextColor = ContextCompat.getColor(context, R.color.mdtp_date_picker_text_highlighted);
+
+
         mSelectedDayTextColor = ContextCompat.getColor(context, R.color.mdtp_white);
         mTodayNumberColor = mController.getAccentColor();
         mStartDayColor = mController.getStartDateColor();
@@ -196,8 +191,8 @@ public abstract class MonthView extends View {
                 .getDimensionPixelSize(R.dimen.mdtp_day_highlight_circle_margin);
 
         //if (mController.getVersion() == PersianDatePickerDialog.Version.VERSION_1) {
-            mRowHeight = (res.getDimensionPixelOffset(R.dimen.mdtp_date_picker_view_animator_height)
-                    - getMonthHeaderSize()) / MAX_NUM_ROWS;
+        mRowHeight = (res.getDimensionPixelOffset(R.dimen.mdtp_date_picker_view_animator_height)
+                - getMonthHeaderSize()) / MAX_NUM_ROWS;
 //        } else {
 //            mRowHeight = (res.getDimensionPixelOffset(R.dimen.mdtp_date_picker_view_animator_height_v2)
 //                    - getMonthHeaderSize() - MONTH_DAY_LABEL_TEXT_SIZE * 2) / MAX_NUM_ROWS;
@@ -284,7 +279,7 @@ public abstract class MonthView extends View {
         mSelectedBorderCirclePaint.setStyle(Style.FILL);
         mSelectedBorderCirclePaint.setAlpha(SELECTED_CIRCLE_ALPHA);
 
-        mSelectedDaysBetweenTwoDates=new Paint();
+        mSelectedDaysBetweenTwoDates = new Paint();
         mSelectedDaysBetweenTwoDates.setAntiAlias(true);
         mSelectedDaysBetweenTwoDates.setColor(mHighlightedDayColor);
         mSelectedDaysBetweenTwoDates.setTextAlign(Align.CENTER);
@@ -341,7 +336,7 @@ public abstract class MonthView extends View {
         mHasToday = false;
         mToday = -1;
 
-        mPersianCalendar.setPersianDate(mYear,mMonth,1);
+        mPersianCalendar.setPersianDate(mYear, mMonth, 1);
 
         mDayOfWeekStart = mPersianCalendar.get(Calendar.DAY_OF_WEEK);
 
@@ -351,7 +346,7 @@ public abstract class MonthView extends View {
             mWeekStart = Calendar.SATURDAY;
         }
 
-        mNumCells = Utils.getDaysInMonth(mMonth,mYear);// mPersianCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        mNumCells = Utils.getDaysInMonth(mMonth, mYear);// mPersianCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         for (int i = 0; i < mNumCells; i++) {
             final int day = i + 1;
             if (sameDay(day, today)) {
@@ -461,7 +456,7 @@ public abstract class MonthView extends View {
             int calendarDay = (i + mWeekStart) % mNumDays;
             mDayLabelCalendar.set(Calendar.DAY_OF_WEEK, calendarDay);
             String localWeekDisplayName = mDayLabelCalendar.getPersianWeekDayNameShortType();
-            Log.v("DayOfWeek",localWeekDisplayName);
+            Log.v("DayOfWeek", localWeekDisplayName);
             String weekString = localWeekDisplayName;//.substring(0, 1);
             canvas.drawText(weekString, x, y, mMonthDayLabelPaint);
         }
@@ -576,7 +571,7 @@ public abstract class MonthView extends View {
             return;
         }
 
-        if (mController.isDisabled(mYear, mMonth, day) && mToday!=day) {
+        if (mController.isDisabled(mYear, mMonth, day) && mToday != day) {
             return;
         }
 
@@ -590,9 +585,9 @@ public abstract class MonthView extends View {
     }
 
     /**
-     * @param year as an int
+     * @param year  as an int
      * @param month as an int
-     * @param day as an int
+     * @param day   as an int
      * @return true if the given date should be highlighted
      */
     protected boolean isHighlighted(int year, int month, int day) {
@@ -600,9 +595,9 @@ public abstract class MonthView extends View {
     }
 
     /**
-     * @param year as an int
+     * @param year  as an int
      * @param month as an int
-     * @param day as an int
+     * @param day   as an int
      * @return true if the given date should be highlighted
      */
     protected boolean isDisabledDay(int year, int month, int day) {

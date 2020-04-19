@@ -126,7 +126,7 @@ public class YearPickerView extends ListView implements OnItemClickListener, OnD
             } else {
                 v = (TextViewWithCircularIndicator) LayoutInflater.from(parent.getContext())
                   .inflate(R.layout.mdtp_year_label_text_view, parent, false);
-                v.setAccentColor(mController.getAccentColor(), mController.isThemeDark());
+                v.setAccentColor(mController.getAccentColor(), false);
             }
             int year = mMinYear + position;
             boolean selected = mController.getSelectedDay().year == year;

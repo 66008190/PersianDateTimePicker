@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Persian DateTimePicker</string>
-    <string name="title_activity_main">DateTimePicker Example</string>
+    <string name="title_activity_main">PersianDateTimePicker Example</string>
     <string name="selected_time">The time you picked will be shown here.</string>
     <string name="selected_date">The date you picked will be shown here.</string>
     <string name="selected_datetime">The date and time you picked will be shown here.</string>
@@ -21,8 +21,7 @@
     <string name="enable_seconds">Show seconds picker</string>
     <string name="enable_minutes">Show minutes picker</string>
     <string name="limit_times">Limit selectable times</string>
-    <string name="limit_dates">Limit selectable dates</string>
-    <string name="disable_dates">Disable specific dates</string>
+    <string name="disable_dates">Disable Some Dates</string>
     <string name="disable_times">Disable specific times</string>
     <string name="highlight_dates">Highlight certain dates</string>
     <string name="switch_orientation">Switch scroll orientation</string>
@@ -37,6 +36,7 @@
     <string name="highlight_days_between_two_date">highlight days between two date</string>
     <string name="date_range_picker">Date Range Picker</string>
     <string name="day">روز</string>
+    <string name="disable_dates_before_today">Disable Dates Before Today</string>
 
 
 </resources>

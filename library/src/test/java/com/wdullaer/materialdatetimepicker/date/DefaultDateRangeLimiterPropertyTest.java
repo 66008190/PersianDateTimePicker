@@ -39,10 +39,6 @@ public class DefaultDateRangeLimiterPropertyTest {
             return new MonthAdapter.CalendarDay(Calendar.getInstance(), TimeZone.getDefault());
         }
 
-        @Override
-        public boolean isThemeDark() {
-            return false;
-        }
 
         @Override
         public int getAccentColor() {
