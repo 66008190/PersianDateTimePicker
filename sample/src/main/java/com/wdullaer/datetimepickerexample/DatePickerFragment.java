@@ -163,7 +163,7 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
     @Override
     public void onDateSet(PersianDatePickerDialog view, PersianCalendar persianCalendar) {
         String date = "You picked the following date: " +
-                +persianCalendar.getPersianYear() + "/" + persianCalendar.getPersianMonth() + "/" + persianCalendar.getPersianDay();
+                +persianCalendar.getPersianYear() + "/" + (persianCalendar.getPersianMonth()+1) + "/" + persianCalendar.getPersianDay();
         dateTextView.setText(date);
         dpd = null;
     }
@@ -171,9 +171,9 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
     @Override
     public void onRangeDateSet(PersianDatePickerDialog view, PersianCalendar startPersianCalendar, PersianCalendar finishPersianCalendar) {
         String date = "You picked the following range date: " +
-                +startPersianCalendar.getPersianYear() + "/" + startPersianCalendar.getPersianMonth() + "/" + startPersianCalendar.getPersianDay()
+                +startPersianCalendar.getPersianYear() + "/" + (startPersianCalendar.getPersianMonth()+1) + "/" + startPersianCalendar.getPersianDay()
                 + "--" +
-                +finishPersianCalendar.getPersianYear() + "/" + finishPersianCalendar.getPersianMonth() + "/" + finishPersianCalendar.getPersianDay();
+                +finishPersianCalendar.getPersianYear() + "/" + (finishPersianCalendar.getPersianMonth()+1) + "/" + finishPersianCalendar.getPersianDay();
 
         dateTextView.setText(date);
         dpd = null;

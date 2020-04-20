@@ -96,7 +96,13 @@ public abstract class DayPickerView extends RecyclerView implements OnDateChange
         int layoutOrientation = scrollOrientation == PersianDatePickerDialog.ScrollOrientation.VERTICAL
                 ? RecyclerView.VERTICAL
                 : RecyclerView.HORIZONTAL;
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, layoutOrientation, false);
+
+        if(layoutOrientation==RecyclerView.HORIZONTAL){
+            linearLayoutManager.setReverseLayout(true);
+        }
+
         setLayoutManager(linearLayoutManager);
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         setVerticalScrollBarEnabled(false);

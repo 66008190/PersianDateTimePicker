@@ -93,12 +93,12 @@ public class PersianCalendar extends GregorianCalendar {
      * fields(persianYear, persianMonth, persianDay)
      */
     protected void calculatePersianDate() {
-        Log.v("selected month1:",String.valueOf(this.get(PersianCalendar.MONTH)));
+        //Log.v("selected month1:",String.valueOf(this.get(PersianCalendar.MONTH)));
 
         YearMonthDay persianYearMonthDay = PersianCalendar.gregorianToJalali(
                 new YearMonthDay(this.get(PersianCalendar.YEAR), this.get(PersianCalendar.MONTH), this.get(PersianCalendar.DAY_OF_MONTH))
         );
-        Log.v("selected date:",this.get(PersianCalendar.YEAR)+"/"+this.get(PersianCalendar.MONTH)+"/"+this.get(PersianCalendar.DAY_OF_MONTH));
+       // Log.v("selected date:",this.get(PersianCalendar.YEAR)+"/"+this.get(PersianCalendar.MONTH)+"/"+this.get(PersianCalendar.DAY_OF_MONTH));
 
         this.persianYear = persianYearMonthDay.year;
         this.persianMonth = persianYearMonthDay.month;
@@ -369,7 +369,7 @@ public class PersianCalendar extends GregorianCalendar {
 
     @Override
     public void set(int field, int value) {
-        Log.v("selected:",field+"  -  "+value);
+        //Log.v("selected:",field+"  -  "+value);
         super.set(field, value);
       //  calculatePersianDate();
     }
