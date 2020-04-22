@@ -33,13 +33,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation "androidx.annotation:annotation:1.0.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-//    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 //    testImplementation 'com.pholser:junit-quickcheck-core:0.7'
 //    testImplementation 'com.pholser:junit-quickcheck-generators:0.7'
 //
-//    androidTestImplementation 'androidx.test:runner:1.2.0'
-//    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 }
 
 apply from: 'gradle-mvn-push.gradle'
