@@ -11,9 +11,9 @@
 
 **Version beta Layout**
 
-Date Picker | Time Picker | Date Picker2
+Features | Range Picker | Date Picker
 --- | --- | ---
-![Date Picker](https://github.com/arash-jahani/ScreenShots/blob/master/datePicker/s1.jpg) | ![Time Picker](https://github.com/arash-jahani/ScreenShots/blob/master/datePicker/s2.jpg)| ![Date Picker2](https://github.com/arash-jahani/ScreenShots/blob/master/datePicker/s3.jpg)
+![Features](https://github.com/arash-jahani/ScreenShots/blob/master/datePicker/s1.jpg) | ![Range Picker](https://github.com/arash-jahani/ScreenShots/blob/master/datePicker/s2.jpg)| ![Date Picker](https://github.com/arash-jahani/ScreenShots/blob/master/datePicker/s3.jpg)
 
 
 ## Table of Contents
