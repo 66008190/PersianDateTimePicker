@@ -38,6 +38,8 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
     public transient DatePickerController mController;
     private int mMinYear = DEFAULT_START_YEAR;
     private int mMaxYear = DEFAULT_END_YEAR;
+    private int mMinMonth=0;
+    private int mMaxMonth=11;
     private PersianCalendar mMinDate;
     private PersianCalendar mMaxDate;
     private TreeSet<PersianCalendar> selectableDays = new TreeSet<>();
@@ -49,6 +51,8 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
     public DefaultDateRangeLimiter(Parcel in) {
         mMinYear = in.readInt();
         mMaxYear = in.readInt();
+        mMinMonth=in.readInt();
+        mMaxMonth=in.readInt();
         mMinDate = (PersianCalendar) in.readSerializable();
         mMaxDate = (PersianCalendar) in.readSerializable();
         selectableDays = (TreeSet<PersianCalendar>) in.readSerializable();
@@ -59,6 +63,8 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(mMinYear);
         out.writeInt(mMaxYear);
+        out.writeInt(mMinMonth);
+        out.writeInt(mMaxMonth);
         out.writeSerializable(mMinDate);
         out.writeSerializable(mMaxDate);
         out.writeSerializable(selectableDays);
@@ -106,13 +112,18 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
         mController = controller;
     }
 
-    public void setYearRange(int startYear, int endYear) {
+    public void setYearRange(int startYear,int startMonth, int endYear,int endMonth) {
         if (endYear < startYear) {
             throw new IllegalArgumentException("Year end must be larger than or equal to year start");
         }
+//        if (startMonth <= endMonth) {
+//            throw new IllegalArgumentException("Month end must be larger than or equal to Month start");
+//        }
 
         mMinYear = startYear;
         mMaxYear = endYear;
+        mMinMonth=startMonth;
+        mMaxMonth=endMonth;
     }
 
     public @Nullable PersianCalendar getMinDate() {
@@ -149,9 +160,8 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
     public @NonNull PersianCalendar getStartDate() {
         if (!selectableDays.isEmpty()) return (PersianCalendar) selectableDays.first().clone();
         if (mMinDate != null) return (PersianCalendar) mMinDate.clone();
-        TimeZone timeZone = mController == null ? TimeZone.getDefault() : mController.getTimeZone();
         PersianCalendar output = new PersianCalendar();
-        output.setPersianDate( mMinYear,0,1);
+        output.setPersianDate( mMinYear,mMinMonth,1);
         return output;
     }
 
@@ -160,9 +170,8 @@ public class DefaultDateRangeLimiter implements DateRangeLimiter {
     PersianCalendar getEndDate() {
         if (!selectableDays.isEmpty()) return (PersianCalendar) selectableDays.last().clone();
         if (mMaxDate != null) return (PersianCalendar) mMaxDate.clone();
-        TimeZone timeZone = mController == null ? TimeZone.getDefault() : mController.getTimeZone();
         PersianCalendar output = new PersianCalendar();
-        output.setPersianDate( mMaxYear,11,29);
+        output.setPersianDate( mMaxYear,mMaxMonth,29);
         return output;
     }
 

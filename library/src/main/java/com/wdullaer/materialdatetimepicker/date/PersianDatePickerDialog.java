@@ -508,7 +508,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
         }
 
         updateDisplay(false);
-        //setCurrentView(currentView);
+        setCurrentView(currentView);
 
         if (listPosition != -1) {
             if (currentView == MONTH_AND_DAY_VIEW) {
@@ -577,11 +577,11 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
                 pulseAnimator.start();
 
 
-                int flags = DateUtils.FORMAT_SHOW_DATE;
-                String dayString = DateUtils.formatDateTime(getActivity(), millis, flags);
-                mAnimator.setContentDescription(mDayPickerDescription + ": " + dayString);
-                Utils.tryAccessibilityAnnounce(mAnimator, mSelectDay);
-                break;
+//                int flags = DateUtils.FORMAT_SHOW_DATE;
+//                String dayString = DateUtils.formatDateTime(getActivity(), millis, flags);
+//                mAnimator.setContentDescription(mDayPickerDescription + ": " + dayString);
+//                Utils.tryAccessibilityAnnounce(mAnimator, mSelectDay);
+//                break;
 
         }
     }
@@ -843,8 +843,8 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
     }
 
     @SuppressWarnings("unused")
-    public void setYearRange(int startYear, int endYear) {
-        mDefaultLimiter.setYearRange(startYear, endYear);
+    public void setYearMonthRange(int startYear, int startMonth, int endYear, int endMonth) {
+        mDefaultLimiter.setYearRange(startYear, startMonth,endYear,endMonth);
 
         if (mDayPickerView != null) {
             mDayPickerView.onChange();
@@ -991,7 +991,7 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
 
         PersianCalendar today = new PersianCalendar();
         PersianCalendar startDay = new PersianCalendar();
-        startDay.setPersianDate(getMinYear(), 0, 0);
+        startDay.setPersianDate(mDefaultLimiter.getMinYear(), 0, 0);
 
         this.setDisabledDays(PersianCalendarUtils.getDatesBetween(today, startDay));
     }

@@ -35,6 +35,9 @@ public interface DateRangeLimiter extends Parcelable {
     default int getMinYear() {
         return getStartDate().get(Calendar.YEAR);
     }
+    default int getMinMonth() {
+        return getStartDate().get(Calendar.MONTH);
+    }
 
     /**
      * getMaxYear returns the maximum selectable year of the picker
@@ -45,6 +48,9 @@ public interface DateRangeLimiter extends Parcelable {
      */
     default int getMaxYear() {
         return getEndDate().get(Calendar.YEAR);
+    }
+    default int getMaxMonth() {
+        return getEndDate().get(Calendar.MONTH);
     }
 
     /**

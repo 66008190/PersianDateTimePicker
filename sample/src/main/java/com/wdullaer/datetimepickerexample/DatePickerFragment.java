@@ -16,8 +16,6 @@ import com.wdullaer.materialdatetimepicker.date.PersianDatePickerDialog;
 import com.wdullaer.materialdatetimepicker.utils.PersianCalendar;
 import com.wdullaer.materialdatetimepicker.utils.PersianCalendarUtils;
 
-import java.util.Calendar;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -72,7 +70,6 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
             during testing
              */
             PersianCalendar persianCalendar = new PersianCalendar();
-
             if (dpd == null) {
                 dpd = PersianDatePickerDialog.newInstance(
                         DatePickerFragment.this,
@@ -88,7 +85,8 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
             dpd.setFinishDateColor("#f5f5f5");
             dpd.setHighlightColor("#459efa");
 
-            dpd.setYearRange(persianCalendar.getPersianYear(), persianCalendar.getPersianYear() + 1);
+            dpd.setYearMonthRange(persianCalendar.getPersianYear(), 0,
+                    persianCalendar.getPersianYear()+1,2);
             dpd.vibrate(vibrateDate.isChecked());
             dpd.dismissOnPause(dismissDate.isChecked());
             dpd.setVersion(PersianDatePickerDialog.Version.VERSION_1);
@@ -141,6 +139,7 @@ public class DatePickerFragment extends Fragment implements PersianDatePickerDia
                     dpd.setScrollOrientation(PersianDatePickerDialog.ScrollOrientation.VERTICAL);
                 }
             }
+
             dpd.show(requireFragmentManager(), "Datepickerdialog");
         });
 
