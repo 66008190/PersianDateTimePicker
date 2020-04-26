@@ -37,7 +37,7 @@
             android:layout_height="@dimen/mdtp_header_height"
             android:layout_gravity="center" />
 
-        <com.wdullaer.materialdatetimepicker.time.RadialPickerLayout
+        <ir.arashjahani.persiandatetimepicker.time.RadialPickerLayout
             android:id="@+id/mdtp_time_picker"
             android:layout_height="@dimen/mdtp_time_picker_height"
             android:layout_width="@dimen/mdtp_picker_dimen"

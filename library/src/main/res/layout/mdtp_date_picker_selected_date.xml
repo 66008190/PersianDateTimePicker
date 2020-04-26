@@ -25,7 +25,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.wdullaer.materialdatetimepicker.AccessibleLinearLayout
+    <ir.arashjahani.persiandatetimepicker.AccessibleLinearLayout
         android:id="@+id/mdtp_date_picker_month_and_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,6 +80,6 @@
             tools:text="May"
             android:layout_marginBottom="16dp"/>
 
-    </com.wdullaer.materialdatetimepicker.AccessibleLinearLayout>
+    </ir.arashjahani.persiandatetimepicker.AccessibleLinearLayout>
 
 </LinearLayout>

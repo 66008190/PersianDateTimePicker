@@ -16,7 +16,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <com.wdullaer.materialdatetimepicker.date.AccessibleDateAnimator
+    <ir.arashjahani.persiandatetimepicker.date.AccessibleDateAnimator
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mdtp_animator"
         android:layout_width="match_parent"
