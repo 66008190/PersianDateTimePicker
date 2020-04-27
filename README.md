@@ -32,7 +32,7 @@ Features | Range Picker | Date Picker
  The easiest way to add the Persian Material DateTime Picker library to your project is by adding it as a dependency to your `build.gradle`
 ```groovy
 dependencies {
-    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+    implementation 'io.github.arash-jahani:persaindatetimepicker:0.1'
 }
 ```
 
