@@ -26,7 +26,7 @@ import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
-import com.wdullaer.materialdatetimepicker.R;
+import ir.arashjahani.persiandatetimepicker.R;
 
 import ir.arashjahani.persiandatetimepicker.Utils;
 

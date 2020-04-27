@@ -1,4 +1,4 @@
-package ir.wdullaer.datetimepickerexample;
+package ir.arashjahani.datetimepickerexample;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.wdullaer.datetimepickerexample.R;
+import ir.arashjahani.datetimepickerexample.R;
 
 import ir.arashjahani.persiandatetimepicker.time.TimePickerDialog;
 import ir.arashjahani.persiandatetimepicker.time.Timepoint;

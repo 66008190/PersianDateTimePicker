@@ -1,8 +1,8 @@
-package ir.wdullaer.datetimepickerexample;
+package ir.arashjahani.datetimepickerexample;
 
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
-import com.wdullaer.datetimepickerexample.R;
+import ir.arashjahani.datetimepickerexample.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;

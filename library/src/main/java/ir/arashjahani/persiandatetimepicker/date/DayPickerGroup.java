@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.wdullaer.materialdatetimepicker.R;
+import ir.arashjahani.persiandatetimepicker.R;
 import ir.arashjahani.persiandatetimepicker.Utils;
 
 public class DayPickerGroup extends ViewGroup

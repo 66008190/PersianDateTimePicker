@@ -46,7 +46,7 @@ import androidx.core.content.res.ResourcesCompat;
 import ir.arashjahani.persiandatetimepicker.utils.PersianCalendar;
 import ir.arashjahani.persiandatetimepicker.utils.PersianCalendarUtils;
 import ir.arashjahani.persiandatetimepicker.HapticFeedbackController;
-import com.wdullaer.materialdatetimepicker.R;
+import ir.arashjahani.persiandatetimepicker.R;
 import ir.arashjahani.persiandatetimepicker.Utils;
 import ir.arashjahani.persiandatetimepicker.utils.PersianNumberUtils;
 
@@ -192,13 +192,6 @@ public class PersianDatePickerDialog extends AppCompatDialogFragment implements
      */
     public interface OnDateSetListener {
 
-        /**
-         * @param view        The view associated with this listener.
-         * @param year        The year that was set.
-         * @param monthOfYear The month that was set (0-11) for compatibility
-         *                    with {@link java.util.Calendar}.
-         * @param dayOfMonth  The day of the month that was set.
-         */
         void onDateSet(PersianDatePickerDialog view, PersianCalendar persianCalendar);
 
         void onRangeDateSet(PersianDatePickerDialog view, PersianCalendar startPersianCalendar, PersianCalendar finishPersianCalendar);

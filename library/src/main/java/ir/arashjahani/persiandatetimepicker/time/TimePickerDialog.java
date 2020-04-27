@@ -47,7 +47,7 @@ import android.widget.TextView;
 
 import ir.arashjahani.persiandatetimepicker.Utils;
 import ir.arashjahani.persiandatetimepicker.HapticFeedbackController;
-import com.wdullaer.materialdatetimepicker.R;
+import ir.arashjahani.persiandatetimepicker.R;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;

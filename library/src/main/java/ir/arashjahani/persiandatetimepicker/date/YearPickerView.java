@@ -29,7 +29,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.wdullaer.materialdatetimepicker.R;
+import ir.arashjahani.persiandatetimepicker.R;
 
 /**
  * Displays a selectable list of years.

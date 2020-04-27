@@ -28,7 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 
-import com.wdullaer.materialdatetimepicker.R;
+import ir.arashjahani.persiandatetimepicker.R;
 
 /**
  * A text view which, when pressed or activated, displays a colored circle around the text.

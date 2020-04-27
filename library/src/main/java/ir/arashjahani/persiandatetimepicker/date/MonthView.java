@@ -40,7 +40,7 @@ import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import com.wdullaer.materialdatetimepicker.R;
+import ir.arashjahani.persiandatetimepicker.R;
 
 import ir.arashjahani.persiandatetimepicker.utils.PersianCalendar;
 import ir.arashjahani.persiandatetimepicker.Utils;
