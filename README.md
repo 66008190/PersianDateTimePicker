@@ -18,12 +18,11 @@ Features | Range Picker | Date Picker
 ## Table of Contents
 1. [Setup](#setup)
 2. [Using Persian Date](#using-material-datetime-pickers)
-1. [Implement Listeners](#implement-an-ontimesetlistenerondatesetlistener)
-2. [Create Pickers](#create-a-timepickerdialogdatepickerdialog-using-the-supplied-factory)
-3. [Additional Options](#additional-options)
-4. [FAQ](#faq)
-5. [Potential Improvements](#potential-improvements)
-6. [License](#license)
+3. [Implement Listeners](#implement-an-ontimesetlistenerondatesetlistener)
+4. [Create Pickers](#create-a-timepickerdialogdatepickerdialog-using-the-supplied-factory)
+5. [Additional Options](#additional-options)
+6. [FAQ](#faq)
+7. [License](#license)
 
 
 ## Setup
