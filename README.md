@@ -1,4 +1,4 @@
-# Persian Material Date And Time Picker - Select a time/date in style
+# Persian Material Date And Time Picker
 
 
 این کتابخانه ابزاری است برای پیاده سازی هر چه ساده تر تقویم و ساعت شمار فارسی و کاملا قابل شخصی سازی.
